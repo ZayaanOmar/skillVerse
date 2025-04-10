@@ -1,21 +1,21 @@
 import React from 'react';
-
+import './ClientHome.css';//importing css style file
 const ClientHome = () => {
   return (
-    <main className="min-h-screen bg-gray-100 p-6">
+    <main className="client-home">
       <section className="max-w-5xl mx-auto">
         {/* Welcome Banner */}
-        <header className="bg-white p-6 rounded-2xl shadow-md mb-6">
-          <h1 className="text-2xl font-bold text-gray-800">testing this is client homepage</h1>
-          <p className="text-gray-600 mt-2">Here’s a quick overview of your account.</p>
+        <header className="welcome-banner mb-6">
+          <h1 className="heading1">testing this is client homepage</h1>
+          <p className="description">Here’s a quick overview of your account.</p>
         </header>
 
         {/* Quick Actions */}
-        <section className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-          <button className="bg-blue-600 text-white p-4 rounded-xl shadow hover:bg-blue-700">
+        <section className="section1">
+          <button className="button1">
             search for a service
           </button>
-          <button className="bg-green-600 text-white p-4 rounded-xl shadow hover:bg-green-700">
+          <button className="button2">
             View Proposals
           </button>
         </section>
