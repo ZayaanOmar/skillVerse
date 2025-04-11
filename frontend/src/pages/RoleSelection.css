@@ -1,1 +1,37 @@
-import
+.role-selection{
+    background: linear-gradient(45deg, white, purple);
+    height: 100vh;
+    display: flex;
+    justify-content: center;   /* centers horizontally */
+    align-items: center;
+}
+  
+.role-body{
+    text-align: center;
+    margin: 0 auto;  
+}
+
+.role-body h1 {
+    margin-top: 0; /* Remove top space from h1 */
+}
+  
+  
+.roles-container{
+    display: flex;
+    align-items: center;
+}
+  
+.client-description, .freelancer-description{
+    background: white;
+    border-radius: 10px;
+    margin: 40px;
+    padding: 20px;
+    transition: transform 0.3s ease;
+}
+  
+.client-description:hover, .freelancer-description:hover{
+    cursor: pointer;
+    transform: scale(1.03);
+}
+
+  
