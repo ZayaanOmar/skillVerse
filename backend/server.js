@@ -1,9 +1,14 @@
+require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
-require("dotenv").config();
+const authRoutes = require("./routes/auth-routes");
+const passportSetup = require("./configs/passport-setup");
 
 const app = express();
 app.use(express.json());
+
+//set up routes
+app.use("/auth", authRoutes);
 
 //connect to MongoDB database
 mongoose
@@ -17,4 +22,4 @@ app.get("/api", (req, res) => {
 });
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
