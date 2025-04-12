@@ -9,7 +9,7 @@ function App() {
       <Routes>
         <Route path="/" element={<h1>Hello from Landing Page</h1>} />
         <Route path="/client/home" element={<ClientHome />} />
-        <Route path="/roles" element={<RoleSelection/>} />
+        <Route path="signup/roles" element={<RoleSelection/>} />
       </Routes>
     </Router>
   );
