@@ -12,13 +12,13 @@ const userSchema = new mongoose.Schema(
       //will be created on first login (sign up)
       type: String,
       required: true,
-      unique: true, // will be enforced at the DB level
+      unique: false,
     },
     role: {
       //will be chosen on first login (signup)
       type: String,
-      enum: ["client", "freelancer", "admin"], //value must be one of these options
-      required: true,
+      //enum: ["client", "freelancer", "admin"], //value must be one of these options
+      //required: true,
     },
   },
   {
@@ -27,6 +27,4 @@ const userSchema = new mongoose.Schema(
 );
 
 //tells mongoose to create a new collection called "users", and to use the previously defined schema
-//export default mongoose.model("User", userSchema);
 module.exports = mongoose.model("User", userSchema);
-//export default User;

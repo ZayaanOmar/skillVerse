@@ -1,6 +1,6 @@
 const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth20");
-//require("../dotenv").config(); /* not sure if this is actually needed */
+const User = require("../models/User");
 
 passport.use(
   new GoogleStrategy(
@@ -10,14 +10,28 @@ passport.use(
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     },
-    (accessToken, refreshToken, profile, done) => {
+    async (accessToken, refreshToken, profile, done) => {
       /*passport callback function
        * accessToken: received from google, allows us to alter user's profile
        * refreshToken: refresh accessToken (accessToken expires)
        * profile: information that passport retrieves about user profile
        * done: function we must call when we are done with this callback function
        */
-      console.log(profile);
+
+      const existingUser = await User.findOne({ googleID: profile.id });
+
+      if (existingUser) {
+        //user already exists, must be logged in
+        console.log(`Logging in User ${profile.id}`);
+      } else {
+        //New User Registering
+        const newUser = new User({
+          googleID: profile.id,
+          username: profile.displayName,
+        });
+        await newUser.save();
+        console.log(`New User Created: ${newUser}`);
+      }
     }
   )
 );
