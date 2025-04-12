@@ -1,12 +1,15 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import './RoleSelection.css'; //importing css style file
 const RoleSelection = () => {
+    {/* Creating navigation to switch pages */}
+    const navigate = useNavigate();
     return (
         <main className='role-selection'>
             <section className='role-body'>
                 <h1>Are you a ... ?</h1>
                 <section className='roles-container'>
-                    <section className='client-description'>
+                    <section className='client-description' onClick={() => navigate("/client/home")}>
                         <h2>Client</h2>
                         <p>A client is someone looking to hire a person</p>
                     </section>

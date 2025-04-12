@@ -1,5 +1,5 @@
 .role-selection{
-    background: linear-gradient(45deg, white, purple);
+    background: linear-gradient(45deg, white, rgb(32, 32, 152));
     height: 100vh;
     display: flex;
     justify-content: center;   /* centers horizontally */
