@@ -1,30 +1,65 @@
 import React from 'react';
-import './ClientHome.css';//importing css style file
+import './ClientHome.css';
+
 const ClientHome = () => {
   return (
     <main className="client-home">
-      <section className="max-w-5xl mx-auto">
+      <section>
         {/* Welcome Banner */}
-        <header className="welcome-banner mb-6">
-          <h1 className="heading1">testing this is client homepage</h1>
-          <p className="description">Here’s a quick overview of your account.</p>
+        <header className="welcome-banner">
+          <h1 className="heading1">SKILLVERSE</h1>
         </header>
 
-        {/* Quick Actions */}
-        <section className="section1">
-          <button className="button1">
-            search for a service
-          </button>
-          <button className="button2">
-            View Proposals
-          </button>
+        {/*the choose service blue section */}
+        <section className='chooseDesc'>
+          <p className="description">CHOOSE A SERVICE</p>
         </section>
 
-        {/* Recent Activity Placeholder */}
-        <article className="bg-white p-6 rounded-2xl shadow-md">
-          <h2 className="text-xl font-semibold text-gray-800 mb-4">Your Recent Jobs</h2>
-          <p className="text-gray-500">No jobs posted yet. Get started by posting one!</p>
+        {/*each button */}
+        <section className="section1">
+          <button className="button1">Software Development</button>
+          <button className="button2">Data Science - Machine Learning</button>
+          <button className="button3">Creating Logos</button>
+          <button className="button4">Graphic Designer</button>
+          <button className="button5">Digital Marketing</button>
+        </section>
+
+        {/*the section grid onn whar skillverse offers */}
+        <article>
+          <h2>
+            What Skill Verse Offers You
+          </h2>
+
+          <section className="offer-grid">
+            <section className="offer-item">
+              <h3>Dedicated hiring experts</h3>
+              <p>Count on an account manager to find you the right talent and see to your project’s every need.</p>
+            </section>
+
+            <section className="offer-item">
+              <h3>Satisfaction guarantee</h3>
+              <p>We guarantee satisfaction with every project, ensuring you're happy with the results.</p>
+            </section>
+
+            <section className="offer-item">
+              <h3>Flexible payment models</h3>
+              <p>Choose from a variety of flexible payment models to fit your needs and budget.</p>
+            </section>
+
+            <section className="offer-item">
+              <h3>Advanced management tools</h3>
+              <p>Access powerful tools to manage your projects and teams with ease.</p>
+            </section>
+          </section>
         </article>
+
+        {/*this is for the footer */}
+        <footer className='footer'>
+          
+          <section>
+          <p>&copy; 2025 SkillVerse. All rights reserved.</p>
+          </section>
+        </footer>
       </section>
     </main>
   );
