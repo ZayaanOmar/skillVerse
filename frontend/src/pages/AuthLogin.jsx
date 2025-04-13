@@ -1,10 +1,13 @@
 import React from 'react';
 import './AuthLogin.css';
+import { useNavigate } from 'react-router-dom';
 
 const AuthOptions = () => {
+  const navigate = useNavigate();
   const handleGoogleLogin = () => {
     // Placeholder for actual Google login logic
     console.log("Logging in with Google...");
+    navigate("/roles");
   };
 
   const handleFacebookLogin = () => {
