@@ -1,0 +1,127 @@
+.freelancer-home{
+    font-family: Georgia, serif;
+    padding: 2rem;
+    margin: 0 auto;
+}
+
+.welcome{
+    background-color: white;
+    padding: 2rem;
+    border-radius: 12px;
+    text-align: left;
+    color: #1e2a38;
+    margin-bottom: 2rem;
+}
+
+.heading{
+    font-size: 80px;
+
+}
+
+.welcome-freelancer{
+font-size: 1.5rem;
+color: #333;
+text-align: left;
+}
+
+.NavBar {
+
+    display: flex;
+    align-items: center;
+    background-color: #1e293b;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    align-items: center;
+    justify-content: flex-end;
+
+  }
+  .NavBar ul {
+    list-style: none;
+    display: flex;
+    gap: 1.5rem;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .NavBar li {
+    color: white;
+    cursor: pointer;
+    transition: color 0.3s ease;
+  }
+  
+  .NavBar li:hover {
+    color: #255795;
+  }
+
+  .how{
+    color: #1e293b;
+    text-align: left;
+    margin-top: 2rem;
+  }
+
+.worklist{
+    margin: 1rem 0 2rem 0;
+    list-style-position: inside;
+}
+
+
+.btn{
+  padding: 0.4rem 0.8rem;
+  font-size: 1rem;
+  border: 1px solid #1e293b;
+  border-radius: 4px;
+  background-color: white;
+  color: #1e293b;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.button1, .button2, .button3, .button4, .btn1, .btn2{
+  display: block;
+  width: 200px;              /* block-like width */
+  padding: 1rem;
+  gap: 1rem;
+  margin: 2rem 0;
+  background-color: white;    /* white background */
+  color: #1e293b;               
+  border: 2px solid #1e293b;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.button1, .button2, .button3, .button4, .btn1, .btn2 :hover{
+  color: white;
+  background-color: #1e2a38;
+}
+
+.profile, .questions, .offers, .services, .guides{
+  margin: 2rem;
+  padding: 1rem;
+  background-color: white;
+  border-left: 5px solid #2a3d59;
+  border-radius: 5px;
+}
+
+.profile ul, .services ul{
+  list-style: disc inside;
+  padding-left: 1rem;
+}
+
+.servheading, .Qs{
+  color:#1e293b;
+  margin-bottom: 1rem;
+}
+
+.footer{
+    height: 100px;
+    background-color: #1e293b;
+    color: white;
+    width: 100%; 
+    padding: 1rem 2rem;
+    display: flex;
+    text-align:  center;
+  }
