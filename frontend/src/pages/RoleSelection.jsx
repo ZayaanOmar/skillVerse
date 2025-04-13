@@ -14,7 +14,7 @@ const RoleSelection = () => {
                         <h2>Client</h2>
                         <p>A client is someone looking to hire a person</p>
                     </section>
-                    <section className='freelancer-description'>
+                    <section className='freelancer-description' onClick={() => navigate("/freelancer/home")}>
                         <h2>Freelancer</h2>
                         <p>A freelancer is a person looking to be of service</p>
                     </section>

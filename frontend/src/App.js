@@ -11,7 +11,7 @@ function App() {
       <Routes>
         <Route path="/" element={<h1 className="p-4 text-xl">Hello from Landing Page</h1>} />
         <Route path="/client/home" element={<ClientHome />} />
-        <Route path="signup/roles" element={<RoleSelection/>} />
+        <Route path="/roles" element={<RoleSelection/>} />
       </Routes>
     </Router>
   );
