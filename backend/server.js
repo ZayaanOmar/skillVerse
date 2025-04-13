@@ -5,18 +5,21 @@ const passportSetup = require("./configs/passport-setup");
 const { connectDB } = require("./configs/db-conn");
 const User = require("./models/User.js");
 const userRoutes = require("./routes/user-routes");
-const cookieSession = require('cookie-session');
-const keys = require('./configs/keys.js');
+const session = require('express-session');
 const passport = require('passport');
 
 const app = express();
 app.use(express.json()); //middleware that allows us to accept JSON data in req.body
 
 // use cookies
-app.use(cookieSession({
-  //lifetime of the cookie is one day and ecrypt key
-  maxAge: 24*60*60*1000,
-  keys: [keys.session.cookieKey]
+ //lifetime of the cookie is one day and encrypt key
+app.use(
+  session({
+    secret : process.env.cookieKey,
+    resave : false,
+    cookie : {
+      maxAge : 24*60*60*100
+    },
 
 }));
 
