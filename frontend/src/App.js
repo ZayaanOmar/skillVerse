@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import AuthLogin from './pages/AuthLogin';
 
 function App() {
 
@@ -13,13 +14,18 @@ function App() {
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
 
-  return (
+  /*return (
     <div>
       <header>
         <h1>Frontend + Backend Test</h1>
         <p>{"Loading..."}</p>
         <p>{message}</p>
       </header>
+    </div>
+  );*/
+  return (
+    <div className="App">
+      <AuthLogin />
     </div>
   );
 }
