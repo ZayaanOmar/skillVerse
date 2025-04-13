@@ -2,22 +2,18 @@ const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth20");
 const User = require("../models/User");
 
- //get user id from mongoDB not GoogleID to send it on next stage (cookie)
-passport.serializeUser((user, done) =>{
+//get user id from mongoDB not GoogleID to send it on next stage (cookie)
+passport.serializeUser((user, done) => {
   done(null, user.id);
 });
 
 // decode the cookie sent back to us to retrieve the user id to check whose id it is
-passport.deserializeUser((id, done) =>{
-  User.findById(id).then((user) =>{
+passport.deserializeUser((id, done) => {
+  User.findById(id).then((user) => {
     //pass user to next stage
     done(null, user);
-
-  })
-
- 
-})
-
+  });
+});
 
 passport.use(
   new GoogleStrategy(
@@ -39,7 +35,7 @@ passport.use(
 
       if (existingUser) {
         //user already exists, must be logged in
-        done(null, existingUser)
+        done(null, existingUser);
 
         console.log(`Logging in User ${profile.id}`);
       } else {

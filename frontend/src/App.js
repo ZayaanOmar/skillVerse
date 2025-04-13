@@ -1,13 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
 function App() {
-
   //testing the /api route from backend
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
 
   useEffect(() => {
-
-    fetch('/api')
+    fetch("/api")
       .then((res) => res.json())
       .then((data) => setMessage(data.message))
       .catch((error) => console.error("Error fetching data:", error));
