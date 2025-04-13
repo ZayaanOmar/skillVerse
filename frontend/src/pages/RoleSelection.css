@@ -9,6 +9,10 @@
 .role-body{
     text-align: center;
     margin: 0 auto;  
+    padding: 50px;
+    background: linear-gradient(45deg, white, rgb(32, 32, 152));
+    border-radius: 10px;
+    box-shadow: 4px 4px 10px 0px rgba(0,0,0,0.25);
 }
 
 .role-body h1 {
@@ -32,6 +36,7 @@
 .client-description:hover, .freelancer-description:hover{
     cursor: pointer;
     transform: scale(1.03);
+    border: 2px solid black;
 }
 
   

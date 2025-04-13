@@ -7,7 +7,8 @@ const RoleSelection = () => {
     return (
         <main className='role-selection'>
             <section className='role-body'>
-                <h1>Are you a ... ?</h1>
+                <p>Welcome to <em>SkillVerse</em>! We're excited to have you on board</p>
+                <h1>Quick question, Are you a ... ?</h1>
                 <section className='roles-container'>
                     <section className='client-description' onClick={() => navigate("/client/home")}>
                         <h2>Client</h2>
