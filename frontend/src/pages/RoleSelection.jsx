@@ -12,11 +12,11 @@ const RoleSelection = () => {
                 <section className='roles-container'>
                     <section className='client-description' onClick={() => navigate("/client/home")}>
                         <h2>Client</h2>
-                        <p>A client is someone looking to hire a person</p>
+                        <p>Find your dream freelancer — fast, easy, and Wi-Fi ready</p>
                     </section>
-                    <section className='freelancer-description' onClick={() => navigate("/freelancer/home")}>
+                    <section className='freelancer-description' /* onClick={() => navigate("/freelancer/home")} */>
                         <h2>Freelancer</h2>
-                        <p>A freelancer is a person looking to be of service</p>
+                        <p>Join the marketplace that gets you paid and praised</p>
                     </section>
                 </section>
             </section>
