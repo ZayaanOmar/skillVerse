@@ -29,7 +29,10 @@ router.get(
 
 //callback route for google to redirect to
 router.get("/google/callback", passport.authenticate("google"), (req, res) => {
+  // to access currently logged in user : res.send(req.user)
   res.send("You Reached the Callback URI");
+  // redirect the user to a certain page
+  //res.redirect()
 });
 
 module.exports = router;

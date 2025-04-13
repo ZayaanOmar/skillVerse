@@ -39,3 +39,22 @@ export const addUser =  async (req, res) => {
       res.status(500).json({ success: false, message: "Internal Server Error" });
     }
   };
+
+  //check if user is logged in
+  export const authCheck = (req,res) =>{
+    if(!req.user)
+    {
+      //if user is not logged in
+      res.redirect("/login");
+    }
+    else
+    {
+      // logged in
+      next();
+    }
+  }
+
+  // already logged in user to be directed to homepage
+  export const logIn = async  (req,res) =>{
+      res.send("you are logged in, redirected to home page");
+  };
