@@ -1,6 +1,5 @@
 import React from 'react';
 import './AuthLogin.css';
-import { useNavigate } from 'react-router-dom';
 
 const AuthOptions = () => {
   const handleGoogleLogin = () => {
