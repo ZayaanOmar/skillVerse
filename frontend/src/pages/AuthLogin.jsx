@@ -6,12 +6,7 @@ const AuthOptions = () => {
     // Placeholder for actual Google login logic
     console.log("Logging in with Google...");
     //navigate("/roles");
-    /*
-    const url = NODE_ENV === "production"
-    ? `${FRONTEND_URL}/auth/google`
-    : "http://localhost:5000/auth/google";
-    */
-    window.location.href = "https://yellow-tree-0ef1bb203.6.azurestaticapps.net/auth/google";
+    window.location.href = "/api/auth/google";
   };
 
   const handleFacebookLogin = () => {
