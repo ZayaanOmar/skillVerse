@@ -25,7 +25,7 @@ app.use(
     secret: process.env.cookieKey,
     resave: false,
     cookie: {
-      maxAge: 24 * 60 * 60 * 100,
+      maxAge: 24 * 60 * 60 * 1000,
     },
   })
 );
