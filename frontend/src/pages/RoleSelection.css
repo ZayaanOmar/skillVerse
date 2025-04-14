@@ -1,0 +1,43 @@
+.role-selection{
+    background: linear-gradient(45deg, white, rgb(32, 32, 152));
+    height: 100vh;
+    display: flex;
+    justify-content: center;   /* centers horizontally */
+    align-items: center;
+}
+  
+.role-body{
+    text-align: center;
+    margin: 0 auto;  
+    padding: 50px;
+    background: linear-gradient(45deg, white, rgb(32, 32, 152));
+    border-radius: 10px;
+    box-shadow: 4px 4px 10px 0px rgba(0,0,0,0.25);
+}
+
+.role-body h1 {
+    margin-top: 0; /* Remove top space from h1 */
+}
+  
+  
+.roles-container{
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+  
+.client-description, .freelancer-description{
+    background: white;
+    border-radius: 10px;
+    margin: 40px;
+    padding: 20px;
+    transition: transform 0.3s ease;
+}
+  
+.client-description:hover, .freelancer-description:hover{
+    cursor: pointer;
+    transform: scale(1.03);
+    border: 2px solid black;
+}
+
+  
