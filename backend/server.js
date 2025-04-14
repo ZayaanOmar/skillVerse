@@ -7,8 +7,15 @@ const User = require("./models/User.js");
 const userRoutes = require("./routes/user-routes");
 const session = require("express-session");
 const passport = require("passport");
+const cors = require("cors");
 
 const app = express();
+
+app.use(cors({
+  origin: "http://localhost:3000", // Allow requests from your frontend
+  credentials: true,               // Allow cookies/session info
+}));
+
 app.use(express.json()); //middleware that allows us to accept JSON data in req.body
 
 // use cookies

@@ -39,7 +39,7 @@ const updateUser = async (req, res) => {
 };
 
 //check if user is logged in
-const authCheck = (req, res) => {
+const authCheck = (req, res, next) => {
   if (!req.user) {
     //if user is not logged in
     res.redirect("/login");
