@@ -36,7 +36,8 @@ router.get("/google/callback", passport.authenticate("google"), (req, res) => {
     if (isNewUser) {
       res.redirect("http://localhost:3000/roles"); // Frontend route for setting role
     } else {
-      res.redirect("http://localhost:3000/homepage");
+      const user_role = req.user.role
+      res.redirect(`http://localhost:3000/${user_role}/home`);
     }
   // redirect the user to a certain page
   //res.redirect()
