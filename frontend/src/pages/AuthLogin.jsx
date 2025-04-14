@@ -19,7 +19,7 @@ const AuthOptions = () => {
   return (
     <div className="auth-options-container d-flex flex-column justify-content-center align-items-center">
       <div className="auth-box shadow p-4 rounded text-center">
-        <h2 className="mb-4">Welcome to SkillVerser</h2>
+        <h2 className="mb-4">Welcome to SkillVerse</h2>
         <p className="mb-4">Login or Sign Up using your preferred provider:</p>
 
         <button className="btn btn-outline-danger w-100 mb-3" onClick={handleGoogleLogin}>
