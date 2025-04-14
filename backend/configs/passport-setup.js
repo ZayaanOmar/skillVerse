@@ -19,7 +19,7 @@ const NODE_ENV = process.env.NODE_ENV || "development";
 // Set callback URL based on environment
 const callbackURL =
   NODE_ENV === "production"
-    ? `${FRONTEND_URL}/.auth/login/google/callback`
+    ? `${FRONTEND_URL}/auth/google/callback`
     : "/auth/google/callback";
 
 passport.use(
