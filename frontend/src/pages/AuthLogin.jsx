@@ -7,7 +7,8 @@ const AuthOptions = () => {
   const handleGoogleLogin = () => {
     // Placeholder for actual Google login logic
     console.log("Logging in with Google...");
-    navigate("/roles");
+    //navigate("/roles");
+    window.location.href = "http://localhost:5000/auth/google";
   };
 
   const handleFacebookLogin = () => {
