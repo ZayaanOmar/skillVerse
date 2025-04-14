@@ -6,7 +6,10 @@ const AuthOptions = () => {
     // Placeholder for actual Google login logic
     console.log("Logging in with Google...");
     //navigate("/roles");
-    window.location.href = "http://localhost:5000/auth/google";
+    const url = NODE_ENV === "production"
+    ? `${FRONTEND_URL}/auth/google`
+    : "http://localhost:5000/auth/google";
+    window.location.href = url;
   };
 
   const handleFacebookLogin = () => {
