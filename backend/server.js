@@ -26,7 +26,7 @@ app.use(express.json());
 // Use more secure cookie settings in production
 app.use(
   session({
-    secret: process.env.cookieKey,
+    secret: process.env.COOKIE_KEY,
     resave: false,
     cookie: {
       maxAge: 24 * 60 * 60 * 100,
