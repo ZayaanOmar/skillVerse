@@ -6,21 +6,20 @@ const roleChangeSchema = new mongoose.Schema(
       //google ID returned from Google during OAuth authentication
       type: String,
       required: true,
-      unique: true,
-    },
-    username: {
-      //will be created on first login (sign up)
-      type: String,
-      required: true,
-      unique: false,
+      //no unique here since a user can make multiple requests in their "lifetime"
     },
     currentRole: {
       //chosen on first login (signup)
       type: String,
-      //enum: ["client", "freelancer", "admin"], //value must be one of these options
     },
     requestedRole: {
-        type: String
+      type: String,
+      enum: ["client", "freelancer", "admin"], //value must be one of these options
+    },
+    status: {
+      type: String,
+      enum: ["pending", "approved", "rejected"], default: "pending"
+      //should be in ["pending", "approved", "rejected"]
     }
   },
   {
