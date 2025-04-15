@@ -165,6 +165,7 @@ jobs:
           GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
           COOKIE_KEY: ${{ secrets.COOKIE_KEY }}
           FRONTEND_URL: ${{ secrets.FRONTEND_URL }}
+          NODE_ENV: production
 
       # Install and build frontend
       - name: Install frontend dependencies
@@ -178,7 +179,8 @@ jobs:
           npm run build
         env:
           CI: false
-          REACT_APP_API_URL: ${{ secrets.FRONTEND_URL }}
+          NODE_ENV: production
+          REACT_APP_API_URL: /api
 
       # Deploy to Azure Static Web Apps
       - name: Build And Deploy

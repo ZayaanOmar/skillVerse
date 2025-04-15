@@ -29,16 +29,17 @@ router.get(
 
 //callback route for google to redirect to
 router.get("/google/callback", passport.authenticate("google"), (req, res) => {
-  // to access currently logged in user : res.send(req.user)
-  //res.send("You Reached the Callback URI");
-    const isNewUser = req.user?.role === undefined; // Assuming role is not yet set for new users
+  //Get frontend url from env variables
+  const FRONTEND_URL = process.env.FRONTEND_URL || "http://localhost:3000";
 
-    if (isNewUser) {
-      res.redirect("http://localhost:3000/roles"); // Frontend route for setting role
-    } else {
-      const user_role = req.user.role
-      res.redirect(`http://localhost:3000/${user_role}/home`);
-    }
+  const isNewUser = req.user?.role === undefined; // Assuming role is not yet set for new users
+
+  if (isNewUser) {
+    res.redirect(`${FRONTEND_URL}/roles`); // Frontend route for setting role
+  } else {
+    const user_role = req.user.role;
+    res.redirect(`${FRONTEND_URL}/${user_role}/home`);
+  }
   // redirect the user to a certain page
   //res.redirect()
 });

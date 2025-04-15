@@ -17,10 +17,7 @@ const FRONTEND_URL = process.env.FRONTEND_URL || "http://localhost:3000";
 const NODE_ENV = process.env.NODE_ENV || "development";
 
 // Set callback URL based on environment
-const callbackURL =
-  NODE_ENV === "production"
-    ? `${FRONTEND_URL}/auth/google/callback`
-    : "/auth/google/callback";
+const callbackURL = "/auth/google/callback";
 
 passport.use(
   new GoogleStrategy(
