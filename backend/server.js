@@ -11,10 +11,12 @@ const cors = require("cors");
 
 const app = express();
 
-app.use(cors({
-  origin: "http://localhost:3000", // Allow requests from your frontend
-  credentials: true,               // Allow cookies/session info
-}));
+app.use(
+  cors({
+    origin: "http://localhost:3000", // Allow requests from your frontend
+    credentials: true, // Allow cookies/session info
+  })
+);
 
 app.use(express.json()); //middleware that allows us to accept JSON data in req.body
 
@@ -22,7 +24,7 @@ app.use(express.json()); //middleware that allows us to accept JSON data in req.
 //lifetime of the cookie is one day and encrypt key
 app.use(
   session({
-    secret: process.env.cookieKey,
+    secret: process.env.COOKIE_KEY,
     resave: false,
     cookie: {
       maxAge: 24 * 60 * 60 * 1000,
