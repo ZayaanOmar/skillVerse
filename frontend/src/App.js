@@ -9,7 +9,7 @@ import FreelancerHome from "./pages/FreelancerHome";
 function App() {
   return (
     <Router>
-      <Navbar />
+      <Navbar /> 
       <Routes>
         <Route path="/" element={<AuthLogin />} />
         <Route path="/client/home" element={<ClientHome />} />

@@ -1,18 +1,17 @@
-// src/components/Navbar.jsx
-import React from 'react';
 
+import React from 'react';
 const Navbar = () => {
   return (
-    <nav className="bg-white shadow-md px-4 py-3 flex justify-between items-center">
-     
-      <ul className="flex space-x-6 text-gray-700">
-        <li><a href="#home" className="homeNav">Home</a></li>
-        <li><a href="#features" className="featuresNav">Features</a></li>
-        <li><a href="#about" className="aboutNav">About</a></li>
-        <li><a href="#contact" className="contactNav">Contact</a></li>
-        <li><a href="#settings" className="settingsNav">Settings</a></li>
-      </ul>
-    </nav>
+<nav className="bg-slate-800 text-white px-8 py-4 flex justify-end items-center">
+  <ul className="flex gap-6 list-none m-0 p-0">
+    <li><a href="#home" className="font-semibold hover:underline">Home</a></li>
+    <li><a href="#features" className="font-semibold hover:underline">Features</a></li>
+    <li><a href="#about" className="font-semibold hover:underline">About</a></li>
+    <li><a href="#contact" className="font-semibold hover:underline">Contact</a></li>
+    <li><a href="#settings" className="font-semibold hover:underline">Settings</a></li>
+  </ul>
+</nav>
+
   );
 };
 
