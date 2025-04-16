@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import React, { useState } from 'react';
 import './ClientHome.css';
 import Navbar from '../components/Navbar';
 import axios from "axios";
@@ -42,6 +43,42 @@ const ClientHome = () => {
     }
   };
 
+  //Handling role change request by a user
+  {/* const [requestedRole, setRequestedRole] = useState("");
+  const [message, setMessage] = useState("");
+  const [status, setStatus] = useState(null);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const payload = {
+      requestedRole,
+      message,
+    };
+
+    try {
+      const response = await fetch("/users/request-role-change", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+      
+      if (response.ok) {
+        setStatus("success");
+        setRequestedRole("");
+        setMessage("");
+        console.log("response is ok here") //debugging
+      } else {
+        setStatus("error");
+      }
+    } catch (err) {
+      console.error("Submission error:", err);
+      setStatus("error");
+    }
+  }; */}
+
   return (
     <main className="client-home">
       <Navbar />
@@ -57,6 +94,12 @@ const ClientHome = () => {
         </section>
     
         {/* Service buttons*/}
+        {/* the choose service blue section */}
+        <section className='chooseDesc'>
+          <p className="description">CHOOSE A SERVICE</p>
+        </section>
+
+        {/* each button */}
         <section className="section1">
           <button className="buttonSD" onClick={() => handleServiceSelection("Software Development")}>Software Development</button>
           <button className="buttonML" onClick={() => handleServiceSelection("Data Science - Machine Learning")}>Data Science</button>
@@ -69,6 +112,9 @@ const ClientHome = () => {
         {/* What SkillVerse offers */}
         <article>
           <h2>What SkillVerse Offers You</h2>
+        {/* section grid on what skillverse offers */}
+        <article>
+          <h2>What Skill Verse Offers You</h2>
           <section className="offer-grid">
             <section className="offer-item">
               <h3>Dedicated hiring experts</h3>
@@ -88,12 +134,14 @@ const ClientHome = () => {
             </section>
           </section>
         </article>
-
+        </article>
         {/* Footer */}
         <footer className='Ebrahimfooter'>
+        <footer className='footer'>
           <section>
             <p>&copy; 2025 SkillVerse. All rights reserved.</p>
           </section>
+        </footer>
         </footer>
       </section>
     </main>

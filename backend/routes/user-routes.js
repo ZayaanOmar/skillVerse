@@ -41,19 +41,32 @@ router.post("/set-role", authCheck, async (req, res) => {
 
 //dealing with role change request
 router.post("/request-role-change", async (req, res) => {
-  const { googleID, requestedRole } = req.body;
+  const { requestedRole, message } = req.body;
+  const user = req.user;
+  const googleID = user.googleID; // pulled from authenticated session
+
+  console.log("Incoming request to /request-role-change");
+  console.log("Request body:", req.body);
 
   try {
     const user = await User.findOne({ googleID });
     if (!user) return res.status(404).json({ error: "User not found" });
 
+    if (user.role == requestedRole) return res.status(400).json({error: `You are already a ${user.role}`});
+
     const existingRequest = await ChangeRequest.findOne({ googleID, status: "pending" });
-    if (existingRequest) return res.status(400).json({ error: "Pending request already exists" });
+    if (existingRequest){
+      console.log("Pending request already exists");
+      res.status(400).json({ error: "Pending request already exists" });
+      return;
+    }
 
     const newRequest = new ChangeRequest({
       googleID,
       currentRole: user.role,
-      requestedRole
+      requestedRole,
+      message,
+      status: "pending"
     });
 
     await newRequest.save();
