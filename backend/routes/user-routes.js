@@ -41,7 +41,12 @@ router.post("/set-role", authCheck, async (req, res) => {
 
 //dealing with role change request
 router.post("/request-role-change", async (req, res) => {
-  const { googleID, requestedRole } = req.body;
+  const { requestedRole, message } = req.body;
+  const user = req.user;
+  const googleID = user.googleID; // pulled from authenticated session
+
+  console.log("Incoming request to /request-role-change");
+  console.log("Request body:", req.body);
 
   try {
     const user = await User.findOne({ googleID });
@@ -53,7 +58,9 @@ router.post("/request-role-change", async (req, res) => {
     const newRequest = new ChangeRequest({
       googleID,
       currentRole: user.role,
-      requestedRole
+      requestedRole,
+      message,
+      status: "pending"
     });
 
     await newRequest.save();

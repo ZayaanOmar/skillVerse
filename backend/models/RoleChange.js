@@ -16,6 +16,9 @@ const roleChangeSchema = new mongoose.Schema(
       type: String,
       enum: ["client", "freelancer", "admin"], //value must be one of these options
     },
+    message: {
+      type: String,
+    },
     status: {
       type: String,
       enum: ["pending", "approved", "rejected"], default: "pending"
