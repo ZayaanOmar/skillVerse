@@ -5,7 +5,7 @@ import ClientHome from "./pages/ClientHome";
 import RoleSelection from "./pages/RoleSelection";
 import JobRequests from './pages/JobRequests';
 import FreelancerHome from "./pages/FreelancerHome";
-
+import 'bootstrap/dist/css/bootstrap.min.css';
 function App() {
   const user = JSON.parse(localStorage.getItem("user"));
 
