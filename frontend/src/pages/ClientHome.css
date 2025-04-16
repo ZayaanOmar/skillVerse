@@ -39,7 +39,7 @@
     position: relative;
   }
 /* Styling for buttons */
-.button1, .button2, .button3, .button4, .button5 {
+.buttonSD, .buttonML, .buttonCL, .buttonGD, .buttonDM {
     
     border: none;
     border-radius: 12px;
@@ -131,7 +131,7 @@ nav {
   nav a:hover {
     text-decoration: underline;
   }
-.footer{
+.Ebrahimfooter{
     height: 300px;
     background-color: #1e293b;
     color: white;

@@ -1,61 +1,82 @@
 import React from 'react';
 import './ClientHome.css';
+import Navbar from '../components/Navbar';
+import axios from "axios"
+import { useState } from "react";
+const ClientHome = ({ user }) => {
+  const [message, setMessage] = useState("");
+//how handleServiceSelection of the buttons is being sent (created)
+const handleServiceSelection = async (category) => {
+  if (!user || !user._id) {//checking if user is properly defined and set
+    console.log("User is not defined or user ID is missing");
+    return;
+  }
 
-const ClientHome = () => {
+  try {
+    console.log("Sending request with:", {
+      clientId: user._id,
+      category,
+      description: `Request for ${category}`,
+    });
+
+    const response = await axios.post(
+      "http://localhost:5000/api/service-requests/create",
+      {
+        clientId: user._id,
+        category,
+        description: `Request for ${category}`,
+      },
+      { withCredentials: true }
+    );
+    console.log("Service request response:", response.data);
+  } catch (error) {
+    console.error("Error creating request:", error);
+  }
+};
+
+
   return (
-    
     <main className="client-home">
-      <nav className="bg-slate-800 text-white px-8 py-4 flex justify-end items-center">
-    <ul className="flex gap-6 list-none m-0 p-0">
-      <li><a href="#home" className="font-semibold hover:underline">Home</a></li>
-      <li><a href="#features" className="font-semibold hover:underline">Features</a></li>
-      <li><a href="#about" className="font-semibold hover:underline">About</a></li>
-      <li><a href="#contact" className="font-semibold hover:underline">Contact</a></li>
-      <li><a href="#settings" className="font-semibold hover:underline">Settings</a></li>
-      </ul>
-    </nav>
+
+      <Navbar />
       <section>
         {/* Welcome Banner */}
         <header className="welcome-banner">
           <h1 className="heading1">SKILLVERSE</h1>
         </header>
 
-        {/*the choose service blue section */}
+        {/* Choose service section */}
         <section className='chooseDesc'>
           <p className="description">CHOOSE A SERVICE</p>
         </section>
     
-        {/*each button */}
+        {/* Service buttons*/}
+        {/*selecting any button sends a request to freelancer side*/}
         <section className="section1">
-          <button className="button1">Software Development</button>
-          <button className="button2">Data Science - Machine Learning</button>
-          <button className="button3">Creating Logos</button>
-          <button className="button4">Graphic Designer</button>
-          <button className="button5">Digital Marketing</button>
+          <button className="buttonSD" onClick={() => handleServiceSelection("Software Development")}>Software Development</button>
+          <button className="buttonML" onClick={() => handleServiceSelection("Data Science - Machine Learning")}>Data Science</button>
+          <button className="buttonCL" onClick={() => handleServiceSelection("Creating Logos")}>Creating Logos</button>
+          <button className="buttonGD" onClick={() => handleServiceSelection("Graphic Designer")}>Graphic Designer</button>
+          <button className="buttonDM" onClick={() => handleServiceSelection("Digital Marketing")}>Digital Marketing</button>
+          {message && <p>{message}</p>}
         </section>
 
-        {/*the section grid onn whar skillverse offers */}
+        {/* What SkillVerse offers */}
         <article>
-          <h2>
-            What Skill Verse Offers You
-          </h2>
-
+          <h2>What SkillVerse Offers You</h2>
           <section className="offer-grid">
             <section className="offer-item">
               <h3>Dedicated hiring experts</h3>
               <p>Count on an account manager to find you the right talent and see to your project’s every need.</p>
             </section>
-
             <section className="offer-item">
               <h3>Satisfaction guarantee</h3>
               <p>We guarantee satisfaction with every project, ensuring you're happy with the results.</p>
             </section>
-
             <section className="offer-item">
               <h3>Flexible payment models</h3>
               <p>Choose from a variety of flexible payment models to fit your needs and budget.</p>
             </section>
-
             <section className="offer-item">
               <h3>Advanced management tools</h3>
               <p>Access powerful tools to manage your projects and teams with ease.</p>
@@ -63,11 +84,10 @@ const ClientHome = () => {
           </section>
         </article>
 
-        {/*this is for the footer */}
-        <footer className='footer'>
-          
+        {/* Footer */}
+        <footer className='Ebrahimfooter'>
           <section>
-          <p>&copy; 2025 SkillVerse. All rights reserved.</p>
+            <p>&copy; 2025 SkillVerse. All rights reserved.</p>
           </section>
         </footer>
       </section>
