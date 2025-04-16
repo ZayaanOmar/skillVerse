@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+//import React, { useState } from 'react';
 import './ClientHome.css';
 
 const ClientHome = () => {
-  const [requestedRole, setRequestedRole] = useState("");
+  {/* const [requestedRole, setRequestedRole] = useState("");
   const [message, setMessage] = useState("");
   const [status, setStatus] = useState(null);
 
@@ -35,7 +35,7 @@ const ClientHome = () => {
       console.error("Submission error:", err);
       setStatus("error");
     }
-  };
+  }; */}
 
   return (
     <main className="client-home">
@@ -81,38 +81,6 @@ const ClientHome = () => {
             </section>
           </section>
         </article>
-
-        {/* Role Change Form */}
-        <form className="RoleForm" onSubmit={handleSubmit}>
-          <h2>Request Role Change</h2>
-
-          <label>
-            Desired Role:
-            <select
-              value={requestedRole}
-              onChange={(e) => setRequestedRole(e.target.value)}
-              required
-            >
-              <option value="">Select a role</option>
-              <option value="freelancer">Freelancer</option>
-              <option value="client">Client</option>
-            </select>
-          </label>
-
-          <label>
-            Message:
-            <textarea
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-              rows={3}
-              placeholder="Leave a message for the admin..."
-            />
-          </label>
-
-          <button type="submit">Submit Request</button>
-          {status === "success" && <p style={{ color: "green" }}>Request submitted!</p>}
-          {status === "error" && <p style={{ color: "red" }}>Something went wrong.</p>}
-        </form>
 
         {/* Footer */}
         <footer className='footer'>
