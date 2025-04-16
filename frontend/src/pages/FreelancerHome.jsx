@@ -1,15 +1,22 @@
-import React from 'react';
-import './FreelancerHome.css'; //importing css style file
+//import React, { useState } from 'react';
+import './FreelancerHome.css';
 
-function FreelancerHome(){
-    
-    return (
-      <main className = "freelancer-home">
-        <header className = "welcome" >
-        <h1 className= "heading">SkillVerser </h1>
-        <h2 className= "welcome-freelancer">Welcome to your profile</h2>
-        </header>
+import { useNavigate } from 'react-router-dom';
 
+function FreelancerHome() {
+  const navigate = useNavigate();
+
+  return (
+    <main className="freelancer-home">
+      <header className="welcome">
+        <h1 className="heading">SkillVerser</h1>
+        <h2 className="welcome-freelancer">Welcome to your profile</h2>
+      </header>
+
+      <section>
+        <button onClick={() => navigate("/freelancer/jobs")}>
+          Find Jobs
+        </button>
         <nav className="NavBar">
             <ul>
             <li><a href="home"> Home</a></li>
@@ -19,15 +26,14 @@ function FreelancerHome(){
                 <li><a href="settings">Settings</a></li>
             </ul>
         </nav>
-
-        <h1 className= "how">How it works</h1>
+      </section>
+      <h1 className= "how">How it works</h1>
         <ol className= "worklist">
         <li>Create an assignment</li>
         <li> Deliver great work</li>
         <li> Get paid</li>
         </ol>
-
-        <section className="offers">
+      <section className="offers">
             <h2>What SkillVerse offers you</h2>
             <p>One platform to find new clients, efficiently manage your projects, invoicing and payments  </p>
         </section>
@@ -56,8 +62,8 @@ function FreelancerHome(){
         </button>
         <button className = "button3">
             How do payments work?
-        </button>
-        <button className="button4">
+            </button>
+      <button className="button4">
             Can I set my own rates?
         </button>
         </section>
@@ -85,8 +91,9 @@ function FreelancerHome(){
         <footer className="footer">
         <p>© 2025 SkillVerse. All rights reserved. </p>
         </footer>
-      </main>  
-    )
+    </main>
+  );
 }
+
 
 export default FreelancerHome;

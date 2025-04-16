@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import AuthLogin from "./pages/AuthLogin";
 import ClientHome from "./pages/ClientHome";
 import RoleSelection from "./pages/RoleSelection";
-
+import JobRequests from './pages/JobRequests';
 import FreelancerHome from "./pages/FreelancerHome";
 
 function App() {
@@ -18,6 +18,7 @@ function App() {
         <Route path="/client/home" element={<ClientHome user={user} />} />
         <Route path="/roles" element={<RoleSelection />} />
         <Route path="/freelancer/home" element={<FreelancerHome user={user} />} />
+        <Route path="/freelancer/jobs" element={<JobRequests />} /> 
       </Routes>
     </Router>
   );

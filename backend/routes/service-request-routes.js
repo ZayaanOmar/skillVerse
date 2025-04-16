@@ -96,6 +96,20 @@ router.patch('/accept/:requestId', async (req, res) => {
     res.status(500).json({ message: 'Error accepting service request' });
   }
 });
+// Get all unassigned, pending service requests (for any freelancer to view)
+router.get('/all', async (req, res) => {
+    try {
+      const requests = await ServiceRequest.find({ freelancerId: null, status: 'pending' })
+        .populate('clientId', 'username')
+        .exec();
+  
+      res.status(200).json(requests);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Error fetching available service requests' });
+    }
+  });
+  
 
 // Mark the service request as completed (for the freelancer side)
 router.patch('/complete/:requestId', async (req, res) => {

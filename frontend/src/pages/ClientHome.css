@@ -54,7 +54,7 @@
     display: flex;
     align-items: center; /* Vertically centers text */
     justify-content: center; /* Horizontally centers text */
-    transition: all 0.3s ease;
+    transition: all 0.3s ease;/*this will then be used with the code below to add effects to btns*/
   }
 .buttonSD:hover,.buttonML:hover,.buttonCL:hover,.buttonGD:hover,.buttonDM:hover {
   background-color: #1a449c; /* Slightly lighter blue */
