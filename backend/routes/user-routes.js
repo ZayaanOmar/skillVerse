@@ -16,6 +16,7 @@ router.post("/", addUser);
 router.put("/:id", updateUser);
 
 const User = require("../models/User");
+const ChangeRequest = require("../models/RoleChange");
 
 // Set user role after signup
 router.post("/set-role", authCheck, async (req, res) => {
@@ -35,6 +36,30 @@ router.post("/set-role", authCheck, async (req, res) => {
   } catch (err) {
     console.error("Error setting role:", err);
     res.status(500).json({ message: "Server error" });
+  }
+});
+
+//dealing with role change request
+router.post("/request-role-change", async (req, res) => {
+  const { googleID, requestedRole } = req.body;
+
+  try {
+    const user = await User.findOne({ googleID });
+    if (!user) return res.status(404).json({ error: "User not found" });
+
+    const existingRequest = await ChangeRequest.findOne({ googleID, status: "pending" });
+    if (existingRequest) return res.status(400).json({ error: "Pending request already exists" });
+
+    const newRequest = new ChangeRequest({
+      googleID,
+      currentRole: user.role,
+      requestedRole
+    });
+
+    await newRequest.save();
+    res.status(201).json({ message: "Request submitted", request: newRequest });
+  } catch (err) {
+    res.status(500).json({ error: "Server error" });
   }
 });
 
