@@ -1,43 +1,49 @@
-import React from 'react';
+import React, { useEffect, useState } from "react";
 import './ClientHome.css';
 import Navbar from '../components/Navbar';
-import axios from "axios"
-import { useState } from "react";
-const ClientHome = ({ user }) => {
+import axios from "axios";
+
+const ClientHome = () => {
+  const [user, setUser] = useState(null);
   const [message, setMessage] = useState("");
-//how handleServiceSelection of the buttons is being sent (created)
-const handleServiceSelection = async (category) => {
-  if (!user || !user._id) {//checking if user is properly defined and set
-    console.log("User is not defined or user ID is missing");
-    return;
-  }
 
-  try {
-    console.log("Sending request with:", {
-      clientId: user._id,
-      category,
-      description: `Request for ${category}`,
-    });
+  useEffect(() => {//this is used to retrieve the client details from local storage (from role selections)
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+  }, []);
 
-    const response = await axios.post(
-      "http://localhost:5000/api/service-requests/create",
-      {
+  const handleServiceSelection = async (category) => {
+    if (!user || !user._id) {
+      console.log("User is not defined or user ID is missing");
+      return;
+    }
+
+    try {
+      console.log("Sending request with:", {
         clientId: user._id,
         category,
         description: `Request for ${category}`,
-      },
-      { withCredentials: true }
-    );
-    console.log("Service request response:", response.data);
-  } catch (error) {
-    console.error("Error creating request:", error);
-  }
-};
+      });
 
+      const response = await axios.post(
+        "http://localhost:5000/api/service-requests/create",
+        {
+          clientId: user._id,
+          serviceType: category,
+          description: `Request for ${category}`,
+        },
+        { withCredentials: true }
+      );
+      console.log("Service request response:", response.data);
+    } catch (error) {
+      console.error("Error creating request:", error);
+    }
+  };
 
   return (
     <main className="client-home">
-
       <Navbar />
       <section>
         {/* Welcome Banner */}
@@ -51,7 +57,6 @@ const handleServiceSelection = async (category) => {
         </section>
     
         {/* Service buttons*/}
-        {/*selecting any button sends a request to freelancer side*/}
         <section className="section1">
           <button className="buttonSD" onClick={() => handleServiceSelection("Software Development")}>Software Development</button>
           <button className="buttonML" onClick={() => handleServiceSelection("Data Science - Machine Learning")}>Data Science</button>

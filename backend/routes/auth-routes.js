@@ -34,13 +34,21 @@ router.get("/google/callback", passport.authenticate("google"), (req, res) => {
     const isNewUser = req.user?.role === undefined; // Assuming role is not yet set for new users
 
     if (isNewUser) {
-      res.redirect("http://localhost:3000/roles"); // Frontend route for setting role
+      res.redirect(`http://localhost:3000/roles?userId=${req.user._id}`);// Frontend route for setting role
+      //userID needs to be fetched for request purposes
     } else {
       const user_role = req.user.role
       res.redirect(`http://localhost:3000/${user_role}/home`);
     }
   // redirect the user to a certain page
   //res.redirect()
+});
+router.get("/me", (req, res) => {//gets current logged in users info from session for reqs
+  if (req.user) {
+    res.status(200).json(req.user);
+  } else {
+    res.status(401).json({ message: "Not authenticated" });
+  }
 });
 
 module.exports = router;
