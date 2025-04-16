@@ -52,8 +52,14 @@ router.post("/request-role-change", async (req, res) => {
     const user = await User.findOne({ googleID });
     if (!user) return res.status(404).json({ error: "User not found" });
 
+    if (user.role == requestedRole) return res.status(400).json({error: `You are already a ${user.role}`});
+
     const existingRequest = await ChangeRequest.findOne({ googleID, status: "pending" });
-    if (existingRequest) return res.status(400).json({ error: "Pending request already exists" });
+    if (existingRequest){
+      console.log("Pending request already exists");
+      res.status(400).json({ error: "Pending request already exists" });
+      return;
+    }
 
     const newRequest = new ChangeRequest({
       googleID,
