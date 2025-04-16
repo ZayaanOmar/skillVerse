@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
-import React, { useState } from 'react';
 import './ClientHome.css';
 import Navbar from '../components/Navbar';
 import axios from "axios";
 
 const ClientHome = () => {
   const [user, setUser] = useState(null);
-  const [message, setMessage] = useState("");
+  const [message, /*setMessage*/] = useState("");
 
   useEffect(() => {//this is used to retrieve the client details from local storage (from role selections)
     const storedUser = localStorage.getItem("user");
@@ -44,7 +43,8 @@ const ClientHome = () => {
   };
 
   //Handling role change request by a user
-  {/* const [requestedRole, setRequestedRole] = useState("");
+
+  /* const [requestedRole, setRequestedRole] = useState("");
   const [message, setMessage] = useState("");
   const [status, setStatus] = useState(null);
 
@@ -77,7 +77,7 @@ const ClientHome = () => {
       console.error("Submission error:", err);
       setStatus("error");
     }
-  }; */}
+  }; */
 
   return (
     <main className="client-home">
