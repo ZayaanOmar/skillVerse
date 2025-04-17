@@ -76,4 +76,20 @@ router.post("/request-role-change", async (req, res) => {
   }
 });
 
+//fetches all pending requests to post on TicketSupport page
+router.get("/alltickets", async (req, res) => {
+    try {
+      const requests = await ChangeRequest.find({status: 'pending' })
+        //.populate('googleID', 'username');
+        //.exec();
+        console.log("Fetched requests:", requests); // debug point
+
+      res.status(200).json(requests);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Error fetching available service requests' });
+    }
+  });
+  
+
 module.exports = router;

@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import Dropdown from 'react-bootstrap/Dropdown';
 import { Modal, Button, Form } from 'react-bootstrap';
+import { useNavigate } from "react-router-dom";
 const Navbar = () => {
 
   const [showModal, setShowModal] = useState(false);
   //const [reason, setReason] = useState("");
-
+  const navigate = useNavigate();
   //Handling role change request by a user
   const [requestedRole, setRequestedRole] = useState("");
   const [message, setMessage] = useState("");
@@ -39,6 +40,7 @@ const Navbar = () => {
       
       if (response.ok) {
         setStatus("success");
+        console.log(status); //just for debugging
         setRequestedRole("");
         setMessage("");
         console.log("response is ok here") //debugging
@@ -51,6 +53,7 @@ const Navbar = () => {
     }
 
     handleCloseModal(); // Close the modal after submission
+    navigate("/admin/support");
   };
   return (
     <nav className="bg-slate-800 text-white px-8 py-4 flex justify-end items-center">
