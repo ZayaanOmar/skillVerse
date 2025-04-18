@@ -62,7 +62,7 @@ router.post("/request-role-change", async (req, res) => {
     }
 
     const newRequest = new ChangeRequest({
-      googleID,
+      user: user._id, //taken from logged-in user
       currentRole: user.role,
       requestedRole,
       message,
@@ -80,8 +80,8 @@ router.post("/request-role-change", async (req, res) => {
 router.get("/alltickets", async (req, res) => {
     try {
       const requests = await ChangeRequest.find({status: 'pending' })
-        //.populate('googleID', 'username');
-        //.exec();
+        .populate('user', 'username')
+        .exec();
         console.log("Fetched requests:", requests); // debug point
 
       res.status(200).json(requests);

@@ -2,11 +2,10 @@ const mongoose = require("mongoose");
 
 const roleChangeSchema = new mongoose.Schema(
   {
-    googleID: {
-      //google ID returned from Google during OAuth authentication
-      type: String,
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
       required: true,
-      //no unique here since a user can make multiple requests in their "lifetime"
     },
     currentRole: {
       //chosen on first login (signup)

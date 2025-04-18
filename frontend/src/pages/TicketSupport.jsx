@@ -36,7 +36,7 @@ function TicketSupport() {
 
   return (
     <main>
-      <h1>Logged Tickets</h1>
+      <h1>Logged Role Change Tickets</h1>
       {error && <p>{error}</p>}
       {tickets.length === 0 ? (
         <p>No available tickets at the moment.</p>
@@ -44,7 +44,7 @@ function TicketSupport() {
         <ul>
           {tickets.map((ticket) => (
             <li key={ticket._id}>
-              <strong>User Name:</strong> {ticket.googleId?.username || "N/A"} <br />
+              <strong>User Name:</strong> {ticket.user?.username || "N/A"} <br />
               <strong>Reason:</strong> {ticket.message}
             </li>
           ))}
