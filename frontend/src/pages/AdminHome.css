@@ -2,3 +2,24 @@
     background-color: #b912be;
     padding: 2rem;
   }
+
+.banner {
+  background-color: #AFEEEE;
+  padding: 1.5rem;
+  text-align: start;
+  border-radius: 12px;
+  margin-bottom: 10px;
+}
+
+.banner-title {
+  font-size: 70px;
+  font-weight: 800;
+}
+
+.card {
+  align-items: start;
+}
+
+.bi.bi-people, .bi.bi-input-cursor-text, .bi.bi-person-workspace {
+  padding-right: 10px;
+}
