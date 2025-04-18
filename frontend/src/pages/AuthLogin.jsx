@@ -1,10 +1,11 @@
 import React from 'react';
 import './AuthLogin.css';
-import { useNavigate } from 'react-router-dom';
+//import { useNavigate } from 'react-router-dom';
 import loginImage from "./images/Login-image.png"; // Adjust the path as necessary
+//import { useNavigate } from 'react-router-dom';
 
 const AuthOptions = () => {
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
   const handleGoogleLogin = () => {
     console.log("Logging in with Google...");
     window.location.href = "http://localhost:5000/auth/google";

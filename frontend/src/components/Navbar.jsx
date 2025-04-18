@@ -1,9 +1,16 @@
 import React, { useState } from "react";
 import Dropdown from 'react-bootstrap/Dropdown';
 import { Modal, Button, Form } from 'react-bootstrap';
+import { useNavigate } from "react-router-dom";
 const Navbar = () => {
+
   const [showModal, setShowModal] = useState(false);
-  const [reason, setReason] = useState("");
+  //const [reason, setReason] = useState("");
+  const navigate = useNavigate();
+  //Handling role change request by a user
+  const [requestedRole, setRequestedRole] = useState("");
+  const [message, setMessage] = useState("");
+  const [status, setStatus] = useState(null);
 
   // Function to handle opening the modal
   const handleShowModal = () => setShowModal(true);
@@ -12,10 +19,41 @@ const Navbar = () => {
   const handleCloseModal = () => setShowModal(false);
 
   // Function to handle form submission (this is just an example for now)
-  const handleSubmitReason = () => {
-    console.log("Reason for changing roles:", reason);
+  const handleSubmitReason = async (e) => {
+    console.log("Reason for changing roles:", message);
     // Add logic to handle the reason submission (e.g., API call)
+    e.preventDefault();
+
+    const payload = {
+      requestedRole,
+      message,
+    };
+
+    try {
+      const response = await fetch("/users/request-role-change", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+      
+      if (response.ok) {
+        setStatus("success");
+        console.log(status); //just for debugging
+        setRequestedRole("");
+        setMessage("");
+        console.log("response is ok here") //debugging
+      } else {
+        setStatus("error");
+      }
+    } catch (err) {
+      console.error("Submission error:", err);
+      setStatus("error");
+    }
+
     handleCloseModal(); // Close the modal after submission
+    navigate("/admin/support");
   };
   return (
     <nav className="bg-slate-800 text-white px-8 py-4 flex justify-end items-center">
@@ -48,8 +86,8 @@ const Navbar = () => {
               <Form.Control
                 as="textarea"
                 rows={3}
-                value={reason}
-                onChange={(e) => setReason(e.target.value)}
+                value={message}
+                onChange={(e) => {setMessage(e.target.value); setRequestedRole("freelancer")}}
                 placeholder="Enter your reason here..."
               />
             </Form.Group>
