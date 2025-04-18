@@ -1,7 +1,14 @@
 import React from "react";
 import "./AdminHome.css";
+import { useNavigate } from "react-router-dom";
 
 const AdminHome = () => {
+  const navigate = useNavigate();
+
+  const handleTicketSupport = () => {
+    navigate("/admin/support");
+  };
+
   return (
     <>
       <section className="container-fluid">
@@ -22,7 +29,10 @@ const AdminHome = () => {
                   <p className="card-text">
                     View and manage user support requests
                   </p>
-                  <button className="btn btn-outline-primary">
+                  <button
+                    className="btn btn-outline-primary"
+                    onClick={handleTicketSupport}
+                  >
                     Support Tickets
                   </button>
                 </section>

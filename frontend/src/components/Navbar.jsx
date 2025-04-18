@@ -1,12 +1,10 @@
 import React, { useState } from "react";
-import Dropdown from 'react-bootstrap/Dropdown';
-import { Modal, Button, Form } from 'react-bootstrap';
-import { useNavigate } from "react-router-dom";
+import Dropdown from "react-bootstrap/Dropdown";
+import { Modal, Button, Form } from "react-bootstrap";
 const Navbar = () => {
-
   const [showModal, setShowModal] = useState(false);
   //const [reason, setReason] = useState("");
-  const navigate = useNavigate();
+
   //Handling role change request by a user
   const [requestedRole, setRequestedRole] = useState("");
   const [message, setMessage] = useState("");
@@ -37,13 +35,13 @@ const Navbar = () => {
         },
         body: JSON.stringify(payload),
       });
-      
+
       if (response.ok) {
         setStatus("success");
         console.log(status); //just for debugging
         setRequestedRole("");
         setMessage("");
-        console.log("response is ok here") //debugging
+        console.log("response is ok here"); //debugging
       } else {
         setStatus("error");
       }
@@ -53,29 +51,36 @@ const Navbar = () => {
     }
 
     handleCloseModal(); // Close the modal after submission
-    navigate("/admin/support");
+    //navigate("/admin/support");
   };
   return (
     <nav className="bg-slate-800 text-white px-8 py-4 flex justify-end items-center">
       <ul className>
         {/*<li><a href="#about" className="font-semibold hover:underline">About</a></li>*/}
-        
+
         {/* Settings Dropdown */}
         <li>
           <Dropdown align="end">
-            <Dropdown.Toggle variant="link" id="settings-dropdown" className="text-white">
-              <i className="bi bi-gear-fill"></i> {/* Example icon, you can replace it */}
+            <Dropdown.Toggle
+              variant="link"
+              id="settings-dropdown"
+              className="text-white"
+            >
+              <i className="bi bi-gear-fill"></i>{" "}
+              {/* Example icon, you can replace it */}
             </Dropdown.Toggle>
 
             <Dropdown.Menu>
-            <Dropdown.Item onClick={handleShowModal}>Change Roles</Dropdown.Item>
+              <Dropdown.Item onClick={handleShowModal}>
+                Change Roles
+              </Dropdown.Item>
               <Dropdown.Item href="#/logout">Logout</Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
         </li>
       </ul>
-            {/* Modal for asking reason for changing roles */}
-            <Modal show={showModal} onHide={handleCloseModal}>
+      {/* Modal for asking reason for changing roles */}
+      <Modal show={showModal} onHide={handleCloseModal}>
         <Modal.Header closeButton>
           <Modal.Title>Change Roles</Modal.Title>
         </Modal.Header>
@@ -87,7 +92,10 @@ const Navbar = () => {
                 as="textarea"
                 rows={3}
                 value={message}
-                onChange={(e) => {setMessage(e.target.value); setRequestedRole("freelancer")}}
+                onChange={(e) => {
+                  setMessage(e.target.value);
+                  setRequestedRole("freelancer");
+                }}
                 placeholder="Enter your reason here..."
               />
             </Form.Group>
