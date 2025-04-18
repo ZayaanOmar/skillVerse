@@ -90,6 +90,39 @@ router.get("/alltickets", async (req, res) => {
       res.status(500).json({ message: 'Error fetching available service requests' });
     }
   });
+
+
+// new endpoint to process decisions, role update when approved
+router.post("/process-request", async (req, res) => {
+  const {ticketId, decision} = req.body;
+  try{
+    const request = await ChangeRequest.findById(ticketId).populate('user');
+    if(!request){
+      return res.status(404).json({error : "Request not found"});
+    }
+
+    if(request.status !== 'pending'){
+      return res.status(400).json({error : "Request already processed"});
+    }
+
+    if(decision === 'approved'){
+      //update the user's role
+      await User.findByIdAndUpdate(request.user._id, {role : request.requestedRole});
+      request.status = 'approved';
+    }
+    else{
+      request.status = 'rejected';
+    }
+
+    request.updatedAt = new Date();
+    await request.save();
+
+    res.status(200).json({message: `Request ${decision}d successfully`,updatedRequest: request});
+  }
+  catch(err){
+    res.status(500).json({ error: "Server error" });
+  }
+});
   
 
 module.exports = router;
