@@ -11,8 +11,8 @@ const AdminHome = () => {
         </section>
 
         <section className="container">
-          <section class="row">
-            <section class="col-4">
+          <section className="row">
+            <section className="col-4">
               <section className="card">
                 <section className="card-body">
                   <h5 className="card-title">
