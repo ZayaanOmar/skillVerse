@@ -14,7 +14,9 @@ const FreelancerProfile = () => {
     about: "I'm a passionate full-stack developer with experience in modern web technologies.",
     hourlyRate: "$30/hr",
     email: "ahmed@example.com",
-    role: "Freelancer"
+    role: "Freelancer",
+    profilePic: "https://randomuser.me/api/portraits/women/44.jpg",
+    occupation: "Software Engineer",
   };
 
   return (
@@ -28,7 +30,13 @@ const FreelancerProfile = () => {
       <Card className="profile-card border-white">
         <Card.Body>
           <Row className="profile-image d-flex justify-content-center align-items-center">
-            <p>Image</p>
+            <img
+              src={freelancer.profilePic}
+              alt="ProfilePic"
+              className="profile-pic"
+              width="70"
+              height="70"
+            />
           </Row>
           <Row className="profile-name-row">
             <h3 className="profile-name">{freelancer.name}</h3>
@@ -46,13 +54,16 @@ const FreelancerProfile = () => {
             <p className="profile-info"><strong>Role:</strong> {freelancer.role}</p>
           </Row>
           <Row className="profile-info-row">
+            <p className="profile-info"><strong>Occupation:</strong> {freelancer.occupation}</p>
+          </Row>
+          <Row className="profile-info-row">
             <p className="profile-info"><strong>Rating:</strong> {freelancer.rating} / 5</p>
           </Row>
           <Row className="profile-info-row">
             <p className="profile-info">
               <strong>Skills:</strong>
               {freelancer.skills.map((skill, idx) => (
-                <Badge key={idx} bg="primary" className="mx-1 profile-badge">{skill}</Badge>
+                <Badge key={idx} bg="black" className="mx-1 profile-badge">{skill}</Badge>
               ))}
             </p>
           </Row>

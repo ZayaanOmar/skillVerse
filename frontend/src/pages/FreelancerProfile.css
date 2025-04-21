@@ -3,7 +3,7 @@
     width: 100%; /* Take up the full width of the screen */
     height: 100vh; /* Take up the full height of the viewport */
     margin: 0; /* Remove default margin */
-    padding: 0; /* Remove default padding */
+    padding-top: 30px;
 }
 
 /* Card 1 styles */
@@ -15,11 +15,16 @@
     width: 100%; /* Ensure the card takes up the full column width */
 }
   
-.profile-img {
-    max-width: 150px;
-    border: 5px solid #f0f0f0;
+.profile-image img {
+    /* border-radius: 50%;  Make the image a perfect circle */
+    object-fit: cover; /* Ensure the image scales properly */
+    width: 100px; /* Adjust the size of the profile picture */
+    height: 100px; /* Ensure the height matches the width */
+    margin: 0 auto; /* Center the image horizontally */
+    display: block; /* Ensure the image is treated as a block element */
 }
-  
+
+
 .profile-name {
     font-weight: 700;
     color: #333;

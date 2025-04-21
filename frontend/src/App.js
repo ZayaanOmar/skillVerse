@@ -5,9 +5,9 @@ import ClientHome from "./pages/ClientHome";
 import RoleSelection from "./pages/RoleSelection";
 import JobRequests from './pages/JobRequests';
 import FreelancerHome from "./pages/FreelancerHome";
-import FreelancerProfile from "./pages/FreelancerProfile";
-import ClientProfile from "./pages/ClientProfile";  
+import FreelancerProfile from "./pages/FreelancerProfile"; 
 import 'bootstrap/dist/css/bootstrap.min.css';
+import ViewFreelancers from "./pages/ViewFreelancers";
 function App() {
   const user = JSON.parse(localStorage.getItem("user"));
 
@@ -22,7 +22,7 @@ function App() {
         <Route path="/freelancer/home" element={<FreelancerHome user={user} />} />
         <Route path="/freelancer/jobs" element={<JobRequests />} /> 
         <Route path="/freelancer/profile" element={<FreelancerProfile />} />
-        <Route path="/client/profile" element={<ClientProfile />} />
+        <Route path="/view/freelancers" element={<ViewFreelancers />} />
       </Routes>
     </Router>
   );
