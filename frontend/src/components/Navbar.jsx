@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import Dropdown from "react-bootstrap/Dropdown";
 import { Modal, Button, Form } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+
 const Navbar = () => {
   const [showModal, setShowModal] = useState(false);
   //const [reason, setReason] = useState("");
@@ -10,11 +12,20 @@ const Navbar = () => {
   const [message, setMessage] = useState("");
   const [status, setStatus] = useState(null);
 
+  //Initialize useNavigate hook
+  const navigate = useNavigate();
+
   // Function to handle opening the modal
   const handleShowModal = () => setShowModal(true);
 
   // Function to handle closing the modal
   const handleCloseModal = () => setShowModal(false);
+
+  //Added the logout handler
+  const handleLogout = () => {
+    console.log("Logging out...");
+    navigate("/"); //Redirect to the AuthLogin page
+  };
 
   // Function to handle form submission (this is just an example for now)
   const handleSubmitReason = async (e) => {
@@ -74,7 +85,7 @@ const Navbar = () => {
               <Dropdown.Item onClick={handleShowModal}>
                 Change Roles
               </Dropdown.Item>
-              <Dropdown.Item href="#/logout">Logout</Dropdown.Item>
+              <Dropdown.Item onClick={handleLogout}>Logout</Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
         </li>

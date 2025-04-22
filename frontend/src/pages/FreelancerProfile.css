@@ -1,0 +1,105 @@
+.freelancer-profile {
+    background-color: #AFEEEE; /* Set the background color */
+    width: 100%; /* Take up the full width of the screen */
+    height: 100vh; /* Take up the full height of the viewport */
+    margin: 0; /* Remove default margin */
+    padding-top: 30px;
+}
+
+/* Card 1 styles */
+
+.profile-card {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    margin-left: -80px; /* Add spacing between cards */
+    width: 100%; /* Ensure the card takes up the full column width */
+}
+  
+.profile-image img {
+    /* border-radius: 50%;  Make the image a perfect circle */
+    object-fit: cover; /* Ensure the image scales properly */
+    width: 100px; /* Adjust the size of the profile picture */
+    height: 100px; /* Ensure the height matches the width */
+    margin: 0 auto; /* Center the image horizontally */
+    display: block; /* Ensure the image is treated as a block element */
+}
+
+
+.profile-name {
+    font-weight: 700;
+    color: #333;
+    text-align: center; /* Center the text horizontally */
+    margin: 0 auto; /* Ensure the element is centered */
+}
+  
+.profile-info {
+    color: #555;
+    margin-bottom: 0.6rem;
+}
+  
+.profile-badge {
+    background-color: #333;
+    font-size: 0.85rem;
+    padding: 0.6em 0.9em;
+    border-radius: 20px;
+}
+
+.profile-image{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 150px;
+    text-align: center; /* Center text inside the <p> element */
+}
+
+.profile-name-row {
+    margin-bottom: 20px; /* Add space below the profile name row */
+  }
+  
+  .profile-info-row:first-of-type {
+    margin-top: 20px; /* Optional: Add space above the first info row (email) */
+  }
+ 
+.profile-info-row {
+    padding: 5px 10px; /* Reduce top and bottom padding */
+    margin-top: 5px; /* Optional: Add smaller space above */
+    margin-bottom: 5px; /* Optional: Add smaller space below */
+}
+
+.edit-btn-row{
+    padding-top: 10px;
+    padding-left: 150px;
+    padding-right: 150px;
+}
+
+.edit-btn{
+    background-color: black;
+    width: auto; /* Allow the button width to adjust based on content */
+    padding: 10px 22px; /* Reduce left and right padding */
+    font-size: 12px;
+    font-weight: bold;
+    margin: 0 auto; /* Center the button horizontally */
+    display: block; /* Ensure the button is treated as a block element */
+    color: white;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.edit-btn:hover {
+    background-color: #555;
+    transform: translateY(-2px);
+  }
+
+/* Card 2,3,4 styles */
+
+.additional-card{
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    margin-left: -80px; /* Add spacing between cards */
+    width: 100%; /* Ensure the card takes up the full column width */
+    margin-bottom: 40px; /* Add spacing between cards */
+    margin-left: 10px; /* Add spacing between card 1 and cards 2,3,4 */
+}
