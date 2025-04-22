@@ -18,7 +18,7 @@ const AuthOptions = () => {
         <section className="col-md-6 p-0 left-panel">
           <section className="left-panel-inner d-flex flex-column h-100 p-5 text-white">
             <h2 className="welcomeHeading" id="left-panel-heading">
-              Welcome to SkillVerser <br />
+              Welcome to SkillVerse <br />
               <br />
             </h2>
             <p className="welcomeText" id="left-panel-text">

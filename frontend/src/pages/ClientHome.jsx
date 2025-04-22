@@ -86,7 +86,7 @@ const ClientHome = () => {
       <section>
         {/* Welcome Banner */}
         <header className="welcome-banner">
-          <h1 className="heading1">SKILLVERSE</h1>
+          <h1 className="heading1">SkillVerse</h1>
         </header>
 
         {/* Service buttons*/}
