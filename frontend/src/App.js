@@ -19,16 +19,16 @@ function App() {
       <Routes>
         <Route path="/" element={<AuthLogin />} />
         <Route path="/client/home" element={<ClientHome user={user} />} />
-        <Route path="/roles" element={<RoleSelection />} />
-        <Route path="/freelancer/jobs" element={<JobRequests />} />
-        <Route path="/freelancer/profile" element={<FreelancerProfile />} />
-        <Route path="/view/freelancers" element={<ViewFreelancers />} />
-        <Route path="/admin/support" element={<TicketSupport />} />
         <Route
           path="/freelancer/home"
           element={<FreelancerHome user={user} />}
         />
         <Route path="/admin/home" element={<AdminHome />} />
+        <Route path="/roles" element={<RoleSelection />} />
+        <Route path="/freelancer/jobs" element={<JobRequests />} />
+        <Route path="/freelancer/profile" element={<FreelancerProfile />} />
+        <Route path="/view/freelancers" element={<ViewFreelancers />} />
+        <Route path="/admin/support" element={<TicketSupport />} />
       </Routes>
     </Router>
   );
