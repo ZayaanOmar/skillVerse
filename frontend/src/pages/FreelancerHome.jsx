@@ -1,5 +1,6 @@
-//import React, { useState } from 'react';
+import React, { useState } from 'react';
 import "./FreelancerHome.css";
+import Navbar from '../components/Navbar';
 
 import { useNavigate } from "react-router-dom";
 
@@ -8,32 +9,14 @@ function FreelancerHome() {
 
   return (
     <main className="freelancer-home">
-      <header className="welcome">
+      <Navbar />
+      <section className="welcome">
         <h1 className="heading">SkillVerse</h1>
         <h2 className="welcome-freelancer">Welcome to your profile</h2>
-      </header>
+      </section>
 
       <section>
         <button onClick={() => navigate("/freelancer/jobs")}>Find Jobs</button>
-        <nav className="NavBar">
-          <ul>
-            <li>
-              <a href="home"> Home</a>
-            </li>
-            <li>
-              <a href="#explore"> Explore</a>
-            </li>
-            <li>
-              <a href="client">Become a client</a>
-            </li>
-            <li>
-              <a href="about">About </a>
-            </li>
-            <li>
-              <a href="settings">Settings</a>
-            </li>
-          </ul>
-        </nav>
       </section>
       <h1 className="how">How it works</h1>
       <ol className="worklist">
