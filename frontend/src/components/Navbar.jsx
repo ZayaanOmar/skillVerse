@@ -15,6 +15,12 @@ const Navbar = () => {
   //Initialize useNavigate hook
   const navigate = useNavigate();
 
+  //Function to take user to the profile page once the user clicks on the profile button
+  const showProfile = () => {
+    console.log("Showing profile...");
+    navigate("/profile"); //Redirect to the profile page
+  }
+
   // Function to handle opening the modal
   const handleShowModal = () => setShowModal(true);
 
@@ -82,10 +88,9 @@ const Navbar = () => {
             </Dropdown.Toggle>
 
             <Dropdown.Menu>
-              <Dropdown.Item onClick={handleShowModal}>
-                Change Roles
-              </Dropdown.Item>
+            <Dropdown.Item onClick={handleShowModal}>Change Roles</Dropdown.Item>
               <Dropdown.Item onClick={handleLogout}>Logout</Dropdown.Item>
+              <Dropdown.Item onClick={showProfile}>My Profile</Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
         </li>

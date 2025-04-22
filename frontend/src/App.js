@@ -25,8 +25,9 @@ function App() {
         />
         <Route path="/admin/home" element={<AdminHome />} />
         <Route path="/roles" element={<RoleSelection />} />
-        <Route path="/freelancer/jobs" element={<JobRequests />} />
-        <Route path="/freelancer/profile" element={<FreelancerProfile />} />
+        <Route path="/freelancer/home" element={<FreelancerHome user={user} />} />
+        <Route path="/freelancer/jobs" element={<JobRequests />} /> 
+        <Route path="/profile" element={<FreelancerProfile />} />
         <Route path="/view/freelancers" element={<ViewFreelancers />} />
         <Route path="/admin/support" element={<TicketSupport />} />
       </Routes>
