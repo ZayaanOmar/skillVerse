@@ -2,8 +2,12 @@ import React, { useEffect, useState } from "react";
 import "./ClientHome.css";
 import Navbar from "../components/Navbar";
 import axios from "axios";
+import { Modal, Button } from "react-bootstrap";
 
 const ClientHome = () => {
+  const [showModal, setShowModal] = useState(false);//this is for req submitted successfully(popup)
+  const [showConfirmModal, setShowConfirmModal] = useState(false);//this brings up the yes no pop up, on yes sends req
+  const [pendingCategory, setPendingCategory] = useState(null);//save the req on button click but dont send it yet
   const [user, setUser] = useState(null);
   const [message /*setMessage*/] = useState("");
 
@@ -38,6 +42,7 @@ const ClientHome = () => {
         { withCredentials: true }
       );
       console.log("Service request response:", response.data);
+      setShowModal(true);
     } catch (error) {
       console.error("Error creating request:", error);
     }
@@ -81,6 +86,7 @@ const ClientHome = () => {
   }; */
 
   return (
+    
     <main className="client-home">
       <Navbar />
       <section>
@@ -99,33 +105,46 @@ const ClientHome = () => {
         <section className="section1">
           <button
             className="buttonSD"
-            onClick={() => handleServiceSelection("Software Development")}
+            onClick={() => {
+              setPendingCategory("Software Development");
+              setShowConfirmModal(true);
+            }}
           >
             Software Development
           </button>
           <button
             className="buttonML"
-            onClick={() =>
-              handleServiceSelection("Data Science - Machine Learning")
-            }
+            onClick={() => {
+              setPendingCategory("Data Science");
+              setShowConfirmModal(true);
+            }}
           >
             Data Science
           </button>
           <button
             className="buttonCL"
-            onClick={() => handleServiceSelection("Creating Logos")}
+            onClick={() => {
+              setPendingCategory("Creating Logos");
+              setShowConfirmModal(true);
+            }}
           >
             Creating Logos
           </button>
           <button
             className="buttonGD"
-            onClick={() => handleServiceSelection("Graphic Designer")}
+            onClick={() => {
+              setPendingCategory("Graphic Designer");
+              setShowConfirmModal(true);
+            }}
           >
             Graphic Designer
           </button>
           <button
             className="buttonDM"
-            onClick={() => handleServiceSelection("Digital Marketing")}
+            onClick={() => {
+              setPendingCategory("Digital Marketing");
+              setShowConfirmModal(true);
+            }}
           >
             Digital Marketing
           </button>
@@ -175,6 +194,42 @@ const ClientHome = () => {
           </footer>
         </footer>
       </section>
+      <Modal show={showModal} onHide={() => setShowModal(false)} centered>
+  <Modal.Header closeButton>
+    <Modal.Title>Request Submitted</Modal.Title>
+  </Modal.Header>
+  <Modal.Body>
+    Your service request was successfully submitted!
+  </Modal.Body>
+  <Modal.Footer>
+    <Button variant="primary" onClick={() => setShowModal(false)}>
+      Close
+    </Button>
+  </Modal.Footer>
+</Modal>
+<Modal show={showConfirmModal} onHide={() => setShowConfirmModal(false)} centered>
+  <Modal.Header closeButton>
+    <Modal.Title>Confirm Request</Modal.Title>
+  </Modal.Header>
+  <Modal.Body>
+    Are you sure you want to request a service for <strong>{pendingCategory}</strong>?
+  </Modal.Body>
+  <Modal.Footer>
+    <Button variant="secondary" onClick={() => setShowConfirmModal(false)}>
+      No
+    </Button>
+    <Button
+      variant="primary"
+      onClick={() => {
+        handleServiceSelection(pendingCategory);/*sends requested service using route when clicks yes*/
+        setShowConfirmModal(false);
+      }}
+    >
+      Yes
+    </Button>
+  </Modal.Footer>
+</Modal>
+
     </main>
   );
 };
