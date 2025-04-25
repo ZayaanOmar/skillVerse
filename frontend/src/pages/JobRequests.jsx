@@ -29,17 +29,21 @@ function JobRequests() {
     // Fetch freelancer info
     const fetchFreelancer = async () => {
       try {
-        // Fetch the freelancerId from the session or user context (you may need to implement this)
-        const freelancerIdFromSession = "FETCHED_FREELANCER_ID"; // Replace this with actual dynamic ID fetching logic
+        // Retrieve the freelancer's googleID from session/local storage/context
+        const googleIDFromSession = "FETCHED_GOOGLE_ID"; // Replace with actual logic to get googleID
 
-        const res = await fetch(`http://localhost:5000/api/users/freelancer/${freelancerIdFromSession}`, {
+        const res = await fetch(`http://localhost:5000/api/users/googleID/${googleIDFromSession}`, {
           credentials: "include", // Include credentials if necessary
         });
 
         if (res.ok) {
           const data = await res.json();
-          setFreelancer(data); // Set freelancer data
-          setFreelancerId(freelancerIdFromSession); // Set freelancerId for applying
+          if (data.role === 'freelancer') {
+            setFreelancer(data); // Set freelancer data
+            setFreelancerId(data._id); // Set freelancerId for applying
+          } else {
+            setError("User is not a freelancer");
+          }
         } else {
           setError("Failed to fetch freelancer data");
         }
