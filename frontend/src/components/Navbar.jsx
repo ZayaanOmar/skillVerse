@@ -72,7 +72,7 @@ const Navbar = () => {
   };
   return (
     <nav className="bg-slate-800 text-white px-8 py-4 flex justify-end items-center">
-      <ul className>
+      <ul className ="">
         {/*<li><a href="#about" className="font-semibold hover:underline">About</a></li>*/}
 
         {/* Settings Dropdown */}

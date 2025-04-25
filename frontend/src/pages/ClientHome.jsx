@@ -186,12 +186,10 @@ const ClientHome = () => {
           </section>
         </article>
         {/* Footer */}
-        <footer className="Ebrahimfooter">
-          <footer className="footer">
+        <footer className="Ebrahimfooter">          
             <section>
               <p>&copy; 2025 SkillVerse. All rights reserved.</p>
             </section>
-          </footer>
         </footer>
       </section>
       <Modal show={showModal} onHide={() => setShowModal(false)} centered>
