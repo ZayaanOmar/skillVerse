@@ -4,34 +4,46 @@ const serviceRequestSchema = new mongoose.Schema(
   {
     clientId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'User', //Reference to the User model (the client making the request)
+      ref: 'User', // Reference to the User model (the client making the request)
       required: true,
     },
     serviceType: {
-      type: String,//this is for any of the buttons that were created
+      type: String, // This is for any of the buttons that were created
       required: true,
     },
     freelancerId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'User', //Reference to the User model (the freelancer who accepts the request)
-      default: null, //Initially set to null because no freelancer is assigned yet
+      ref: 'User', // Reference to the User model (the freelancer who accepts the request)
+      default: null, // Initially set to null because no freelancer is assigned yet
     },
     status: {
       type: String,
       enum: ['pending', 'accepted', 'completed'],
-      default: 'pending', //Default status is 'pending' until a freelancer accepts it
+      default: 'pending', // Default status is 'pending' until a freelancer accepts it
     },
+    appliedFreelancers: [
+      {
+        freelancerId: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: 'User', // Reference to the freelancer who applied
+        },
+        appliedAt: {
+          type: Date,
+          default: Date.now, // Automatically records when the freelancer applied
+        },
+      },
+    ],
     createdAt: {
       type: Date,
-      default: Date.now, //Automatically sets the date when the service request is created
+      default: Date.now, // Automatically sets the date when the service request is created
     },
     updatedAt: {
       type: Date,
-      default: Date.now, //Automatically sets the date when the service request is updated
+      default: Date.now, // Automatically sets the date when the service request is updated
     },
   },
   {
-    timestamps: true, //timestamps create the createdAt stuff
+    timestamps: true, // Automatically adds createdAt and updatedAt fields
   }
 );
 

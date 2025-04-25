@@ -139,5 +139,41 @@ router.patch('/complete/:requestId', async (req, res) => {
     res.status(500).json({ message: 'Error completing service request' });
   }
 });
+// Freelancer applies to a service request (without accepting it yet)
+router.post('/apply/:requestId', async (req, res) => {
+  const { requestId } = req.params;
+  const { freelancerId } = req.body;
+
+  try {
+    const serviceRequest = await ServiceRequest.findById(requestId);
+
+    if (!serviceRequest) {//service request dne
+      return res.status(404).json({ message: 'Service request not found' });
+    }
+
+    // Check if the freelancer already applied
+    const alreadyApplied = serviceRequest.appliedFreelancers.some(
+      (app) => app.freelancerId.toString() === freelancerId//this ensures uu cant apply to same thing twice
+    );
+
+    if (alreadyApplied) {
+      return res.status(400).json({ message: 'You have already applied' });//return message if applied already
+    }
+
+    // Push freelancer into appliedFreelancers
+    serviceRequest.appliedFreelancers.push({
+      freelancerId,
+      appliedAt: new Date(),
+    });
+
+    await serviceRequest.save();
+
+    res.status(200).json({ message: 'Application submitted successfully', serviceRequest });
+  } catch (error) {
+    console.error('Error applying to request:', error);
+    res.status(500).json({ message: 'Error applying to service request' });
+  }
+});
+
 
 module.exports = router;

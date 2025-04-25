@@ -131,5 +131,8 @@ router.post("/process-request", async (req, res) => {
     res.status(500).json({ error: "Server error" });
   }
 });
+const { getFreelancerInfo } = require("../controllers/user_controller");
+// Route to get freelancer info by freelancerId
+router.get("/freelancer/:freelancerId", getFreelancerInfo);
 
 module.exports = router;
