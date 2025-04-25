@@ -185,14 +185,12 @@ const ClientHome = () => {
             </section>
           </section>
         </article>
-        {/* Footer */}
-        <footer className="Ebrahimfooter">
-          <footer className="footer">
-            <section>
-              <p>&copy; 2025 SkillVerse. All rights reserved.</p>
-            </section>
-          </footer>
-        </footer>
+
+      <footer className="Ebrahimfooter">
+        <section className="footer">
+          <p>&copy; 2025 SkillVerse. All rights reserved.</p>
+      </section>
+      </footer>
       </section>
       <Modal show={showModal} onHide={() => setShowModal(false)} centered>
   <Modal.Header closeButton>
