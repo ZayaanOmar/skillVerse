@@ -1,11 +1,43 @@
-import React, { useState } from 'react';
+import React, {useState,useEffect } from 'react';
 import "./FreelancerHome.css";
 import Navbar from '../components/Navbar';
-
 import { useNavigate } from "react-router-dom";
 
-function FreelancerHome() {
+//function FreelancerHome() {
+  //const navigate = useNavigate();
+//once user logs in and lands on fr page, fetch the id they logged in with
+ // useEffect(() => {//needed to fetch user data
+  //  const fetchUser = async () => {
+   //   try {
+   //     const res = await fetch("http://localhost:5000/api/auth/current-user", {
+   //       credentials: "include",
+   //     });
+   //     if (res.ok) {
+   //       const userData = await res.json();
+   //       localStorage.setItem("user", JSON.stringify(userData));
+   //     } else {
+   //       console.error("Failed to fetch user info");
+   //     }
+   //   } catch (err) {
+  //      console.error("Error fetching user info:", err);
+  //    }
+ //   };
+
+  //  fetchUser();
+  //}, []);
+const FreelancerHome = () => {
   const navigate = useNavigate();
+  const [user, setUser] = useState(null);
+  const [message /*setMessage*/] = useState("");
+
+  useEffect(() => {
+    //this is used to retrieve the client details from local storage (from role selections)
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+  }, []);
+  
 
   return (
     <main className="freelancer-home">
@@ -72,6 +104,6 @@ function FreelancerHome() {
       </footer>
     </main>
   );
-}
+};
 
 export default FreelancerHome;
