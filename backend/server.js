@@ -27,6 +27,7 @@ app.use(
   session({
     secret: process.env.COOKIE_KEY,
     resave: false,
+    saveUninitialized: false,
     cookie: {
       maxAge: 24 * 60 * 60 * 1000,
     },
@@ -44,10 +45,6 @@ app.use("/users", userRoutes);
 // Set up the service request routes (this should be before the app.listen)
 app.use("/api/service-requests", serviceRequestRoutes);
 
-// Test route
-app.get("/api", (req, res) => {
-  res.json({ message: "Hello from the backend!" });
-});
 
 const PORT = process.env.PORT || 5000;
 
@@ -55,3 +52,4 @@ app.listen(PORT, () => {
   connectDB(); // Connects to the database
   console.log(`Server running on port ${PORT}`);
 });
+module.exports = app;

@@ -1,7 +1,7 @@
 const express = require('express');
 const ServiceRequest = require('../models/ServiceRequest');
 const User = require('../models/User');
-
+const Application = require('../models/Application');
 const router = express.Router();
 //http://localhost:5000/api/service-requests/create (postman check)
 // Create a new service request (from client obs POST)
@@ -13,8 +13,7 @@ router.post('/create', async (req, res) => {
 
       const client = await User.findOne({ _id: clientId, role: 'client' });
       const allUsers = await User.find({});
-      //console.log("All users in DB:", allUsers);
-      
+      //console.log("All users in DB:", allUsers); 
       //console.log("Sample user from DB:", user);
       //console.log("Client from findById:", client);
       if (!client) {
@@ -33,70 +32,6 @@ router.post('/create', async (req, res) => {
       res.status(500).json({ message: `Error creating service request: ${error.message}` });
     }
   });
-//http://localhost:5000/api/service-requests/client/67fed78eecbde86bd27b85bc test with
-// Get all service requests for a client (for the client side)
-router.get('/client/:clientId', async (req, res) => {
-  const { clientId } = req.params;
-  //console.log("Client ID received:", clientId); 
-  try {
-    const serviceRequests = await ServiceRequest.find({ clientId })
-      .populate('freelancerId', 'username') // Populate freelancer info
-      .exec();
-
-    res.status(200).json(serviceRequests);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Error fetching service requests' });
-  }
-});
-//http://localhost:5000/api/service-requests/freelancer/67fcfe8d7cd7664ebc13af74
-// Get all service requests for a freelancer (for the freelancer side)
-router.get('/freelancer/:freelancerId', async (req, res) => {
-  const { freelancerId } = req.params;
-
-  try {
-    const serviceRequests = await ServiceRequest.find({ freelancerId: freelancerId, status: 'pending' })
-      .populate('clientId', 'username') // Populate client info
-      .exec();
-
-    res.status(200).json(serviceRequests);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Error fetching service requests' });
-  }
-});
-
-// Accept a service request (freelancer accepting the request)
-router.patch('/accept/:requestId', async (req, res) => {
-  const { requestId } = req.params;
-  const { freelancerId } = req.body;
-
-  try {
-    const serviceRequest = await ServiceRequest.findById(requestId);
-
-    if (!serviceRequest) {
-      return res.status(404).json({ message: 'Service request not found' });
-    }
-
-    // Make sure the request is still pending
-    if (serviceRequest.status !== 'pending') {
-      return res.status(400).json({ message: 'This request cannot be accepted' });
-    }
-
-    // Assign the freelancer to the request
-    serviceRequest.freelancerId = freelancerId;
-    serviceRequest.status = 'accepted';
-    serviceRequest.updatedAt = Date.now(); // Update the timestamp
-
-    await serviceRequest.save();
-
-    res.status(200).json({ message: 'Service request accepted', serviceRequest });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Error accepting service request' });
-  }
-});
-// Get all unassigned, pending service requests (for any freelancer to view)
 router.get('/all', async (req, res) => {
     try {
       const requests = await ServiceRequest.find({ freelancerId: null, status: 'pending' })
@@ -109,69 +44,38 @@ router.get('/all', async (req, res) => {
       res.status(500).json({ message: 'Error fetching available service requests' });
     }
   });
-  
-
-// Mark the service request as completed (for the freelancer side)
-router.patch('/complete/:requestId', async (req, res) => {
-  const { requestId } = req.params;
+// Freelancer applies to a service request
+//http://localhost:5000/api/service-requests/applications test
+router.post('/applications', async (req, res) => {
+  const { jobId, freelancerId, coverLetter } = req.body;
 
   try {
-    const serviceRequest = await ServiceRequest.findById(requestId);
-
-    if (!serviceRequest) {
-      return res.status(404).json({ message: 'Service request not found' });
+    const freelancer = await User.findOne({ _id: freelancerId, role: 'freelancer' });
+    if (!freelancer) {
+      return res.status(400).json({ message: 'Freelancer not found' });
     }
 
-    // Check if it's accepted
-    if (serviceRequest.status !== 'accepted') {
-      return res.status(400).json({ message: 'This request is not yet accepted' });
+    const job = await ServiceRequest.findById(jobId);
+    if (!job) {
+      return res.status(400).json({ message: 'Service request not found' });
     }
 
-    // Mark it as completed
-    serviceRequest.status = 'completed';
-    serviceRequest.updatedAt = Date.now(); // Update the timestamp
+    if (job.freelancerId) {
+      return res.status(400).json({ message: 'This service request is already taken' });
+    }
 
-    await serviceRequest.save();
+    const existingApplication = await Application.findOne({ jobId, freelancerId });
+    if (existingApplication) {
+      return res.status(400).json({ message: 'You have already applied for this job' });
+    }
 
-    res.status(200).json({ message: 'Service request completed', serviceRequest });
+    const newApplication = new Application({ jobId, freelancerId, coverLetter });
+    await newApplication.save();
+
+    res.status(201).json({ message: 'Application submitted successfully', newApplication });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Error completing service request' });
-  }
-});
-// Freelancer applies to a service request (without accepting it yet)
-router.post('/apply/:requestId', async (req, res) => {
-  const { requestId } = req.params;
-  const { freelancerId } = req.body;
-
-  try {
-    const serviceRequest = await ServiceRequest.findById(requestId);
-
-    if (!serviceRequest) {//service request dne
-      return res.status(404).json({ message: 'Service request not found' });
-    }
-
-    // Check if the freelancer already applied
-    const alreadyApplied = serviceRequest.appliedFreelancers.some(
-      (app) => app.freelancerId.toString() === freelancerId//this ensures uu cant apply to same thing twice
-    );
-
-    if (alreadyApplied) {
-      return res.status(400).json({ message: 'You have already applied' });//return message if applied already
-    }
-
-    // Push freelancer into appliedFreelancers
-    serviceRequest.appliedFreelancers.push({
-      freelancerId,
-      appliedAt: new Date(),
-    });
-
-    await serviceRequest.save();
-
-    res.status(200).json({ message: 'Application submitted successfully', serviceRequest });
-  } catch (error) {
-    console.error('Error applying to request:', error);
-    res.status(500).json({ message: 'Error applying to service request' });
+    res.status(500).json({ message: 'Error applying for service request' });
   }
 });
 
