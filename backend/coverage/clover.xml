@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1745665831406" clover="3.2.0">
-  <project timestamp="1745665831406" name="All files">
+<coverage generated="1745671750431" clover="3.2.0">
+  <project timestamp="1745671750431" name="All files">
     <metrics statements="352" coveredstatements="53" conditionals="372" coveredconditionals="10" methods="79" coveredmethods="3" elements="803" coveredelements="66" complexity="0" loc="352" ncloc="352" packages="6" files="15" classes="15"/>
     <package name="backend">
       <metrics statements="24" coveredstatements="0" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
@@ -256,7 +256,7 @@
         <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="1" count="2" type="stmt"/>
         <line num="3" count="2" type="stmt"/>
-        <line num="22" count="2" type="stmt"/>
+        <line num="26" count="2" type="stmt"/>
       </file>
       <file name="RoleChange.js" path="/Users/ebrahimhoosen/Documents/GitHub/freelancer-management-platform/backend/models/RoleChange.js">
         <metrics statements="3" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
@@ -345,7 +345,7 @@
         <line num="75" count="1" type="stmt"/>
         <line num="77" count="1" type="stmt"/>
         <line num="78" count="1" type="stmt"/>
-        <line num="83" count="2" type="stmt"/>
+        <line num="84" count="2" type="stmt"/>
       </file>
       <file name="user-routes.js" path="/Users/ebrahimhoosen/Documents/GitHub/freelancer-management-platform/backend/routes/user-routes.js">
         <metrics statements="66" coveredstatements="0" conditionals="14" coveredconditionals="0" methods="4" coveredmethods="0"/>

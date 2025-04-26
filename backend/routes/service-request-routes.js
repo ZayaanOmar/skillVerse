@@ -47,7 +47,7 @@ router.get('/all', async (req, res) => {
 // Freelancer applies to a service request
 //http://localhost:5000/api/service-requests/applications test
 router.post('/applications', async (req, res) => {
-  const { jobId, freelancerId, coverLetter } = req.body;
+  const { jobId, freelancerId, coverLetter, price } = req.body; // <-- added price
 
   try {
     const freelancer = await User.findOne({ _id: freelancerId, role: 'freelancer' });
@@ -69,7 +69,7 @@ router.post('/applications', async (req, res) => {
       return res.status(400).json({ message: 'You have already applied for this job' });
     }
 
-    const newApplication = new Application({ jobId, freelancerId, coverLetter });
+    const newApplication = new Application({ jobId, freelancerId, coverLetter, price });
     await newApplication.save();
 
     res.status(201).json({ message: 'Application submitted successfully', newApplication });
@@ -78,6 +78,7 @@ router.post('/applications', async (req, res) => {
     res.status(500).json({ message: 'Error applying for service request' });
   }
 });
+
 
 
 module.exports = router;

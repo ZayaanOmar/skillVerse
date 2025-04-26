@@ -12,6 +12,10 @@ const applicationSchema = new mongoose.Schema({
   coverLetter: { 
     type: String, 
     required: false },
+    price: { 
+      type: Number, 
+      required: true 
+    },
   status: { type: String, 
     default: 'pending', 
     enum: ['pending', 'accepted', 'rejected'] },

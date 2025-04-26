@@ -10,10 +10,10 @@ function JobRequests() {
   const [applicationSuccess, setApplicationSuccess] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [showResultModal, setShowResultModal] = useState(false);
-  const [freelancer, setFreelancer] = useState(null); // NEW STATE for freelancer
+  const [freelancer, setFreelancer] = useState(null);//freelancer state
+  const [fee, setFee] = useState("");//price state
 
   useEffect(() => {
-    // Fetch logged-in freelancer from localStorage
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
       setFreelancer(JSON.parse(storedUser));
@@ -71,6 +71,7 @@ function JobRequests() {
           jobId: selectedJob._id,
           freelancerId: freelancer._id, // 👈 USE the logged-in freelancer ID
           coverLetter: coverLetter,
+          price: fee,
         }),
       });
 
@@ -119,22 +120,34 @@ function JobRequests() {
         </Modal.Header>
 
         <Modal.Body>
-          <Form onSubmit={handleApply}>
-            <Form.Group controlId="formCoverLetter">
-              <Form.Label> Reason for applying: </Form.Label>
-              <Form.Control
-                as="textarea"
-                rows={4}
-                value={coverLetter}
-                onChange={(e) => setCoverLetter(e.target.value)}
-                placeholder="State your reason here..."
-              />
-            </Form.Group>
-            
-            {applicationError && (
-              <article style={{ color: "red", marginTop: "1rem" }}>{applicationError}</article>
-            )}
-          </Form>
+        <Form onSubmit={handleApply}>
+          <Form.Group controlId="formCoverLetter">
+            <Form.Label>Reason for applying:</Form.Label>
+            <Form.Control
+              as="textarea"
+              rows={4}
+              value={coverLetter}
+              onChange={(e) => setCoverLetter(e.target.value)}
+              placeholder="State your reason here..."
+            />
+          </Form.Group>
+
+          <Form.Group controlId="formFee" style={{ marginTop: "1rem" }}>
+            <Form.Label>Proposed Fee (in Rands)</Form.Label>
+            <Form.Control
+              type="number"
+              value={fee}
+              onChange={(e) => setFee(e.target.value)}
+              placeholder="Enter your fee..."
+              min="0"
+            />
+          </Form.Group>
+
+          {applicationError && (
+            <article style={{ color: "red", marginTop: "1rem" }}>{applicationError}</article>
+          )}
+        </Form>
+
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={() => setShowModal(false)}>
