@@ -18,7 +18,7 @@
   font-weight: 800;
 }
 .description{
-  background-color: rgba(94, 193, 238, 0.4);
+  background-color: rgba(94, 193, 238, 0.4);/*last val is level of transp*/
   margin-top: -10px;
   border-radius: 12px;
   height: 200px;

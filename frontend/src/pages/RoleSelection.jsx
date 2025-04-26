@@ -65,7 +65,7 @@ const RoleSelection = () => {
     <main className='role-selection'>
       <section className='role-body'>
         <p>Welcome to <em>SkillVerse</em>! We're excited to have you on board</p>
-        <h1>Quick question, Are you a ... ?</h1>
+        <h1>Choose Account Type</h1>
         <section className='roles-container'>
           <section className='client-description' onClick={() => selectRole("client")}>
             <h2>Client</h2>

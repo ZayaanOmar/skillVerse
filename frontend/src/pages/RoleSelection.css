@@ -4,15 +4,17 @@
     display: flex;
     justify-content: center;   /* centers horizontally */
     align-items: center;
+    background-image: url(./images/adminbackground.jpg);
 }
   
 .role-body{
     text-align: center;
     margin: 0 auto;  
     padding: 50px;
-    background: linear-gradient(45deg, white, rgb(32, 32, 152));
+    background: linear-gradient(45deg, white, rgb(103, 199, 225));
     border-radius: 10px;
     box-shadow: 4px 4px 10px 0px rgba(0,0,0,0.25);
+    
 }
 
 .role-body h1 {
