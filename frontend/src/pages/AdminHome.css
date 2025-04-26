@@ -9,11 +9,21 @@
   text-align: start;
   border-radius: 12px;
   margin-bottom: 10px;
+  height: 300px;
+  background-image: url(./images/adminbackground.jpg);
 }
 
 .banner-title {
   font-size: 70px;
   font-weight: 800;
+}
+.description{
+  background-color: rgba(94, 193, 238, 0.4);
+  margin-top: -10px;
+  border-radius: 12px;
+  height: 200px;
+  color: black;
+  font-size: 20px;
 }
 
 .card {
@@ -22,4 +32,19 @@
 
 .bi.bi-people, .bi.bi-input-cursor-text, .bi.bi-person-workspace {
   padding-right: 10px;
+}
+
+.admin-bottom-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin: 2rem 0;
+  padding: 0 2rem;
+}
+.admin-analytics-section {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  margin: 2rem 0;
+  padding: 0 2rem;
 }

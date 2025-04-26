@@ -13,8 +13,28 @@ const AdminHome = () => {
     <>
       <section className="container-fluid">
         <section className="banner">
-          <h1 className="banner-title">Admin Dashboard</h1>
-          <h2>Manage Your Site</h2>
+          <h1 className="banner-title">Dashboard</h1>
+          <h2>Manage Your Site As an Admin</h2>
+        </section>
+        <section className="description">
+        </section>
+        <section className="admin-analytics-section">
+          <section className="admin-analytics-card">
+            <h5>Total Users</h5>
+            <p>1,245</p>
+          </section>
+          <section className="admin-analytics-card">
+            <h5>Open Tickets</h5>
+            <p>32</p>
+          </section>
+          <section className="admin-analytics-card">
+            <h5>Job Listings</h5>
+            <p>87</p>
+          </section>
+          <section className="admin-analytics-card">
+            <h5>System Status</h5>
+            <p className="admin-system-status">✅ Operational</p>
+          </section>
         </section>
 
         <section className="container">
@@ -70,7 +90,24 @@ const AdminHome = () => {
           </section>
         </section>
       </section>
+      <section className="admin-bottom-section">
+          <section className="admin-recent-activity">
+            <h5>📝 Recent Activity</h5>
+            <ul>
+              <li>User JohnDoe registered</li>
+              <li>Ticket #432 resolved</li>
+              <li>New job listing posted</li>
+            </ul>
+          </section>
+
+          <section className="admin-announcements">
+            <h5>📢 Announcements</h5>
+            <p>🚀 New features coming soon! Stay tuned.</p>
+          </section>
+        </section>
+      
     </>
+    
   );
 };
 
