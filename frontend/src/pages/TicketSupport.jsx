@@ -1,66 +1,88 @@
-import React, {useEffect, useState} from 'react';
-import {Table, Button, Badge, Alert} from 'react-bootstrap';
-import './TicketSupport.css'; // link styles
-import axios from 'axios';
+import React, { useEffect, useState } from "react";
+import { Table, Button, Badge, Alert } from "react-bootstrap";
+import "./TicketSupport.css"; // link styles
+import axios from "axios";
 
-
-function TicketSupport(){
+function TicketSupport() {
   const [tickets, setTickets] = useState([]);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
-  useEffect(() =>{
+  useEffect(() => {
     const fetchTickets = async () => {
-      try{
-        const res = await axios.get("http://localhost:5000/users/alltickets", {withCredentials: true});
+      try {
+        const res = await axios.get("http://localhost:5000/users/alltickets", {
+          withCredentials: true,
+        });
 
         console.log("Fetched tickets:", res.data);
         setTickets(res.data);
-      }
-      catch(err){
+      } catch (err) {
         console.error("Error fetching tickets:", err);
         setError("Failed to fetch tickets. Please try again");
       }
-
     };
 
     fetchTickets();
   }, []);
 
-  const handleDecision = async (ticketId, decision) =>{
-    try{
-      const response = await axios.post("http://localhost:5000/users/process-request", {ticketId, decision}, {withCredentials: true});
-      setSuccess(`Request ${decision === 'approve' ? 'approved' : 'rejected'} successfully`);
-      setTickets(tickets.filter(ticket => ticket._id !== ticketId));
+  const handleDecision = async (ticketId, decision) => {
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/users/process-request",
+        { ticketId, decision },
+        { withCredentials: true }
+      );
+      setSuccess(
+        `Request ${
+          decision === "approve" ? "approved" : "rejected"
+        } successfully`
+      );
+      setTickets(tickets.filter((ticket) => ticket._id !== ticketId));
+
+      // Log the response for debugging
+      console.log("Response from server:", response.data);
 
       // Success message disappear after 3 secs
       setTimeout(() => setSuccess(""), 3000);
-    }
-    catch(err){
+    } catch (err) {
       console.error("Error processing request:", err);
       setError(`Failed to ${decision} request. Please try again`);
     }
   };
 
   const getStatusBadge = (status) => {
-    switch(status){
-      case 'pending' : return <Badge bg="warning">Pending</Badge>;
-      case 'approved' : return <Badge bg="success">Approved</Badge>;
-      case 'rejected' : return <Badge bg="danger">Rejected</Badge>;
-      default : return <Badge bg="secondary">Unknown</Badge>;
-
+    switch (status) {
+      case "pending":
+        return <Badge bg="warning">Pending</Badge>;
+      case "approved":
+        return <Badge bg="success">Approved</Badge>;
+      case "rejected":
+        return <Badge bg="danger">Rejected</Badge>;
+      default:
+        return <Badge bg="secondary">Unknown</Badge>;
     }
   };
 
-  return(
+  return (
     <main className="ticket-support-container">
       <h1 className="mb-4">Role Change Requests</h1>
 
-      {error && <Alert variant="danger" onClose={() => setError("")} dismissible>{error}</Alert>}
-      {success && <Alert variant="success" onClose={() => setSuccess("")} dismissible>{success}</Alert>}
+      {error && (
+        <Alert variant="danger" onClose={() => setError("")} dismissible>
+          {error}
+        </Alert>
+      )}
+      {success && (
+        <Alert variant="success" onClose={() => setSuccess("")} dismissible>
+          {success}
+        </Alert>
+      )}
 
       {tickets.length === 0 ? (
-        <Alert variant="info">No pending role change requests at this time.</Alert>
+        <Alert variant="info">
+          No pending role change requests at this time.
+        </Alert>
       ) : (
         <Table striped bordered hover responsive className="tickets-table">
           <thead>
@@ -75,7 +97,7 @@ function TicketSupport(){
             </tr>
           </thead>
           <tbody>
-            {tickets.map((ticket) =>(
+            {tickets.map((ticket) => (
               <tr key={ticket._id}>
                 <td>{ticket.user?.username || "Unknown User"}</td>
                 <td className="text-capitalize">{ticket.currentRole}</td>
@@ -84,12 +106,23 @@ function TicketSupport(){
                 <td>{new Date(ticket.createdAt).toLocaleDateString()}</td>
                 <td>{getStatusBadge(ticket.status)}</td>
                 <td className="action-buttons">
-                  {ticket.status === 'pending' && (
+                  {ticket.status === "pending" && (
                     <>
-                      <Button variant="success" size="sm" onClick={()=> handleDecision(ticket._id, 'approve')} className="me-2">
+                      <Button
+                        variant="success"
+                        size="sm"
+                        onClick={() => handleDecision(ticket._id, "approve")}
+                        className="me-2"
+                      >
                         Approve
                       </Button>
-                      <Button variant="danger" size="sm" onClick={() => handleDecision(ticket._id, 'reject')}>Reject</Button>
+                      <Button
+                        variant="danger"
+                        size="sm"
+                        onClick={() => handleDecision(ticket._id, "reject")}
+                      >
+                        Reject
+                      </Button>
                     </>
                   )}
                 </td>
@@ -99,24 +132,10 @@ function TicketSupport(){
         </Table>
       )}
     </main>
-
   );
 }
 
 export default TicketSupport;
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /*import React, { useEffect, useState } from 'react';
 

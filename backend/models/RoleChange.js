@@ -4,7 +4,7 @@ const roleChangeSchema = new mongoose.Schema(
   {
     user: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
+      ref: "User",
       required: true,
     },
     currentRole: {
@@ -20,9 +20,10 @@ const roleChangeSchema = new mongoose.Schema(
     },
     status: {
       type: String,
-      enum: ["pending", "approved", "rejected"], default: "pending"
+      enum: ["pending", "approved", "rejected"],
+      default: "pending",
       //should be in ["pending", "approved", "rejected"]
-    }
+    },
   },
   {
     timestamps: true, //stores created at, updated at information (maybe not necessary)

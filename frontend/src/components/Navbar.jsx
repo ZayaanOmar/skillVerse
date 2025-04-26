@@ -19,7 +19,7 @@ const Navbar = () => {
   const showProfile = () => {
     console.log("Showing profile...");
     navigate("/profile"); //Redirect to the profile page
-  }
+  };
 
   // Function to handle opening the modal
   const handleShowModal = () => setShowModal(true);
@@ -72,7 +72,7 @@ const Navbar = () => {
   };
   return (
     <nav className="bg-slate-800 text-white px-8 py-4 flex justify-end items-center">
-      <ul className ="">
+      <ul className="">
         {/*<li><a href="#about" className="font-semibold hover:underline">About</a></li>*/}
 
         {/* Settings Dropdown */}
@@ -84,11 +84,12 @@ const Navbar = () => {
               className="text-white"
             >
               <i className="bi bi-gear-fill"></i>{" "}
-              
             </Dropdown.Toggle>
 
             <Dropdown.Menu>
-            <Dropdown.Item onClick={handleShowModal}>Change Roles</Dropdown.Item>
+              <Dropdown.Item onClick={handleShowModal}>
+                Change Roles
+              </Dropdown.Item>
               <Dropdown.Item onClick={handleLogout}>Logout</Dropdown.Item>
               <Dropdown.Item onClick={showProfile}>My Profile</Dropdown.Item>
             </Dropdown.Menu>

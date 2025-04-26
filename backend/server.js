@@ -45,7 +45,6 @@ app.use("/users", userRoutes);
 // Set up the service request routes (this should be before the app.listen)
 app.use("/api/service-requests", serviceRequestRoutes);
 
-
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {

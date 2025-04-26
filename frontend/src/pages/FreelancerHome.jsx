@@ -1,41 +1,36 @@
-import React, {useState,useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import "./FreelancerHome.css";
-import Navbar from '../components/Navbar';
+import Navbar from "../components/Navbar";
 import { useNavigate } from "react-router-dom";
 
 const FreelancerHome = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
-  const [message /*setMessage*/] = useState("");
+  //const [message /*setMessage*/] = useState(""); /* unused state variable */
 
   useEffect(() => {
-    const storedUser = localStorage.getItem("user");//get user from local storage if its there
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-    } else {
-      // If user is not found in localStorage, fetch from server
-      const fetchUser = async () => {
-        try {
-          const res = await fetch("http://localhost:5000/api/user/homepage", {//route to get user creds
-            credentials: "include",
-          });
-          if (res.ok) {
-            const userData = await res.json();
-            localStorage.setItem("user", JSON.stringify(userData));
-            setUser(userData);
-          } else {
-            console.error("Failed to fetch user info");
-          }
-        } catch (err) {
-          console.error("Error fetching user info:", err);
+    const fetchUser = async () => {
+      try {
+        const res = await fetch("http://localhost:5000/auth/me", {
+          credentials: "include",
+        });
+        if (res.ok) {
+          const userData = await res.json();
+          localStorage.setItem("user", JSON.stringify(userData));
+          setUser(userData);
+        } else {
+          console.error("Failed to fetch user info");
         }
-      };
-  
-      fetchUser();
-    }
+      } catch (err) {
+        console.error("Error fetching user info:", err);
+      }
+    };
+
+    fetchUser();
   }, []);
-  
-  
+
+  console.log("User in useEffect:", user); // Debugging line to check user data
+  console.log("User in localStorage:", localStorage.getItem("user")); // Debugging line to check localStorage
 
   return (
     <main className="freelancer-home">

@@ -5,19 +5,35 @@ import axios from "axios";
 import { Modal, Button } from "react-bootstrap";
 
 const ClientHome = () => {
-  const [showModal, setShowModal] = useState(false);//this is for req submitted successfully(popup)
-  const [showConfirmModal, setShowConfirmModal] = useState(false);//this brings up the yes no pop up, on yes sends req
-  const [pendingCategory, setPendingCategory] = useState(null);//save the req on button click but dont send it yet
+  const [showModal, setShowModal] = useState(false); //this is for req submitted successfully(popup)
+  const [showConfirmModal, setShowConfirmModal] = useState(false); //this brings up the yes no pop up, on yes sends req
+  const [pendingCategory, setPendingCategory] = useState(null); //save the req on button click but dont send it yet
   const [user, setUser] = useState(null);
   const [message /*setMessage*/] = useState("");
 
   useEffect(() => {
-    //this is used to retrieve the client details from local storage (from role selections)
-    const storedUser = localStorage.getItem("user");
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-    }
+    const fetchUser = async () => {
+      try {
+        const res = await fetch("http://localhost:5000/auth/me", {
+          credentials: "include",
+        });
+        if (res.ok) {
+          const userData = await res.json();
+          localStorage.setItem("user", JSON.stringify(userData));
+          setUser(userData);
+        } else {
+          console.error("Failed to fetch user info");
+        }
+      } catch (err) {
+        console.error("Error fetching user info:", err);
+      }
+    };
+
+    fetchUser();
   }, []);
+
+  console.log("User in useEffect:", user); // Debugging line to check user data
+  console.log("User in localStorage:", localStorage.getItem("user")); // Debugging line to check localStorage
 
   const handleServiceSelection = async (category) => {
     if (!user || !user._id) {
@@ -86,7 +102,6 @@ const ClientHome = () => {
   }; */
 
   return (
-    
     <main className="client-home">
       <Navbar />
       <section>
@@ -187,49 +202,57 @@ const ClientHome = () => {
         </article>
 
         {/* Footer */}
-        <footer className="Ebrahimfooter">          
-            <section>
-              <p>&copy; 2025 SkillVerse. All rights reserved.</p>
-            </section>
+        <footer className="Ebrahimfooter">
+          <section>
+            <p>&copy; 2025 SkillVerse. All rights reserved.</p>
+          </section>
         </footer>
-
       </section>
       <Modal show={showModal} onHide={() => setShowModal(false)} centered>
-  <Modal.Header closeButton>
-    <Modal.Title>Request Submitted</Modal.Title>
-  </Modal.Header>
-  <Modal.Body>
-    Your service request was successfully submitted!
-  </Modal.Body>
-  <Modal.Footer>
-    <Button variant="primary" onClick={() => setShowModal(false)}>
-      Close
-    </Button>
-  </Modal.Footer>
-</Modal>
-<Modal show={showConfirmModal} onHide={() => setShowConfirmModal(false)} centered>
-  <Modal.Header closeButton>
-    <Modal.Title>Confirm Request</Modal.Title>
-  </Modal.Header>
-  <Modal.Body>
-    Are you sure you want to request a service for <strong>{pendingCategory}</strong>?
-  </Modal.Body>
-  <Modal.Footer>
-    <Button variant="secondary" onClick={() => setShowConfirmModal(false)}>
-      No
-    </Button>
-    <Button
-      variant="primary"
-      onClick={() => {
-        handleServiceSelection(pendingCategory);/*sends requested service using route when clicks yes*/
-        setShowConfirmModal(false);
-      }}
-    >
-      Yes
-    </Button>
-  </Modal.Footer>
-</Modal>
-
+        <Modal.Header closeButton>
+          <Modal.Title>Request Submitted</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          Your service request was successfully submitted!
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="primary" onClick={() => setShowModal(false)}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      <Modal
+        show={showConfirmModal}
+        onHide={() => setShowConfirmModal(false)}
+        centered
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Confirm Request</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          Are you sure you want to request a service for{" "}
+          <strong>{pendingCategory}</strong>?
+        </Modal.Body>
+        <Modal.Footer>
+          <Button
+            variant="secondary"
+            onClick={() => setShowConfirmModal(false)}
+          >
+            No
+          </Button>
+          <Button
+            variant="primary"
+            onClick={() => {
+              handleServiceSelection(
+                pendingCategory
+              ); /*sends requested service using route when clicks yes*/
+              setShowConfirmModal(false);
+            }}
+          >
+            Yes
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </main>
   );
 };

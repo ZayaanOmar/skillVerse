@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import './RoleSelection.css';
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import "./RoleSelection.css";
 
 const RoleSelection = () => {
   const navigate = useNavigate();
@@ -62,16 +62,24 @@ const RoleSelection = () => {
   };
 
   return (
-    <main className='role-selection'>
-      <section className='role-body'>
-        <p>Welcome to <em>SkillVerse</em>! We're excited to have you on board</p>
+    <main className="role-selection">
+      <section className="role-body">
+        <p>
+          Welcome to <em>SkillVerse</em>! We're excited to have you on board
+        </p>
         <h1>Choose Account Type</h1>
-        <section className='roles-container'>
-          <section className='client-description' onClick={() => selectRole("client")}>
+        <section className="roles-container">
+          <section
+            className="client-description"
+            onClick={() => selectRole("client")}
+          >
             <h2>Client</h2>
             <p>Find your dream freelancer — fast, easy, and Wi-Fi ready</p>
           </section>
-          <section className='freelancer-description' onClick={() => selectRole("freelancer")}>
+          <section
+            className="freelancer-description"
+            onClick={() => selectRole("freelancer")}
+          >
             <h2>Freelancer</h2>
             <p>Join the marketplace that gets you paid and praised</p>
           </section>

@@ -1,84 +1,112 @@
-const express = require('express');
-const ServiceRequest = require('../models/ServiceRequest');
-const User = require('../models/User');
-const Application = require('../models/Application');
+const express = require("express");
+const ServiceRequest = require("../models/ServiceRequest");
+const User = require("../models/User");
+const Application = require("../models/Application");
 const router = express.Router();
 //http://localhost:5000/api/service-requests/create (postman check)
 // Create a new service request (from client obs POST)
-router.post('/create', async (req, res) => {
-    const { clientId, serviceType } = req.body;
-  
-    try {//checks if client is actually existing 
-      console.log("Received clientId:", clientId);
+router.post("/create", async (req, res) => {
+  const { clientId, serviceType } = req.body;
 
-      const client = await User.findOne({ _id: clientId, role: 'client' });
-      const allUsers = await User.find({});
-      //console.log("All users in DB:", allUsers); 
-      //console.log("Sample user from DB:", user);
-      //console.log("Client from findById:", client);
-      if (!client) {
-        return res.status(400).json({ message: 'Client not found' });//client DNE in database
-      }
-      //this creates a new service request
-      const newServiceRequest = new ServiceRequest({
-        clientId,
-        serviceType,
+  try {
+    //checks if client is actually existing
+    console.log("Received clientId:", clientId);
+
+    const client = await User.findOne({ _id: clientId, role: "client" });
+    const allUsers = await User.find({});
+    //console.log("All users in DB:", allUsers);
+    //console.log("Sample user from DB:", user);
+    //console.log("Client from findById:", client);
+    if (!client) {
+      return res.status(400).json({ message: "Client not found" }); //client DNE in database
+    }
+    //this creates a new service request
+    const newServiceRequest = new ServiceRequest({
+      clientId,
+      serviceType,
+    });
+
+    await newServiceRequest.save();
+    res
+      .status(201)
+      .json({
+        message: "Service request created successfully",
+        newServiceRequest,
       });
-  
-      await newServiceRequest.save();
-      res.status(201).json({ message: 'Service request created successfully', newServiceRequest });
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: `Error creating service request: ${error.message}` });
-    }
-  });
-router.get('/all', async (req, res) => {
-    try {
-      const requests = await ServiceRequest.find({ freelancerId: null, status: 'pending' })
-        .populate('clientId', 'username')
-        .exec();
-  
-      res.status(200).json(requests);
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: 'Error fetching available service requests' });
-    }
-  });
+  } catch (error) {
+    console.error(error);
+    res
+      .status(500)
+      .json({ message: `Error creating service request: ${error.message}` });
+  }
+});
+router.get("/all", async (req, res) => {
+  try {
+    const requests = await ServiceRequest.find({
+      freelancerId: null,
+      status: "pending",
+    })
+      .populate("clientId", "username")
+      .exec();
+
+    res.status(200).json(requests);
+  } catch (error) {
+    console.error(error);
+    res
+      .status(500)
+      .json({ message: "Error fetching available service requests" });
+  }
+});
 // Freelancer applies to a service request
 //http://localhost:5000/api/service-requests/applications test
-router.post('/applications', async (req, res) => {
+router.post("/applications", async (req, res) => {
   const { jobId, freelancerId, coverLetter, price } = req.body; // <-- added price
 
   try {
-    const freelancer = await User.findOne({ _id: freelancerId, role: 'freelancer' });
+    const freelancer = await User.findOne({
+      _id: freelancerId,
+      role: "freelancer",
+    });
     if (!freelancer) {
-      return res.status(400).json({ message: 'Freelancer not found' });
+      return res.status(400).json({ message: "Freelancer not found" });
     }
 
     const job = await ServiceRequest.findById(jobId);
     if (!job) {
-      return res.status(400).json({ message: 'Service request not found' });
+      return res.status(400).json({ message: "Service request not found" });
     }
 
     if (job.freelancerId) {
-      return res.status(400).json({ message: 'This service request is already taken' });
+      return res
+        .status(400)
+        .json({ message: "This service request is already taken" });
     }
 
-    const existingApplication = await Application.findOne({ jobId, freelancerId });
+    const existingApplication = await Application.findOne({
+      jobId,
+      freelancerId,
+    });
     if (existingApplication) {
-      return res.status(400).json({ message: 'You have already applied for this job' });
+      return res
+        .status(400)
+        .json({ message: "You have already applied for this job" });
     }
 
-    const newApplication = new Application({ jobId, freelancerId, coverLetter, price });
+    const newApplication = new Application({
+      jobId,
+      freelancerId,
+      coverLetter,
+      price,
+    });
     await newApplication.save();
 
-    res.status(201).json({ message: 'Application submitted successfully', newApplication });
+    res
+      .status(201)
+      .json({ message: "Application submitted successfully", newApplication });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Error applying for service request' });
+    res.status(500).json({ message: "Error applying for service request" });
   }
 });
-
-
 
 module.exports = router;

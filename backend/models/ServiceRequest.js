@@ -1,10 +1,10 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const serviceRequestSchema = new mongoose.Schema(
   {
     clientId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'User', // Reference to the User model (the client making the request)
+      ref: "User", // Reference to the User model (the client making the request)
       required: true,
     },
     serviceType: {
@@ -13,19 +13,19 @@ const serviceRequestSchema = new mongoose.Schema(
     },
     freelancerId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'User', // Reference to the User model (the freelancer who accepts the request)
+      ref: "User", // Reference to the User model (the freelancer who accepts the request)
       default: null, // Initially set to null because no freelancer is assigned yet
     },
     status: {
       type: String,
-      enum: ['pending', 'accepted', 'completed'],
-      default: 'pending', // Default status is 'pending' until a freelancer accepts it
+      enum: ["pending", "accepted", "completed"],
+      default: "pending", // Default status is 'pending' until a freelancer accepts it
     },
     appliedFreelancers: [
       {
         freelancerId: {
           type: mongoose.Schema.Types.ObjectId,
-          ref: 'User', // Reference to the freelancer who applied
+          ref: "User", // Reference to the freelancer who applied
         },
         appliedAt: {
           type: Date,
@@ -47,4 +47,4 @@ const serviceRequestSchema = new mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model('ServiceRequest', serviceRequestSchema);
+module.exports = mongoose.model("ServiceRequest", serviceRequestSchema);
