@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
-
+import "./JobRequests.css";
 function JobRequests() {
   const [jobs, setJobs] = useState([]);
   const [error, setError] = useState("");
@@ -10,8 +10,15 @@ function JobRequests() {
   const [applicationSuccess, setApplicationSuccess] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [showResultModal, setShowResultModal] = useState(false);
+  const [freelancer, setFreelancer] = useState(null); // NEW STATE for freelancer
 
   useEffect(() => {
+    // Fetch logged-in freelancer from localStorage
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      setFreelancer(JSON.parse(storedUser));
+    }
+
     const fetchJobs = async () => {
       try {
         const res = await fetch("http://localhost:5000/api/service-requests/all", {
@@ -49,9 +56,12 @@ function JobRequests() {
       return;
     }
 
-    try {
-      const freelancerId = "680bf5c791b752bb1ac59cc0";
+    if (!freelancer || !freelancer._id) {
+      setApplicationError("Freelancer not logged in.");
+      return;
+    }
 
+    try {
       const res = await fetch("http://localhost:5000/api/service-requests/applications", {
         method: "POST",
         headers: {
@@ -59,7 +69,7 @@ function JobRequests() {
         },
         body: JSON.stringify({
           jobId: selectedJob._id,
-          freelancerId: freelancerId,
+          freelancerId: freelancer._id, // 👈 USE the logged-in freelancer ID
           coverLetter: coverLetter,
         }),
       });
@@ -80,8 +90,7 @@ function JobRequests() {
       console.error("Error applying for job:", err);
       setApplicationError("An error occurred while submitting your application");
       setApplicationSuccess(false);
-      setShowResultModal(true); // Show failure message
-
+      setShowResultModal(true);
     }
   };
 
@@ -112,21 +121,21 @@ function JobRequests() {
         <Modal.Body>
           <Form onSubmit={handleApply}>
             <Form.Group controlId="formCoverLetter">
-              <Form.Label>Cover Letter</Form.Label>
+              <Form.Label> Reason for applying: </Form.Label>
               <Form.Control
                 as="textarea"
                 rows={4}
                 value={coverLetter}
                 onChange={(e) => setCoverLetter(e.target.value)}
-                placeholder="Enter your cover letter here..."
+                placeholder="State your reason here..."
               />
             </Form.Group>
+            
             {applicationError && (
               <article style={{ color: "red", marginTop: "1rem" }}>{applicationError}</article>
             )}
           </Form>
         </Modal.Body>
-
         <Modal.Footer>
           <Button variant="secondary" onClick={() => setShowModal(false)}>
             Cancel

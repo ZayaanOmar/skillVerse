@@ -24,7 +24,10 @@ describe('Service Request Routes', () => {
       const mockRequest = { save: jest.fn(), clientId: 'client123', serviceType: 'web' };
 
       User.findOne.mockResolvedValue(mockClient);
-      ServiceRequest.mockImplementation(() => mockRequest);
+      ServiceRequest.mockImplementation(() => ({
+        save: jest.fn().mockResolvedValue({}),
+      }));
+      
 
       const res = await request(app)
         .post('/api/service-requests/create')
@@ -55,8 +58,11 @@ describe('Service Request Routes', () => {
             { _id: 'req124', serviceType: 'app', freelancerId: null, status: 'pending', clientId: 'client124' }
           ];
       
-          // Mock the populate and exec chain
-          ServiceRequest.find.mockResolvedValue(mockServiceRequests);
+          ServiceRequest.find.mockReturnValue({
+            populate: jest.fn().mockReturnThis(),
+            exec: jest.fn().mockResolvedValue(mockServiceRequests),
+          });
+          
       
           const res = await request(app).get('/api/service-requests/all');
           
@@ -97,7 +103,10 @@ describe('Service Request Routes', () => {
           User.findOne.mockResolvedValue(mockFreelancer);
           ServiceRequest.findById.mockResolvedValue(mockJob);
           Application.findOne.mockResolvedValue(null); // No existing application
-          Application.prototype.save.mockResolvedValue(mockApplication);
+          Application.mockImplementation(() => ({
+            save: jest.fn().mockResolvedValue(mockApplication)
+          }));
+          
       
           const res = await request(app)
             .post('/api/service-requests/applications')
