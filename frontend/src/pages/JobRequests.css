@@ -1,94 +1,40 @@
-.admin-dashboard-main {
+.available-jobs-main-jobRequest {
   padding: 2rem;
 }
 
-.admin-banner {
+.available-jobs-titl-jobRequest {
   text-align: center;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 }
 
-.admin-banner-title {
-  font-size: 2.5rem;
-  margin-bottom: 0.5rem;
-}
-
-.admin-banner-subtitle {
-  font-size: 1.5rem;
-  color: gray;
-}
-
-/* Analytics Section */
-.admin-analytics-section {
+.available-jobs-section-jobRequest {
+  margin-top: 1rem;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1.5rem;
-  margin-bottom: 3rem;
+  grid-template-columns: repeat(5, 1fr); /* 3 columns */
+  gap: 1.5rem; /* Space between the cards */
+  width: 1400px;
+  height: 600px;
 }
 
-.admin-analytics-card {
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  padding: 1.5rem;
-  text-align: center;
-  background-color: #f9f9f9;
+.available-job-card-jobRequest {
+border: 1px solid #ccc;
+border-radius: 8px;
+padding: 1rem;
+text-align: left;
+display: flex;
+flex-direction: column;
+justify-content: space-between;
+position: relative; /* important */
+height: 300px; /* set a fixed height for consistency */
+position: relative;
+height: 300px;
 }
 
-.admin-system-status {
-  color: green;
-  font-weight: bold;
-}
-
-/* Management Section */
-.admin-management-section {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
-  margin-bottom: 3rem;
-}
-
-.admin-management-card {
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  padding: 1.5rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.admin-management-button {
-  background-color: #12357c;
+.available-job-apply-button-jobRequest {
   color: white;
-  padding: 0.75rem;
-  border: none;
-  margin-top: 2rem;
-  cursor: pointer;
-  border-radius: 5px;
+  background-color: #12357c;
+  margin-top: 6rem;
   width: 100%;
-}
-
-.admin-management-button:hover {
-  background-color: #0e2b67;
-}
-
-/* Bottom Section */
-.admin-bottom-section {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.5rem;
-}
-
-.admin-recent-activity,
-.admin-announcements {
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  padding: 1.5rem;
-  background-color: #f9f9f9;
-}
-
-.admin-recent-activity ul {
-  padding-left: 1rem;
-}
-
-.admin-recent-activity li {
-  margin-bottom: 0.5rem;
+  padding: 0.5rem;
+  cursor: pointer;
 }

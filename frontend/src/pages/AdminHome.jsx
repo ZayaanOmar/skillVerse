@@ -16,7 +16,7 @@ const AdminHome = () => {
           <h1 className="banner-title">Dashboard</h1>
           <h2>Manage Your Site As an Admin</h2>
         </section>
-        <section className="description">
+        <section className="descriptionAdmin">
         </section>
         <section className="admin-analytics-section">
           <section className="admin-analytics-card">

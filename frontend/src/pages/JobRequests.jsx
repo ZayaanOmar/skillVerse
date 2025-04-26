@@ -96,25 +96,29 @@ function JobRequests() {
   };
 
   return (
-<main className="available-jobs-main">
-  <h1 className="available-jobs-title">Available Jobs</h1>
+<main className="available-jobs-main-jobRequest">
+  <h1 className="available-jobs-title-jobRequest">Available Jobs</h1>
   {error && <p>{error}</p>}
 
   {jobs.length === 0 ? (
     <p>No available jobs at the moment.</p>
   ) : (
-    <section className="available-jobs-section">
+    <section className="available-jobs-section-jobRequest">
       {jobs.map((job) => (
-        <article key={job._id} className="available-job-card">
+        <article key={job._id} className="available-job-card-jobRequest">
           <strong>Service Type:</strong> {job.serviceType} <br />
           <strong>Client:</strong> {job.clientId?.username || "N/A"} <br />
-          <button className="available-job-apply-button" onClick={() => handleJobSelection(job)}>
+          <button
+            className="available-job-apply-button-jobRequest"
+            onClick={() => handleJobSelection(job)}
+          >
             Apply
           </button>
         </article>
       ))}
     </section>
   )}
+
       <Modal show={showModal} onHide={() => setShowModal(false)}>
         <Modal.Header closeButton>
           <Modal.Title>Apply for: {selectedJob?.serviceType}</Modal.Title>
