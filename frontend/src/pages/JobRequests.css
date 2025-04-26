@@ -1,22 +1,22 @@
-main {
+.available-jobs-main {
     padding: 2rem;
   }
   
-  h1 {
+  .available-jobs-title {
     text-align: center;
     margin-bottom: 1rem;
   }
   
-  section {
+  .available-jobs-section {
     margin-top: 1rem;
     display: grid;
-    grid-template-columns: repeat(5, 1fr); /* 3 columns */
-    gap: 1.5rem; /* Space between the cards */
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1.5rem;
     width: 1400px;
     height: 600px;
   }
   
-  article {
+  .available-job-card {
     border: 1px solid #ccc;
     border-radius: 8px;
     padding: 1rem;
@@ -24,15 +24,15 @@ main {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    position: relative; /* important */
-    height: 300px; /* set a fixed height for consistency */
+    position: relative;
+    height: 300px;
   }
   
-  button {
+  .available-job-apply-button {
     color: white;
     background-color: #12357c;
     margin-top: 6rem;
-    width: 100%; /* Button spans the width of the card */
+    width: 100%;
     padding: 0.5rem;
     cursor: pointer;
   }
