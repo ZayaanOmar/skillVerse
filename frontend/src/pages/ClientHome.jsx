@@ -48,6 +48,32 @@ const ClientHome = () => {
     }
   };
 
+  const handlePay = async () => {
+    console.log("Button clicked!");
+    const email = "johndoe@example.com";
+
+    try{
+
+      const response = await axios.post("http://localhost:5000/payments/create-checkout-session", {
+      email: email,
+      amount: 1000
+      }, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+
+    console.log("Full response:", response);  
+    const { checkoutUrl } = response.data;
+
+    // Redirect user to the checkout page
+    window.location.href = checkoutUrl;
+
+  } catch (error) {
+    console.error("Error creating checkout session:", error);
+  }
+
+  };
   //Handling role change request by a user
 
   /* const [requestedRole, setRequestedRole] = useState("");
@@ -182,6 +208,7 @@ const ClientHome = () => {
                 Access powerful tools to manage your projects and teams with
                 ease.
               </p>
+              <button onClick={handlePay}>Checkout</button>
             </section>
           </section>
         </article>
