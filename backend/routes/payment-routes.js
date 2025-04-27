@@ -5,14 +5,12 @@ const router = express.Router();
 
 router.post('/create-checkout-session', async (req, res) => {
     const { email, amount } = req.body; 
-    console.log("Inside the post for the backend top");
 
     if (!email || !amount) {
         return res.status(400).json({ error: 'Email and amount are required' });
     }
 
     try{
-        console.log("Inside the try for the backend top");
         console.log("PAYSTACK_KEY:", process.env.PAYSTACK_SECRET_KEY ? "***loaded***" : "MISSING!");
         const paystackResponse = await axios.post('https://api.paystack.co/transaction/initialize', {
             email: email,
