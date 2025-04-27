@@ -9,8 +9,17 @@ const session = require("express-session");
 const passport = require("passport");
 const cors = require("cors");
 const serviceRequestRoutes = require("./routes/service-request-routes");
+const paymentRoutes = require("./routes/payment-routes")
+//const stripe = require('stripe')(process.env.STRIPE_PRIVATE_KEY);
 
 const app = express();
+
+//Testing for stripe payment
+const Items = new Map([
+  [1, {priceInCents: 10000, name: "Software Developer"}],
+  [2, {priceInCents: 20000, name: "Graphics Designer"}]
+])
+//
 
 app.use(
   cors({
@@ -41,6 +50,9 @@ app.use(passport.session());
 // Set up routes
 app.use("/auth", authRoutes);
 app.use("/users", userRoutes);
+
+//set up payment routes
+app.use("/payments", paymentRoutes);
 
 // Set up the service request routes (this should be before the app.listen)
 app.use("/api/service-requests", serviceRequestRoutes);

@@ -25,23 +25,13 @@ function TicketSupport() {
 
     fetchTickets();
   }, []);
+  
 
-  const handleDecision = async (ticketId, decision) => {
-    try {
-      const response = await axios.post(
-        "http://localhost:5000/users/process-request",
-        { ticketId, decision },
-        { withCredentials: true }
-      );
-      setSuccess(
-        `Request ${
-          decision === "approve" ? "approved" : "rejected"
-        } successfully`
-      );
-      setTickets(tickets.filter((ticket) => ticket._id !== ticketId));
-
-      // Log the response for debugging
-      console.log("Response from server:", response.data);
+  const handleDecision = async (ticketId, decision) =>{
+    try{
+      //const response = await axios.post("http://localhost:5000/users/process-request", {ticketId, decision}, {withCredentials: true});
+      setSuccess(`Request ${decision === 'approve' ? 'approved' : 'rejected'} successfully`);
+      setTickets(tickets.filter(ticket => ticket._id !== ticketId));
 
       // Success message disappear after 3 secs
       setTimeout(() => setSuccess(""), 3000);
