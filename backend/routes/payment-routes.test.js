@@ -1,13 +1,13 @@
 const request = require('supertest');
 const express = require('express');
-const paymentRoutes = require('./routes/payment-routes');
+const paymentRoutes = require("../routes/payment-routes");
 
 const axios = require('axios');
 jest.mock('axios'); // mock axios
 
 const app = express();
 app.use(express.json()); // allow parsing JSON
-app.use('/api/payment', paymentRoutes); // mount the router
+app.use('/payments', paymentRoutes); // mount the router
 
 describe('Payment Routes', () => {
     it('should return 400 when missing parameters', async () => {
@@ -47,7 +47,7 @@ describe('Payment Routes', () => {
         });
 
         const response = await request(app)
-            .post('/api/payment/create-checkout-session')
+            .post('/payments/create-checkout-session')
             .send({ email: 'test@example.com', amount: 1000 });
 
         expect(response.status).toBe(500);
@@ -59,7 +59,7 @@ describe('Payment Routes', () => {
         axios.post.mockRejectedValue(new Error('Network Error'));
 
         const response = await request(app)
-            .post('/api/payment/create-checkout-session')
+            .post('/payments/create-checkout-session')
             .send({ email: 'test@example.com', amount: 1000 });
 
         expect(response.status).toBe(500);

@@ -11,7 +11,7 @@ router.post('/create-checkout-session', async (req, res) => {
     }
 
     try{
-        console.log("PAYSTACK_KEY:", process.env.PAYSTACK_SECRET_KEY ? "***loaded***" : "MISSING!");
+        //console.log("PAYSTACK_KEY:", process.env.PAYSTACK_SECRET_KEY ? "***loaded***" : "MISSING!");
         const paystackResponse = await axios.post('https://api.paystack.co/transaction/initialize', {
             email: email,
             amount: amount * 100,

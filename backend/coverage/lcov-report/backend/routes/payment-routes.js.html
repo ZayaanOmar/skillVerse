@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/18</span>
+                <span class='fraction'>17/17</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/8</span>
+                <span class='fraction'>6/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/1</span>
+                <span class='fraction'>1/1</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/18</span>
+                <span class='fraction'>17/17</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -101,23 +101,21 @@
 <a name='L36'></a><a href='#L36'>36</a>
 <a name='L37'></a><a href='#L37'>37</a>
 <a name='L38'></a><a href='#L38'>38</a>
-<a name='L39'></a><a href='#L39'>39</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<a name='L39'></a><a href='#L39'>39</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -126,34 +124,36 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const express = <span class="cstat-no" title="statement not covered" >require('express');</span>
-<span class="cstat-no" title="statement not covered" >require("dotenv").config();</span>
-const axios = <span class="cstat-no" title="statement not covered" >require('axios');</span>
-const router = <span class="cstat-no" title="statement not covered" >express.Router();</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const express = require('express');
+require("dotenv").config();
+const axios = require('axios');
+const router = express.Router();
 &nbsp;
-<span class="cstat-no" title="statement not covered" >router.post('/create-checkout-session', <span class="fstat-no" title="function not covered" >as</span>ync (req, res) =&gt; {</span>
-    const { email, amount } = <span class="cstat-no" title="statement not covered" >req.body; </span>
+router.post('/create-checkout-session', async (req, res) =&gt; {
+    const { email, amount } = req.body; 
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    if (!email || !amount) {</span>
-<span class="cstat-no" title="statement not covered" >        return res.status(400).json({ error: 'Email and amount are required' });</span>
+    if (!email || !amount) {
+        return res.status(400).json({ error: 'Email and amount are required' });
     }
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    try{</span>
-<span class="cstat-no" title="statement not covered" >        console.log("PAYSTACK_KEY:", process.env.PAYSTACK_SECRET_KEY ? "***loaded***" : "MISSING!");</span>
-        const paystackResponse = <span class="cstat-no" title="statement not covered" >await axios.post('https://api.paystack.co/transaction/initialize', {</span>
+    try{
+        //console.log("PAYSTACK_KEY:", process.env.PAYSTACK_SECRET_KEY ? "***loaded***" : "MISSING!");
+        const paystackResponse = await axios.post('https://api.paystack.co/transaction/initialize', {
             email: email,
             amount: amount * 100,
             callback_url: "https://zoomquilt.org", // after payment, Paystack redirects here
@@ -164,19 +164,19 @@ const router = <span class="cstat-no" title="statement not covered" >express.Rou
             }
           });
 &nbsp;
-<span class="cstat-no" title="statement not covered" >          console.log("Paystack response:", paystackResponse.data);</span>
-<span class="cstat-no" title="statement not covered" >          if (paystackResponse.data.status === true) {</span>
-<span class="cstat-no" title="statement not covered" >            res.json({ checkoutUrl: paystackResponse.data.data.authorization_url });</span>
+          console.log("Paystack response:", paystackResponse.data);
+          if (paystackResponse.data.status === true) {
+            res.json({ checkoutUrl: paystackResponse.data.data.authorization_url });
           } else {
-<span class="cstat-no" title="statement not covered" >            res.status(500).json({ error: 'Error initializing Paystack transaction' });</span>
+            res.status(500).json({ error: 'Error initializing Paystack transaction' });
           }
         } catch (error) {
-<span class="cstat-no" title="statement not covered" >          console.error("Error with Paystack API:", error);</span>
-<span class="cstat-no" title="statement not covered" >          res.status(500).json({ error: 'Internal Server Error' });</span>
+          console.error("Error with Paystack API:", error);
+          res.status(500).json({ error: 'Internal Server Error' });
         }
 });
 &nbsp;
-<span class="cstat-no" title="statement not covered" >module.exports = router;</span>
+module.exports = router;
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
@@ -184,7 +184,7 @@ const router = <span class="cstat-no" title="statement not covered" >express.Rou
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-04-27T19:08:35.626Z
+                at 2025-04-27T19:32:36.745Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

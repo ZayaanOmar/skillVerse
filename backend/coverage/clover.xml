@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1745780915787" clover="3.2.0">
-  <project timestamp="1745780915787" name="All files">
-    <metrics statements="373" coveredstatements="80" conditionals="380" coveredconditionals="19" methods="80" coveredmethods="7" elements="833" coveredelements="106" complexity="0" loc="373" ncloc="373" packages="6" files="16" classes="16"/>
+<coverage generated="1745782356861" clover="3.2.0">
+  <project timestamp="1745782356862" name="All files">
+    <metrics statements="372" coveredstatements="97" conditionals="378" coveredconditionals="25" methods="80" coveredmethods="8" elements="830" coveredelements="130" complexity="0" loc="372" ncloc="372" packages="6" files="16" classes="16"/>
     <package name="backend">
       <metrics statements="27" coveredstatements="0" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
       <file name="server.js" path="C:\Users\Admin\Desktop\Bayanda\freelancer-management-platform\backend\server.js">
@@ -281,7 +281,7 @@
       </file>
     </package>
     <package name="backend.routes">
-      <metrics statements="146" coveredstatements="44" conditionals="36" coveredconditionals="10" methods="12" coveredmethods="3"/>
+      <metrics statements="145" coveredstatements="61" conditionals="34" coveredconditionals="16" methods="12" coveredmethods="4"/>
       <file name="auth-routes.js" path="C:\Users\Admin\Desktop\Bayanda\freelancer-management-platform\backend\routes\auth-routes.js">
         <metrics statements="18" coveredstatements="0" conditionals="4" coveredconditionals="0" methods="4" coveredmethods="0"/>
         <line num="1" count="0" type="stmt"/>
@@ -304,25 +304,24 @@
         <line num="55" count="0" type="stmt"/>
       </file>
       <file name="payment-routes.js" path="C:\Users\Admin\Desktop\Bayanda\freelancer-management-platform\backend\routes\payment-routes.js">
-        <metrics statements="18" coveredstatements="0" conditionals="8" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="1" count="0" type="stmt"/>
-        <line num="2" count="0" type="stmt"/>
-        <line num="3" count="0" type="stmt"/>
-        <line num="4" count="0" type="stmt"/>
-        <line num="6" count="0" type="stmt"/>
-        <line num="7" count="0" type="stmt"/>
-        <line num="9" count="0" type="cond" truecount="0" falsecount="4"/>
-        <line num="10" count="0" type="stmt"/>
-        <line num="13" count="0" type="stmt"/>
-        <line num="14" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="15" count="0" type="stmt"/>
-        <line num="26" count="0" type="stmt"/>
-        <line num="27" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="28" count="0" type="stmt"/>
-        <line num="30" count="0" type="stmt"/>
-        <line num="33" count="0" type="stmt"/>
-        <line num="34" count="0" type="stmt"/>
-        <line num="38" count="0" type="stmt"/>
+        <metrics statements="17" coveredstatements="17" conditionals="6" coveredconditionals="6" methods="1" coveredmethods="1"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="6" count="1" type="stmt"/>
+        <line num="7" count="4" type="stmt"/>
+        <line num="9" count="4" type="cond" truecount="4" falsecount="0"/>
+        <line num="10" count="1" type="stmt"/>
+        <line num="13" count="3" type="stmt"/>
+        <line num="15" count="3" type="stmt"/>
+        <line num="26" count="2" type="stmt"/>
+        <line num="27" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="28" count="1" type="stmt"/>
+        <line num="30" count="1" type="stmt"/>
+        <line num="33" count="1" type="stmt"/>
+        <line num="34" count="1" type="stmt"/>
+        <line num="38" count="1" type="stmt"/>
       </file>
       <file name="service-request-routes.js" path="C:\Users\Admin\Desktop\Bayanda\freelancer-management-platform\backend\routes\service-request-routes.js">
         <metrics statements="44" coveredstatements="44" conditionals="10" coveredconditionals="10" methods="3" coveredmethods="3"/>
