@@ -10,6 +10,7 @@ const passport = require("passport");
 const cors = require("cors");
 const serviceRequestRoutes = require("./routes/service-request-routes");
 const paymentRoutes = require("./routes/payment-routes");
+const applicationRoutes = require("./routes/application-routes");
 //const stripe = require('stripe')(process.env.STRIPE_PRIVATE_KEY);
 
 const app = express();
@@ -49,6 +50,7 @@ app.use(passport.session());
 // Set up routes
 app.use("/auth", authRoutes);
 app.use("/users", userRoutes);
+app.use("/api/applications", applicationRoutes);
 
 //set up payment routes
 app.use("/payments", paymentRoutes);

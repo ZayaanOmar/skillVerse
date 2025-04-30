@@ -3,6 +3,7 @@ import "./ClientHome.css";
 import Navbar from "../components/Navbar";
 import axios from "axios";
 import { Modal, Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 const ClientHome = () => {
   const [showModal, setShowModal] = useState(false); //this is for req submitted successfully(popup)
@@ -14,6 +15,8 @@ const ClientHome = () => {
   const [message /*setMessage*/] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -248,7 +251,10 @@ const ClientHome = () => {
                     <p>
                       <strong>Status:</strong> {job.status}
                     </p>
-                    <button className="btn btn-outline-primary">
+                    <button
+                      className="btn btn-outline-primary"
+                      onClick={() => navigate(`/myjobs/${job._id}`)}
+                    >
                       View Details
                     </button>
                   </article>

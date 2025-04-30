@@ -8,9 +8,9 @@ import FreelancerHome from "./pages/FreelancerHome";
 import FreelancerProfile from "./pages/FreelancerProfile";
 import TicketSupport from "./pages/TicketSupport";
 import AdminHome from "./pages/AdminHome";
+import JobApplications from "./pages/JobApplications";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-import ViewFreelancers from "./pages/ViewFreelancers";
 function App() {
   const user = JSON.parse(localStorage.getItem("user"));
 
@@ -27,7 +27,7 @@ function App() {
         <Route path="/roles" element={<RoleSelection />} />
         <Route path="/freelancer/jobs" element={<JobRequests />} />
         <Route path="/profile" element={<FreelancerProfile />} />
-        <Route path="/view/freelancers" element={<ViewFreelancers />} />
+        <Route path="/myjobs/:jobId" element={<JobApplications />} />
         <Route path="/admin/support" element={<TicketSupport />} />
       </Routes>
     </Router>
