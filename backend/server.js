@@ -9,17 +9,16 @@ const session = require("express-session");
 const passport = require("passport");
 const cors = require("cors");
 const serviceRequestRoutes = require("./routes/service-request-routes");
-const paymentRoutes = require("./routes/payment-routes")
+const paymentRoutes = require("./routes/payment-routes");
 //const stripe = require('stripe')(process.env.STRIPE_PRIVATE_KEY);
 
 const app = express();
 
 //Testing for stripe payment
 const Items = new Map([
-  [1, {priceInCents: 10000, name: "Software Developer"}],
-  [2, {priceInCents: 20000, name: "Graphics Designer"}]
-])
-//
+  [1, { priceInCents: 10000, name: "Software Developer" }],
+  [2, { priceInCents: 20000, name: "Graphics Designer" }],
+]);
 
 app.use(
   cors({
@@ -63,4 +62,5 @@ app.listen(PORT, () => {
   connectDB(); // Connects to the database
   console.log(`Server running on port ${PORT}`);
 });
+
 module.exports = app;
