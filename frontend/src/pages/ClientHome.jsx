@@ -43,6 +43,10 @@ const ClientHome = () => {
 
   useEffect(() => {
     const fetchJobs = async () => {
+      if (!userId || userId === null) {
+        console.error("User ID is not available or null");
+        return;
+      }
       try {
         const res = await fetch(
           `http://localhost:5000/api/service-requests/jobs/${userId}`,
@@ -236,8 +240,11 @@ const ClientHome = () => {
 
         <section className="section-jobs">
           <h1 className="header-text">Your Current Job Requests</h1>
-          {error && <p>{error}</p>}
-          {success && <p>{success}</p>}
+          <h5>
+            Manage your current jobs. View applications for your pending
+            requests, and track progress for your jobs that are currently being
+            worked on.
+          </h5>
           {jobs.length === 0 ? (
             <p>No available jobs at the moment.</p>
           ) : (

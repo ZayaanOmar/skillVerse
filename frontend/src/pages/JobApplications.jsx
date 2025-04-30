@@ -27,6 +27,20 @@ const ViewFreelancers = () => {
     fetchApplications();
   }, [jobId]);
 
+  const handleAccept = async (applicationId) => {
+    try {
+      const response = await axios.post(
+        `http://localhost:5000/api/applications/jobs/accept/${applicationId}`,
+        {},
+        { withCredentials: true }
+      );
+      alert("Application Accepted"); // Show success message
+    } catch (error) {
+      console.error("Error accepting application:", error);
+      alert("Error accepting application"); // Show error message
+    }
+  };
+
   return (
     <main>
       <section>
@@ -49,7 +63,9 @@ const ViewFreelancers = () => {
                     {application.coverLetter}
                   </p>
                 )}
-                <button>Accept Application</button>
+                <button onClick={() => handleAccept(application._id)}>
+                  Accept Application
+                </button>
               </article>
             ))}
           </section>
