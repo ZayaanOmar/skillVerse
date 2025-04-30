@@ -18,21 +18,9 @@ const serviceRequestSchema = new mongoose.Schema(
     },
     status: {
       type: String,
-      enum: ["pending", "accepted", "completed"],
-      default: "pending", // Default status is 'pending' until a freelancer accepts it
+      enum: ["Pending", "Accepted", "Completed"],
+      default: "Pending", // Default status is 'pending' until a freelancer accepts it
     },
-    appliedFreelancers: [
-      {
-        freelancerId: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: "User", // Reference to the freelancer who applied
-        },
-        appliedAt: {
-          type: Date,
-          default: Date.now, // Automatically records when the freelancer applied
-        },
-      },
-    ],
     createdAt: {
       type: Date,
       default: Date.now, // Automatically sets the date when the service request is created

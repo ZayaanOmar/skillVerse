@@ -13,7 +13,7 @@ router.post("/create", async (req, res) => {
     console.log("Received clientId:", clientId);
 
     const client = await User.findOne({ _id: clientId, role: "client" });
-    const allUsers = await User.find({});
+    //const allUsers = await User.find({});
     //console.log("All users in DB:", allUsers);
     //console.log("Sample user from DB:", user);
     //console.log("Client from findById:", client);
@@ -27,12 +27,10 @@ router.post("/create", async (req, res) => {
     });
 
     await newServiceRequest.save();
-    res
-      .status(201)
-      .json({
-        message: "Service request created successfully",
-        newServiceRequest,
-      });
+    res.status(201).json({
+      message: "Service request created successfully",
+      newServiceRequest,
+    });
   } catch (error) {
     console.error(error);
     res
@@ -44,7 +42,7 @@ router.get("/all", async (req, res) => {
   try {
     const requests = await ServiceRequest.find({
       freelancerId: null,
-      status: "pending",
+      status: "Pending",
     })
       .populate("clientId", "username")
       .exec();
@@ -106,6 +104,23 @@ router.post("/applications", async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Error applying for service request" });
+  }
+});
+
+router.get("/jobs/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const jobs = await ServiceRequest.find({ clientId: id })
+      .populate("clientId", "username")
+      .exec();
+    if (!jobs) {
+      return res.status(404).json({ message: "Job not found" });
+    }
+    console.log("Jobs fetched:", jobs); // Debugging line to check fetched jobs
+    res.status(200).json(jobs);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error fetching job details" });
   }
 });
 

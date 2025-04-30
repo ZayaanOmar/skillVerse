@@ -83,7 +83,7 @@ const AdminHome = () => {
               </section>
             </section>
 
-            <section class="col-4">
+            <section className="col-4">
               <section className="card">
                 <section className="card-body">
                   <h5 className="card-title">

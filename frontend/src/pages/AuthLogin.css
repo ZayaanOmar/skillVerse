@@ -1,10 +1,10 @@
 .auth-container {
-  height: 90vh; 
+  height: 90vh;
   display: flex;
-  justify-content: center; 
-  align-items: center; 
-  margin-top: -20px; 
-  overflow: hidden; 
+  justify-content: center;
+  align-items: center;
+  margin-top: -20px;
+  overflow: hidden;
 }
 
 .left-panel {
@@ -27,12 +27,13 @@
   margin-right: 8px;
   color: #fff;
 }
- 
-.welcomeHeading, .welcomeText{
-  color: black
+
+.welcomeHeading,
+.welcomeText {
+  color: black;
 }
 
-.btn.btn-outline-dark{
+.btn.btn-outline-dark {
   background-color: white;
   width: 65%;
   margin: 0 auto;
@@ -45,20 +46,19 @@
 }
 
 .btn.btn-outline-dark:hover {
-  background-color: #343a40; 
-  color: white; 
-  border-color: #343a40; 
-  transform: scale(1.05); 
+  background-color: #343a40;
+  color: white;
+  border-color: #343a40;
+  transform: scale(1.05);
 }
 
-.button-section{
+.button-section {
   margin-top: 80px;
   gap: 20px;
 }
 
 .right-panel-text {
-  text-align: center; 
-  width: 100%; 
-  margin: 0 auto; 
+  text-align: center;
+  width: 100%;
+  margin: 0 auto;
 }
-
