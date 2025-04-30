@@ -12,8 +12,9 @@
     "testEnvironment": "node",
     "collectCoverage": true,
     "collectCoverageFrom": [
-      "**/*js",
-      "!*/node_modules/*"
+      "**/*.js",
+      "!*/node_modules/*",
+      "!**/coverage/lcov-report/**"
     ],
     "coverageDirectory": "./coverage"
   },
