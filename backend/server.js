@@ -16,6 +16,10 @@ const MongoStore = require("connect-mongo"); // for storing sessions in MongoDB
 
 const app = express();
 
+if (process.env.NODE_ENV === "production") {
+  app.set("trust proxy", 1);
+}
+
 //Testing for stripe payment
 const Items = new Map([
   [1, { priceInCents: 10000, name: "Software Developer" }],
