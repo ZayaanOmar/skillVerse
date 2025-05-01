@@ -17,7 +17,10 @@ const FRONTEND_URL = process.env.FRONTEND_URL || "http://localhost:3000";
 const NODE_ENV = process.env.NODE_ENV || "development";
 
 // Set callback URL based on environment
-const callbackURL = "/auth/google/callback";
+const callbackURL =
+  process.env.NODE_ENV === "production"
+    ? "https://skillverse-backend.azurewebsites.net/auth/google/callback"
+    : "http://localhost:5000/auth/google/callback"; // for local development
 
 passport.use(
   new GoogleStrategy(
