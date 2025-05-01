@@ -3,6 +3,8 @@ import "./ClientHome.css";
 import Navbar from "../components/Navbar";
 import axios from "axios";
 import { Modal, Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import API_URL from "../config/api";
 
 const ClientHome = () => {
   const [showModal, setShowModal] = useState(false); //this is for req submitted successfully(popup)
@@ -15,10 +17,12 @@ const ClientHome = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = await fetch("http://localhost:5000/auth/me", {
+        const res = await fetch(`${API_URL}/auth/me`, {
           credentials: "include",
         });
         if (res.ok) {
@@ -40,9 +44,13 @@ const ClientHome = () => {
 
   useEffect(() => {
     const fetchJobs = async () => {
+      if (!userId || userId === null) {
+        console.error("User ID is not available or null");
+        return;
+      }
       try {
         const res = await fetch(
-          `http://localhost:5000/api/service-requests/jobs/${userId}`,
+          `${API_URL}/api/service-requests/jobs/${userId}`,
           {
             method: "GET",
             credentials: "include",
@@ -54,8 +62,10 @@ const ClientHome = () => {
           setJobs(data);
           setError(""); // Clear error if fetch is successful
           setSuccess("Jobs fetched successfully!"); // Set success message
+          console.log(success);
         } else {
           setError("Failed to fetch jobs");
+          console.log(error);
         }
       } catch (err) {
         setError("Error fetching jobs: " + err.message);
@@ -63,7 +73,7 @@ const ClientHome = () => {
     };
 
     fetchJobs();
-  }, [userId]); // Fetch jobs whenever userId is updated
+  }, [userId, error, success]); // Fetch jobs whenever userId is updated
 
   console.log("User in useEffect:", user); // Debugging line to check user data
   console.log("User ID:", user ? user._id : "User not available"); // Debugging line to check user ID
@@ -84,7 +94,7 @@ const ClientHome = () => {
       });
 
       const response = await axios.post(
-        "http://localhost:5000/api/service-requests/create",
+        `${API_URL}/api/service-requests/create`,
         {
           clientId: user._id,
           serviceType: category,
@@ -106,7 +116,7 @@ const ClientHome = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/payments/create-checkout-session",
+        `${API_URL}/payments/create-checkout-session`,
         {
           email: email,
           amount: 1000,
@@ -233,8 +243,11 @@ const ClientHome = () => {
 
         <section className="section-jobs">
           <h1 className="header-text">Your Current Job Requests</h1>
-          {error && <p>{error}</p>}
-          {success && <p>{success}</p>}
+          <h5>
+            Manage your current jobs. View applications for your pending
+            requests, and track progress for your jobs that are currently being
+            worked on.
+          </h5>
           {jobs.length === 0 ? (
             <p>No available jobs at the moment.</p>
           ) : (
@@ -248,7 +261,10 @@ const ClientHome = () => {
                     <p>
                       <strong>Status:</strong> {job.status}
                     </p>
-                    <button className="btn btn-outline-primary">
+                    <button
+                      className="btn btn-outline-primary"
+                      onClick={() => navigate(`/myjobs/${job._id}`)}
+                    >
                       View Details
                     </button>
                   </article>

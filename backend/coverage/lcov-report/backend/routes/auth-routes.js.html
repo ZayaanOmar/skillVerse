@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">45.45% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>9/18</span>
+                <span class='fraction'>10/22</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">33.33% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/4</span>
+                <span class='fraction'>2/6</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">45.45% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>9/18</span>
+                <span class='fraction'>10/22</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line medium'></div>
+    <div class='status-line low'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -118,7 +118,14 @@
 <a name='L53'></a><a href='#L53'>53</a>
 <a name='L54'></a><a href='#L54'>54</a>
 <a name='L55'></a><a href='#L55'>55</a>
-<a name='L56'></a><a href='#L56'>56</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L56'></a><a href='#L56'>56</a>
+<a name='L57'></a><a href='#L57'>57</a>
+<a name='L58'></a><a href='#L58'>58</a>
+<a name='L59'></a><a href='#L59'>59</a>
+<a name='L60'></a><a href='#L60'>60</a>
+<a name='L61'></a><a href='#L61'>61</a>
+<a name='L62'></a><a href='#L62'>62</a>
+<a name='L63'></a><a href='#L63'>63</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -127,6 +134,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
@@ -152,18 +161,23 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -182,6 +196,8 @@ router.get("/login", (req, res) =&gt; {
   //do something to login
 });
 */
+&nbsp;
+const FRONTEND_URL = process.env.FRONTEND_URL || "http://localhost:3000";
 &nbsp;
 //no real purpose - just to display while testing
 router.get("/", (req, res) =&gt; {
@@ -206,19 +222,24 @@ router.get(
 router.get("/google/callback", passport.authenticate("google"), <span class="fstat-no" title="function not covered" >(r</span>eq, res) =&gt; {
   // to access currently logged in user : res.send(req.user)
   //res.send("You Reached the Callback URI");
+<span class="cstat-no" title="statement not covered" >  console.log(req.user); </span>// Log the user info for debugging
   const isNewUser = <span class="cstat-no" title="statement not covered" >req.user?.role === undefined;</span> // Assuming role is not yet set for new users
 &nbsp;
 <span class="cstat-no" title="statement not covered" >  if (isNewUser) {</span>
-<span class="cstat-no" title="statement not covered" >    res.redirect(`http://localhost:3000/roles?userId=${req.user._id}`); </span>// Frontend route for setting role
+<span class="cstat-no" title="statement not covered" >    res.redirect(`${FRONTEND_URL}/roles?userId=${req.user._id}`); </span>// Frontend route for setting role
     //userID needs to be fetched for request purposes
   } else {
     const user_role = <span class="cstat-no" title="statement not covered" >req.user.role;</span>
-<span class="cstat-no" title="statement not covered" >    res.redirect(`http://localhost:3000/${user_role}/home`);</span>
+<span class="cstat-no" title="statement not covered" >    res.redirect(`${FRONTEND_URL}/${user_role}/home`);</span>
   }
   // redirect the user to a certain page
   //res.redirect()
 });
+&nbsp;
 router.get("/me", <span class="fstat-no" title="function not covered" >(r</span>eq, res) =&gt; {
+<span class="cstat-no" title="statement not covered" >  console.log("User Info:", req.user); </span>// Log the user info for debugging
+<span class="cstat-no" title="statement not covered" >  console.log("Session Info:", req.session); </span>// Log the session info for debugging
+&nbsp;
   //gets current logged in users info from session for reqs
 <span class="cstat-no" title="statement not covered" >  if (req.user) {</span>
 <span class="cstat-no" title="statement not covered" >    res.status(200).json(req.user);</span>
@@ -235,7 +256,7 @@ module.exports = router;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-04-30T23:18:32.586Z
+                at 2025-05-01T23:04:47.661Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

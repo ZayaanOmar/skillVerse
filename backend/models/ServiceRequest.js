@@ -18,16 +18,8 @@ const serviceRequestSchema = new mongoose.Schema(
     },
     status: {
       type: String,
-      enum: ["Pending", "Accepted", "Completed"],
+      enum: ["Pending", "Accepted", "Completed", "In Progress"],
       default: "Pending", // Default status is 'pending' until a freelancer accepts it
-    },
-    createdAt: {
-      type: Date,
-      default: Date.now, // Automatically sets the date when the service request is created
-    },
-    updatedAt: {
-      type: Date,
-      default: Date.now, // Automatically sets the date when the service request is updated
     },
   },
   {

@@ -1,11 +1,12 @@
 import React from "react";
 import "./AuthLogin.css";
 import loginImage from "./images/Login-image.png";
+import API_URL from "../config/api";
 
 const AuthOptions = () => {
   const handleGoogleLogin = () => {
     console.log("Logging in with Google...");
-    window.location.href = "http://localhost:5000/auth/google";
+    window.location.href = `${API_URL}/auth/google`;
   };
 
   return (

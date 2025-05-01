@@ -2,51 +2,52 @@ const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth20");
 const User = require("../models/User");
 
-//get user id from mongoDB not GoogleID to send it on next stage (cookie)
 passport.serializeUser((user, done) => {
   done(null, user.id);
 });
 
-// decode the cookie sent back to us to retrieve the user id to check whose id it is
 passport.deserializeUser((id, done) => {
   User.findById(id).then((user) => {
-    //pass user to next stage
     done(null, user);
   });
 });
 
+// Get the frontend URL from environment variable or fallback to localhost for development
+const FRONTEND_URL = process.env.FRONTEND_URL || "http://localhost:3000";
+const NODE_ENV = process.env.NODE_ENV || "development";
+
+// Set callback URL based on environment
+const callbackURL =
+  process.env.NODE_ENV === "production"
+    ? "https://skillverse-backend.azurewebsites.net/auth/google/callback"
+    : "http://localhost:5000/auth/google/callback"; // for local development
+
 passport.use(
   new GoogleStrategy(
     {
-      //options for the strategy
-      callbackURL: "/auth/google/callback",
+      callbackURL: callbackURL,
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     },
     async (accessToken, refreshToken, profile, done) => {
-      /*passport callback function
-       * accessToken: received from google, allows us to alter user's profile
-       * refreshToken: refresh accessToken (accessToken expires)
-       * profile: information that passport retrieves about user profile
-       * done: function we must call when we are done with this callback function
-       */
+      try {
+        const existingUser = await User.findOne({ googleID: profile.id });
 
-      const existingUser = await User.findOne({ googleID: profile.id });
-
-      if (existingUser) {
-        //user already exists, must be logged in
-        done(null, existingUser);
-
-        console.log(`Logging in User ${profile.id}`);
-      } else {
-        //New User Registering
-        const newUser = new User({
-          googleID: profile.id,
-          username: profile.displayName,
-        });
-        await newUser.save();
-        console.log(`New User Created: ${newUser}`);
-        done(null, newUser);
+        if (existingUser) {
+          console.log(`Logging in User ${profile.id}`);
+          return done(null, existingUser);
+        } else {
+          const newUser = new User({
+            googleID: profile.id,
+            username: profile.displayName,
+          });
+          await newUser.save();
+          console.log(`New User Created: ${newUser}`);
+          return done(null, newUser);
+        }
+      } catch (error) {
+        console.error("Error in Google strategy callback:", error);
+        return done(error, null);
       }
     }
   )
