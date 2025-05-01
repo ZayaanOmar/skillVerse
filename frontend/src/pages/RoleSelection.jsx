@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./RoleSelection.css";
+import API_URL from "../config/api";
 
 const RoleSelection = () => {
   const navigate = useNavigate();
@@ -8,7 +9,7 @@ const RoleSelection = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = await fetch("http://localhost:5000/auth/me", {
+        const res = await fetch(`${API_URL}/auth/me`, {
           credentials: "include",
         });
 
@@ -29,7 +30,7 @@ const RoleSelection = () => {
 
   const selectRole = async (role) => {
     try {
-      const res = await fetch("http://localhost:5000/users/set-role", {
+      const res = await fetch(`${API_URL}/users/set-role`, {
         method: "POST",
         credentials: "include",
         headers: {
@@ -39,7 +40,7 @@ const RoleSelection = () => {
       });
 
       if (res.ok) {
-        const userRes = await fetch("http://localhost:5000/auth/me", {
+        const userRes = await fetch(`${API_URL}/auth/me`, {
           credentials: "include",
         });
 

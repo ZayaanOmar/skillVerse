@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Table, Button, Badge, Alert } from "react-bootstrap";
 import "./TicketSupport.css"; // link styles
 import axios from "axios";
+import API_URL from "../config/api";
 
 function TicketSupport() {
   const [tickets, setTickets] = useState([]);
@@ -11,7 +12,7 @@ function TicketSupport() {
   useEffect(() => {
     const fetchTickets = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/users/alltickets", {
+        const res = await axios.get(`${API_URL}/users/alltickets`, {
           withCredentials: true,
         });
 

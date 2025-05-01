@@ -5,6 +5,7 @@ import { FaStar, FaMapMarkerAlt, FaEnvelope } from "react-icons/fa";
 import Navbar from "../components/Navbar";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import API_URL from "../config/api";
 
 const ViewFreelancers = () => {
   const { jobId } = useParams(); // Get the jobId from the URL parameters
@@ -15,7 +16,7 @@ const ViewFreelancers = () => {
     const fetchApplications = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/applications/jobs/${jobId}`
+          `${API_URL}/api/applications/jobs/${jobId}`
         );
         setApplications(response.data);
         console.log("Applications:", response.data);
@@ -30,7 +31,7 @@ const ViewFreelancers = () => {
   const handleAccept = async (applicationId) => {
     try {
       const response = await axios.post(
-        `http://localhost:5000/api/applications/jobs/accept/${applicationId}`,
+        `${API_URL}/api/applications/jobs/accept/${applicationId}`,
         {},
         { withCredentials: true }
       );

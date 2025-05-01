@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
 import "./JobRequests.css";
+import API_URL from "../config/api";
+
 function JobRequests() {
   const [jobs, setJobs] = useState([]);
   const [error, setError] = useState("");
@@ -21,12 +23,9 @@ function JobRequests() {
 
     const fetchJobs = async () => {
       try {
-        const res = await fetch(
-          "http://localhost:5000/api/service-requests/all",
-          {
-            credentials: "include",
-          }
-        );
+        const res = await fetch(`${API_URL}/api/service-requests/all`, {
+          credentials: "include",
+        });
 
         if (res.ok) {
           const data = await res.json();
@@ -65,21 +64,18 @@ function JobRequests() {
     }
 
     try {
-      const res = await fetch(
-        "http://localhost:5000/api/service-requests/applications",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            jobId: selectedJob._id,
-            freelancerId: freelancer._id, // 👈 USE the logged-in freelancer ID
-            coverLetter: coverLetter,
-            price: fee,
-          }),
-        }
-      );
+      const res = await fetch(`${API_URL}/api/service-requests/applications`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          jobId: selectedJob._id,
+          freelancerId: freelancer._id, // 👈 USE the logged-in freelancer ID
+          coverLetter: coverLetter,
+          price: fee,
+        }),
+      });
 
       if (res.ok) {
         setApplicationSuccess(true);

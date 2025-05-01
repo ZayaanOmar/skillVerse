@@ -4,6 +4,7 @@ import Navbar from "../components/Navbar";
 import axios from "axios";
 import { Modal, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import API_URL from "../config/api";
 
 const ClientHome = () => {
   const [showModal, setShowModal] = useState(false); //this is for req submitted successfully(popup)
@@ -21,7 +22,7 @@ const ClientHome = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = await fetch("http://localhost:5000/auth/me", {
+        const res = await fetch(`${API_URL}/auth/me`, {
           credentials: "include",
         });
         if (res.ok) {
@@ -49,7 +50,7 @@ const ClientHome = () => {
       }
       try {
         const res = await fetch(
-          `http://localhost:5000/api/service-requests/jobs/${userId}`,
+          `${API_URL}/api/service-requests/jobs/${userId}`,
           {
             method: "GET",
             credentials: "include",
@@ -91,7 +92,7 @@ const ClientHome = () => {
       });
 
       const response = await axios.post(
-        "http://localhost:5000/api/service-requests/create",
+        `${API_URL}/api/service-requests/create`,
         {
           clientId: user._id,
           serviceType: category,
@@ -113,7 +114,7 @@ const ClientHome = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/payments/create-checkout-session",
+        `${API_URL}/payments/create-checkout-session`,
         {
           email: email,
           amount: 1000,

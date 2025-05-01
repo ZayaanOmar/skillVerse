@@ -23,8 +23,11 @@ const Items = new Map([
 
 app.use(
   cors({
-    origin: "http://localhost:3000", // Allow requests from your frontend
-    credentials: true, // Allow cookies/session info
+    origin:
+      process.env.NODE_ENV === "production"
+        ? process.env.FRONTEND_URL // Your Azure Static Web App URL
+        : "http://localhost:3000",
+    credentials: true,
   })
 );
 
