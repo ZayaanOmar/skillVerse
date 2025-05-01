@@ -62,8 +62,10 @@ const ClientHome = () => {
           setJobs(data);
           setError(""); // Clear error if fetch is successful
           setSuccess("Jobs fetched successfully!"); // Set success message
+          console.log(success);
         } else {
           setError("Failed to fetch jobs");
+          console.log(error);
         }
       } catch (err) {
         setError("Error fetching jobs: " + err.message);

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "./JobApplications.css"; // Importing CSS style file
-import { Card, Button, Badge } from "react-bootstrap";
-import { FaStar, FaMapMarkerAlt, FaEnvelope } from "react-icons/fa";
-import Navbar from "../components/Navbar";
+//import { Card, Button, Badge } from "react-bootstrap";
+//import { FaStar, FaMapMarkerAlt, FaEnvelope } from "react-icons/fa";
+//import Navbar from "../components/Navbar";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import API_URL from "../config/api";
@@ -30,7 +30,7 @@ const ViewFreelancers = () => {
 
   const handleAccept = async (applicationId) => {
     try {
-      const response = await axios.post(
+      await axios.post(
         `${API_URL}/api/applications/jobs/accept/${applicationId}`,
         {},
         { withCredentials: true }
