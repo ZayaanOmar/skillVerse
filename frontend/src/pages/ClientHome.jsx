@@ -73,7 +73,7 @@ const ClientHome = () => {
     };
 
     fetchJobs();
-  }, [userId]); // Fetch jobs whenever userId is updated
+  }, [userId, error, success]); // Fetch jobs whenever userId is updated
 
   console.log("User in useEffect:", user); // Debugging line to check user data
   console.log("User ID:", user ? user._id : "User not available"); // Debugging line to check user ID
