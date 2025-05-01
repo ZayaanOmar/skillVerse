@@ -45,6 +45,7 @@ router.get("/google/callback", passport.authenticate("google"), (req, res) => {
   // redirect the user to a certain page
   //res.redirect()
 });
+
 router.get("/me", (req, res) => {
   console.log("User Info:", req.user); // Log the user info for debugging
   console.log("Session Info:", req.session); // Log the session info for debugging
