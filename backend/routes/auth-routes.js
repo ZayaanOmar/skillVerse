@@ -33,6 +33,7 @@ router.get(
 router.get("/google/callback", passport.authenticate("google"), (req, res) => {
   // to access currently logged in user : res.send(req.user)
   //res.send("You Reached the Callback URI");
+  console.log(req.user); // Log the user info for debugging
   const isNewUser = req.user?.role === undefined; // Assuming role is not yet set for new users
 
   if (isNewUser) {
