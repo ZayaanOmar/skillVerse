@@ -50,7 +50,7 @@ router.post("/jobs/accept/:applicationId", async (req, res) => {
     return res.status(200).json({ message: "Application Accepted" });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Error accepting application" });
+    res.status(500).json({ message: "Error Accepting Application" });
   }
 });
 
