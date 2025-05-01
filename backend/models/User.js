@@ -17,7 +17,7 @@ const userSchema = new mongoose.Schema(
     role: {
       //will be chosen on first login (signup)
       type: String,
-      //enum: ["client", "freelancer", "admin"], //value must be one of these options
+      enum: ["client", "freelancer", "admin"], //value must be one of these options
     },
   },
   {
