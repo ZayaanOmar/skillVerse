@@ -1,18 +1,37 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./RoleSelection.css";
 
 const RoleSelection = () => {
   const navigate = useNavigate();
 
-  const apiUrl =
-    process.env.NODE_ENV === "production" ? "/api" : "http://localhost:5000";
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const res = await fetch("http://localhost:5000/auth/me", {
+          credentials: "include",
+        });
+
+        if (res.ok) {
+          const data = await res.json();
+          localStorage.setItem("user", JSON.stringify(data));
+          console.log("User saved to localStorage:", data);
+        } else {
+          console.error("Failed to fetch user info");
+        }
+      } catch (err) {
+        console.error("Error fetching user:", err);
+      }
+    };
+
+    fetchUser();
+  }, []);
 
   const selectRole = async (role) => {
     try {
-      const res = await fetch(`${apiUrl}/users/set-role`, {
+      const res = await fetch("http://localhost:5000/users/set-role", {
         method: "POST",
-        credentials: "include", // to include session cookie
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
@@ -20,9 +39,20 @@ const RoleSelection = () => {
       });
 
       if (res.ok) {
-        // Navigate to correct dashboard
-        if (role === "client") navigate("/client/home");
-        else if (role === "freelancer") navigate("/freelancer/home");
+        const userRes = await fetch("http://localhost:5000/auth/me", {
+          credentials: "include",
+        });
+
+        if (userRes.ok) {
+          const userData = await userRes.json();
+          localStorage.setItem("user", JSON.stringify(userData));
+
+          // Navigate to correct dashboard
+          if (role === "client") navigate("/client/home");
+          else if (role === "freelancer") navigate("/freelancer/home");
+        } else {
+          console.error("Failed to fetch user data");
+        }
       } else {
         console.error("Failed to set role");
       }
@@ -37,7 +67,7 @@ const RoleSelection = () => {
         <p>
           Welcome to <em>SkillVerse</em>! We're excited to have you on board
         </p>
-        <h1>Quick question, Are you a ... ?</h1>
+        <h1>Choose Account Type</h1>
         <section className="roles-container">
           <section
             className="client-description"

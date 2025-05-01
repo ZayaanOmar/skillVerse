@@ -7,60 +7,73 @@
 .welcome-banner {
   background-color: white;
   padding: 1.5rem;
+  height: 250px;
   border-radius: 12px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   background-image: url(./images/skillVerse.jpg.avif);
 }
-.heading1{
-    font-size: 80px;
-    font-weight: 600;
+.heading1 {
+  font-size: 80px;
+  font-weight: 600;
 }
 .chooseDesc {
-    background-color: #102e69;
-    height: 250px;
-    padding: 1.5rem;
-    border-radius: 12px;
-    position: relative;
-    z-index: 1;
-  }
-.description{
-    font-size: 40px;
-    font-weight: 500;
-    color:#f3f4f6;
+  background-color: #102e69;
+  height: 250px;
+  padding: 1.5rem;
+  border-radius: 12px;
+  position: relative;
+  z-index: 1;
+}
+.description {
+  font-size: 40px;
+  font-weight: 500;
+  color: #f3f4f6;
 }
 .section1 {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
-    margin-top: -100px; /* pulls buttons halfway up into .chooseDesc */
-    z-index: 2;
-    position: relative;
-  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  margin-top: -100px; /* pulls buttons halfway up into .chooseDesc */
+  margin-bottom: 2rem;
+  z-index: 2;
+  position: relative;
+}
 /* Styling for buttons */
-.button1, .button2, .button3, .button4, .button5 {
-    
-    border: none;
-    border-radius: 12px;
-    height: 200px; /* Fixed height for all buttons */
-    width: 200px;
-    background-color: #12357c;
-    color: white;
-    font-size: 1rem;
-    font-weight: 700;
-    cursor: pointer;
-    margin: 10px;
-    display: flex;
-    align-items: center; /* Vertically centers text */
-    justify-content: center; /* Horizontally centers text */
-  }
-  
-  /* Container to hold button and text */
-  .button-container {
-    text-align: center; /* Centers the button */
-  }
-  
+.buttonSD,
+.buttonML,
+.buttonCL,
+.buttonGD,
+.buttonDM {
+  border: none;
+  border-radius: 12px;
+  height: 200px; /* Fixed height for all buttons */
+  width: 200px;
+  background-color: #12357c;
+  color: white;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  margin: 10px;
+  display: flex;
+  align-items: center; /* Vertically centers text */
+  justify-content: center; /* Horizontally centers text */
+  transition: all 0.3s ease; /*this will then be used with the code below to add effects to btns*/
+}
+.buttonSD:hover,
+.buttonML:hover,
+.buttonCL:hover,
+.buttonGD:hover,
+.buttonDM:hover {
+  background-color: #1a449c; /* Slightly lighter blue */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+  transform: translateY(-4px); /* Slight lift effect */
+}
 
+/* Container to hold button and text */
+.button-container {
+  text-align: center; /* Centers the button */
+}
 
 .quick-actions button {
   padding: 15px 32px;
@@ -69,7 +82,6 @@
   box-shadow: 0 4px 6px rgba(66, 126, 191, 0.1);
 }
 
-
 .recent-activity {
   background-color: white;
   padding: 1.5rem;
@@ -77,63 +89,117 @@
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 .offer-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 2rem;
-    margin-top: 1.5rem;
-    margin-bottom: -100px;
-  }
-  
-  .offer-item {
-    background-color: #f9fafb;
-    padding: 1rem;
-    height: 100px;
-    border-radius: 12px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-  }
-  
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+  margin-top: 1.5rem;
+  margin-bottom: -100px;
+}
+
+.offer-item {
+  background-color: #f9fafb;
+  padding: 1rem;
+  height: 120px;
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
 nav {
-    background-color: #1e293b; /* dark slate */
-    color: white;
-    padding: 1rem 2rem;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-  }
-  
-  nav h1 {
-    font-size: 1.5rem;
-    font-weight: bold;
-    margin: 0;
-  }
-  
-  nav ul {
-    list-style: none;
-    display: flex;
-    gap: 1.5rem;
-    margin: 0;
-    padding: 0;
-  }
-  
-  nav li {
-    cursor: pointer;
-  }
-  
-  nav a {
-    color: white;
-    text-decoration: none;
-    font-weight: 600;
-  }
-  
-  nav a:hover {
-    text-decoration: underline;
-  }
-.footer{
-    height: 300px;
-    background-color: #1e293b;
-    color: white;
-    width: 100%;
-    padding: 1rem 2rem;
-    display: flex;
-    align-items: center;
-  }
+  background-color: #1e293b; /* dark slate */
+  color: white;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  height: 20px;
+  margin-top: -32px;
+}
+
+nav h1 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-top: -100px;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 1.5rem;
+  margin: 0;
+  padding: 0;
+}
+
+nav li {
+  cursor: pointer;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+.jobs-banner {
+  background-color: #102e69;
+  padding: 1.5rem;
+  border-radius: 12px;
+  margin-top: 8rem;
+  height: 12rem;
+}
+
+.section-jobs {
+  background-color: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin: 75px;
+  margin-top: -150px;
+}
+
+.my-jobs-card {
+  background-color: #f9fafb;
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: space-between;
+  text-align: left;
+  flex-direction: column;
+}
+
+.my-jobs-card button {
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+  transition: all 0.3s ease;
+}
+
+.my-jobs-card button:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+  transform: translateY(-5px); /* Slight lift effect */
+}
+
+.jobs-grid {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(300px, 1fr)
+  ); /* Responsive grid */
+  gap: 1.5rem; /* Space between the cards */
+  margin-top: 1rem;
+}
+
+.Ebrahimfooter {
+  height: 300px;
+  background-color: #1e293b;
+  color: white;
+  width: 100%;
+  padding: 1rem 2rem;
+  display: flex;
+  align-items: center;
+}

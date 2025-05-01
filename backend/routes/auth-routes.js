@@ -29,19 +29,27 @@ router.get(
 
 //callback route for google to redirect to
 router.get("/google/callback", passport.authenticate("google"), (req, res) => {
-  //Get frontend url from env variables
-  const FRONTEND_URL = process.env.FRONTEND_URL || "http://localhost:3000";
-
+  // to access currently logged in user : res.send(req.user)
+  //res.send("You Reached the Callback URI");
   const isNewUser = req.user?.role === undefined; // Assuming role is not yet set for new users
 
   if (isNewUser) {
-    res.redirect(`${FRONTEND_URL}/roles`); // Frontend route for setting role
+    res.redirect(`http://localhost:3000/roles?userId=${req.user._id}`); // Frontend route for setting role
+    //userID needs to be fetched for request purposes
   } else {
     const user_role = req.user.role;
-    res.redirect(`${FRONTEND_URL}/${user_role}/home`);
+    res.redirect(`http://localhost:3000/${user_role}/home`);
   }
   // redirect the user to a certain page
   //res.redirect()
+});
+router.get("/me", (req, res) => {
+  //gets current logged in users info from session for reqs
+  if (req.user) {
+    res.status(200).json(req.user);
+  } else {
+    res.status(401).json({ message: "Not authenticated" });
+  }
 });
 
 module.exports = router;

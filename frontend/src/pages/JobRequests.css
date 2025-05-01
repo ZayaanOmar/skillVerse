@@ -1,0 +1,40 @@
+.available-jobs-main-jobRequest {
+  padding: 2rem;
+}
+
+.available-jobs-titl-jobRequest {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.available-jobs-section-jobRequest {
+  margin-top: 1rem;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); /* 3 columns */
+  gap: 1.5rem; /* Space between the cards */
+  width: 1400px;
+  height: 600px;
+}
+
+.available-job-card-jobRequest {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 1rem;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative; /* important */
+  height: 300px; /* set a fixed height for consistency */
+  position: relative;
+  height: 300px;
+}
+
+.available-job-apply-button-jobRequest {
+  color: white;
+  background-color: #12357c;
+  margin-top: 6rem;
+  width: 100%;
+  padding: 0.5rem;
+  cursor: pointer;
+}

@@ -1,0 +1,146 @@
+.admin-home {
+  background-color: #b912be;
+  padding: 2rem;
+}
+
+.banner {
+  background-color: #afeeee;
+  padding: 1.5rem;
+  text-align: start;
+  border-radius: 12px;
+  margin-bottom: 10px;
+  height: 300px;
+  background-image: url(./images/adminbackground.jpg);
+}
+
+.banner-title {
+  font-size: 70px;
+  font-weight: 800;
+}
+.descriptionAdmin {
+  background-color: rgba(94, 193, 238, 0.4); /*last val is level of transp*/
+  margin-top: -10px;
+  border-radius: 12px;
+  height: 200px;
+  color: black;
+  font-size: 20px;
+}
+
+.card {
+  align-items: start;
+}
+
+.bi.bi-people,
+.bi.bi-input-cursor-text,
+.bi.bi-person-workspace {
+  padding-right: 10px;
+}
+
+.admin-bottom-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin: 2rem 0;
+  padding: 0 2rem;
+}
+.admin-analytics-section {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  margin: 2rem 0;
+  padding: 0 2rem;
+}
+.admin-dashboard-main {
+  padding: 2rem;
+}
+
+.admin-banner {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.admin-banner-title {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.admin-banner-subtitle {
+  font-size: 1.5rem;
+  color: gray;
+}
+
+/* Analytics Section */
+.admin-analytics-section {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+}
+
+.admin-analytics-card {
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 1.5rem;
+  text-align: center;
+  background-color: #f9f9f9;
+}
+
+.admin-system-status {
+  color: green;
+  font-weight: bold;
+}
+
+/* Management Section */
+.admin-management-section {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+}
+
+.admin-management-card {
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.admin-management-button {
+  background-color: #12357c;
+  color: white;
+  padding: 0.75rem;
+  border: none;
+  margin-top: 2rem;
+  cursor: pointer;
+  border-radius: 5px;
+  width: 100%;
+}
+
+.admin-management-button:hover {
+  background-color: #0e2b67;
+}
+
+/* Bottom Section */
+.admin-bottom-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.admin-recent-activity,
+.admin-announcements {
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 1.5rem;
+  background-color: #f9f9f9;
+}
+
+.admin-recent-activity ul {
+  padding-left: 1rem;
+}
+
+.admin-recent-activity li {
+  margin-bottom: 0.5rem;
+}

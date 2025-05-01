@@ -53,5 +53,21 @@ const authCheck = (req, res, next) => {
 const logIn = async (req, res) => {
   res.send("you are logged in, redirected to home page");
 };
+const getFreelancerInfo = async (req, res) => {
+  try {
+    const freelancerId = req.params.freelancerId; // Assume freelancerId is passed in the request
 
-module.exports = { addUser, updateUser, authCheck, logIn };
+    const freelancer = await User.findById(freelancerId);
+
+    if (!freelancer) {
+      return res.status(404).json({ message: "Freelancer not found" });
+    }
+
+    res.status(200).json(freelancer); // Return freelancer info
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+module.exports = { addUser, updateUser, authCheck, logIn, getFreelancerInfo };
