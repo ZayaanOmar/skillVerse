@@ -11,6 +11,7 @@ const cors = require("cors");
 const serviceRequestRoutes = require("./routes/service-request-routes");
 const paymentRoutes = require("./routes/payment-routes");
 const applicationRoutes = require("./routes/application-routes");
+const MongoStore = require("connect-mongo"); // for storing sessions in MongoDB
 //const stripe = require('stripe')(process.env.STRIPE_PRIVATE_KEY);
 
 const app = express();
