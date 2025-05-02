@@ -1,21 +1,20 @@
 .freelancer-home{
-    font-family: Georgia, serif;
-    padding: 2rem;
-    margin: 0 auto;
+  font-family: Georgia, serif;
+  padding: 2rem;
+  margin: 0 auto;
 }
 
 .welcome{
-    background-color: white;
-    padding: 2rem;
-    border-radius: 12px;
-    text-align: left;
-    color: #1e2a38;
-    margin-bottom: 2rem;
+  background-image: url(./images/newfreelancehome.avif);
+  background-size: cover;
+  padding: 2rem;
+  text-align: left;
+  color: #1e2a38;
 }
 
 .heading{
-    font-size: 80px;
-
+  font-size: 80px;
+  text-align: left;
 }
 
 .welcome-freelancer{
@@ -24,104 +23,131 @@ color: #333;
 text-align: left;
 }
 
-.NavBar {
-
-    display: flex;
-    align-items: center;
-    background-color: #1e293b;
+nav {
+    background-color: #1e293b; /* dark slate */
+    color: white;
     padding: 1rem 2rem;
-    border-radius: 8px;
-    align-items: center;
+    display: flex;
     justify-content: flex-end;
-
+    align-items: center;
+    height: 20px;
+    margin-top: -32px;
   }
-  .NavBar ul {
+  
+  nav h1 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-top: -100px;
+  }
+  
+  nav ul {
     list-style: none;
     display: flex;
     gap: 1.5rem;
-    padding: 0;
     margin: 0;
+    padding: 0;
   }
   
-  .NavBar li {
-    color: white;
+  nav li {
     cursor: pointer;
-    transition: color 0.3s ease;
   }
   
-  .NavBar li:hover {
-    color: #255795;
+  nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+  }
+  
+  nav a:hover {
+    text-decoration: underline;
   }
 
-  .how{
-    color: #1e293b;
-    text-align: left;
-    margin-top: 2rem;
-  }
-
-.worklist{
-    margin: 1rem 0 2rem 0;
-    list-style-position: inside;
-}
-
-
-.btn{
-  padding: 0.4rem 0.8rem;
-  font-size: 1rem;
-  border: 1px solid #1e293b;
-  border-radius: 4px;
-  background-color: white;
+.how, .servheading, .Qs{
+  margin-top: 1rem;
   color: #1e293b;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+  text-align: center;
 }
 
-.button1, .button2, .button3, .button4, .btn1, .btn2{
-  display: block;
-  width: 200px;              /* block-like width */
-  padding: 1rem;
-  gap: 1rem;
-  margin: 2rem 0;
-  background-color: white;    /* white background */
-  color: #1e293b;               
-  border: 2px solid #1e293b;
-  border-radius: 6px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  font-size: 1rem;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background 0.3s ease;
+.worklist, .services, .start{
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  margin: 1rem 0 2rem 0;
+  list-style-position: inside;
+}
+.howbox, .servbox{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 180px;
+  width: 200px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  background-color: #e6f5fe;
+  color: #1e293b; 
 }
 
-.button1, .button2, .button3, .button4, .btn1, .btn2 :hover{
-  color: white;
-  background-color: #1e2a38;
+.findjobbutton{
+  padding: 0.4rem 0.8rem !important; 
+  font-size: 1rem !important;
+  width: 150px !important;
+  height: 60px !important;
+  border: 2px solid #1e293b !important;
+  border-radius: 4px !important;
+  background-color: #1e293b !important;
+  color: white !important;
+  cursor: pointer !important;
+  align-items: center !important;
+  transition: background-color 0.3s ease !important;
+  }
+
+.Qbutton1, .Qbutton2, .Qbutton3, .Qbutton4, .answer1, .answer2, .answer3, .answer4{
+display: block;
+width: 200px important!; 
+height: 150px important!;            
+padding: 1rem;
+gap: 1rem;
+margin: 10px;
+background-color: white;    
+color: #1e293b;               
+border: 2px solid #1e293b;
+border-radius: 6px;
+box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+font-size: 1rem;
+font-weight: bold;
+font-family: cursive;
+cursor: pointer;
+justify-content:center; 
+transition: background 0.3s ease;
 }
 
-.profile, .questions, .offers, .services, .guides{
-  margin: 2rem;
-  padding: 1rem;
-  background-color: white;
-  border-left: 5px solid #2a3d59;
-  border-radius: 5px;
+.Qbutton1, .Qbutton2, .Qbutton3, .Qbutton4, .btn1, .btn2 :hover{
+color: white;
+background-color: #1e293b; /* Change to your desired hover color */
 }
 
-.profile ul, .services ul{
-  list-style: disc inside;
-  padding-left: 1rem;
+.questions{
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+ 
 }
 
-.servheading, .Qs{
-  color:#1e293b;
-  margin-bottom: 1rem;
+
+
+.projectheading{
+  margin-top: 2rem;
+  color: #1e293b;
+  text-align: center;
 }
 
 .footer{
-    height: 100px;
-    background-color: #1e293b;
-    color: white;
-    width: 100%; 
-    padding: 1rem 2rem;
-    display: flex;
-    text-align:  center;
-  }
+  height: 100px;
+  background-color: #1e293b;
+  color: white;
+  width: 100%; 
+  padding: 1rem 2rem;
+  display: flex;
+  text-align:  center;
+}

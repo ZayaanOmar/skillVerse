@@ -11,6 +11,8 @@ import AdminHome from "./pages/AdminHome";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import ViewFreelancers from "./pages/ViewFreelancers";
+import Progress from "./pages/Progress";
+
 function App() {
   const user = JSON.parse(localStorage.getItem("user"));
 
@@ -29,6 +31,8 @@ function App() {
         <Route path="/profile" element={<FreelancerProfile />} />
         <Route path="/view/freelancers" element={<ViewFreelancers />} />
         <Route path="/admin/support" element={<TicketSupport />} />
+        <Route path="/progress" element={<Progress />} />
+
       </Routes>
     </Router>
   );
