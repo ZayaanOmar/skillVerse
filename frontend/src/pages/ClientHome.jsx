@@ -236,7 +236,6 @@ const ClientHome = () => {
                 Access powerful tools to manage your projects and teams with
                 ease.
               </p>
-              <button onClick={handlePay}>Checkout</button>
             </section>
           </section>
         </article>
@@ -263,6 +262,13 @@ const ClientHome = () => {
                     <p>
                       <strong>Status:</strong> {job.status}
                     </p>
+
+                    <button
+                      className="btn btn-outline-success"
+                      onClick={handlePay}
+                    >
+                      Checkout
+                    </button>
                     <button
                       className="btn btn-outline-primary"
                       onClick={() => navigate(`/myjobs/${job._id}`)}
