@@ -262,7 +262,9 @@ const ClientHome = () => {
                     <p>
                       <strong>Status:</strong> {job.status}
                     </p>
-
+                    <p>
+                      <strong>Progress:</strong> {job.progress} %
+                    </p>
                     <button
                       className="btn btn-outline-success"
                       onClick={handlePay}

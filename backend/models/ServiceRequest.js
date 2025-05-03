@@ -21,6 +21,10 @@ const serviceRequestSchema = new mongoose.Schema(
       enum: ["Pending", "Accepted", "Completed", "In Progress"],
       default: "Pending", // Default status is 'pending' until a freelancer accepts it
     },
+    progress: {
+      type: Number,
+      default: 0, // Progress percentage (0-100)
+    },
   },
   {
     timestamps: true, // Automatically adds createdAt and updatedAt fields
