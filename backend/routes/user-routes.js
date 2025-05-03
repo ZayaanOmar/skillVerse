@@ -16,6 +16,32 @@ router.post("/", addUser);
 
 router.put("/:id", updateUser);
 
+// Handles creating new profile details document
+router.post("/create-user", async (req, res) => {
+  console.log(req.body); //debugging
+  const { user, location, gender, occupation, skills, about } = req.body;
+  const userID = user._id;
+  try {
+    const user = await User.findOne( {userID} );
+
+    const newDetails = new ProfileDetails({
+      user: user._id, //taken from logged-in user
+      location: location,
+      gender: gender,
+      occupation: occupation,
+      skills: skills,
+      about: about
+    });
+
+    await newDetails.save();
+
+    res.status(200).json({ message: "Profile details added successfully", user });
+  } catch (err) {
+    console.error("Error setting profile up:", err);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
 // Set user role after signup
 router.post("/set-role", authCheck, async (req, res) => {
   const { role } = req.body;
@@ -30,6 +56,7 @@ router.post("/set-role", authCheck, async (req, res) => {
       { role },
       { new: true }
     );
+    
     res.status(200).json({ message: "Role set successfully", user });
   } catch (err) {
     console.error("Error setting role:", err);
