@@ -260,6 +260,14 @@ const ClientHome = () => {
                       <strong>Service Type:</strong> {job.serviceType}
                     </p>
                     <p>
+                      <strong>Freelancer: </strong>
+                      {job.status === "Accepted" ||
+                      job.status === "In Progress" ||
+                      job.status === "Completed"
+                        ? job.freelancerId?.username
+                        : "No Freelancer Assigned Yet"}
+                    </p>
+                    <p>
                       <strong>Status:</strong> {job.status}
                     </p>
                     <p>
