@@ -75,10 +75,12 @@ const ClientHome = () => {
     fetchJobs();
   }, [userId, error, success]); // Fetch jobs whenever userId is updated
 
+  /* Debugging logs
   console.log("User in useEffect:", user); // Debugging line to check user data
   console.log("User ID:", user ? user._id : "User not available"); // Debugging line to check user ID
   console.log("User in localStorage:", localStorage.getItem("user")); // Debugging line to check localStorage
   console.log("Jobs fetched:", jobs); // Debugging line to check jobs data
+  */
 
   const handleServiceSelection = async (category) => {
     if (!user || !user._id) {
@@ -111,7 +113,7 @@ const ClientHome = () => {
   };
 
   const handlePay = async () => {
-    console.log("Button clicked!");
+    //console.log("Button clicked!");
     const email = "johndoe@example.com";
 
     try {
