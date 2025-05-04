@@ -32,7 +32,7 @@ const FreelancerProfile = () => {
     if (User._id) {
       fetchProfile();
     }
-  }, [User._id]);
+  }, []);
 
   const freelancer = {
     name: "Tazeem Tayob",
@@ -98,11 +98,6 @@ const FreelancerProfile = () => {
                   <Row className="profile-info-row">
                     <p className="profile-info">
                       <strong>Occupation:</strong> {profile.occupation}
-                    </p>
-                  </Row>
-                  <Row className="profile-info-row">
-                    <p className="profile-info">
-                      <strong>Rating:</strong> {freelancer.rating} / 5
                     </p>
                   </Row>
                   <Row className="profile-info-row">
