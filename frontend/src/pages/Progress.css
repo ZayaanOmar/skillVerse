@@ -1,0 +1,96 @@
+
+
+.progress{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    gap: 50px;
+    margin-top: 50px;
+    padding: 20px;
+
+}
+
+.progress-steps{
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+    align-items: center;
+    position: relative;
+}
+
+.progress-steps, .circle{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    width: 50px;
+    color: #1e293b;
+    font-size: 20px;
+    font-weight: bold;
+    border-radius: 50%;
+    background: white;
+    border: 5px solid #1e293b;
+    transition-delay: 0s;
+    transition: all .2s ease;
+    gap: 50px;
+}
+
+.progress-steps .circle.active{
+    transition-delay: .1s;
+    color: white;
+    border: 5px solid aqua;
+}
+.progress-steps, .progress-bar{
+    position: absolute;
+    height: 5px;
+    width: 100%;
+    background-color: #1e293b;
+    z-index: -1;
+}
+
+.progress-bar {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background: aqua;
+    transition: all .3s ease;
+}
+
+.indicator{
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 10%;
+    width: 0%;
+    background: aqua;
+    border-radius: 5px;
+    transition: all .3s ease;
+}
+
+.buttons{
+    display: flex;
+    gap: 20px;
+}
+
+.buttons button{
+
+    padding: 10px 20px;
+    border-radius: 6px;
+    border: none;
+    background: aqua;
+    color: black;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all .3s linear;
+}
+
+.buttons button:active{
+    transform: scale(0.90);
+}
+
+.buttons button:disabled{
+    background: #ccc;
+    cursor: not-allowed;
+}
+

@@ -1,5 +1,5 @@
 .freelancer-profile {
-  background-color: #afeeee; /* Set the background color */
+  background-color: #AFEEEE; /* Set the background color */
   width: 100%; /* Take up the full width of the screen */
   height: 100vh; /* Take up the full height of the viewport */
   margin: 0; /* Remove default margin */
@@ -24,6 +24,7 @@
   display: block; /* Ensure the image is treated as a block element */
 }
 
+
 .profile-name {
   font-weight: 700;
   color: #333;
@@ -43,7 +44,7 @@
   border-radius: 20px;
 }
 
-.profile-image {
+.profile-image{
   display: flex;
   justify-content: center;
   align-items: center;
@@ -65,13 +66,13 @@
   margin-bottom: 5px; /* Optional: Add smaller space below */
 }
 
-.edit-btn-row {
+.edit-btn-row{
   padding-top: 10px;
   padding-left: 150px;
   padding-right: 150px;
 }
 
-.edit-btn {
+.edit-btn{
   background-color: black;
   width: auto; /* Allow the button width to adjust based on content */
   padding: 10px 22px; /* Reduce left and right padding */
@@ -94,7 +95,7 @@
 
 /* Card 2,3,4 styles */
 
-.additional-card {
+.additional-card{
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   border-radius: 15px;
   margin-left: -80px; /* Add spacing between cards */

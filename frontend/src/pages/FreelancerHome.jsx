@@ -7,6 +7,7 @@ import API_URL from "../config/api";
 const FreelancerHome = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
+  const [visibleAnswer, setVisibleAnswer] = useState(null); // State to track which answer is visible
   //const [message /*setMessage*/] = useState(""); /* unused state variable */
 
   useEffect(() => {
@@ -30,69 +31,88 @@ const FreelancerHome = () => {
     fetchUser();
   }, []);
 
+
   console.log("User in useEffect:", user); // Debugging line to check user data
   console.log("User in localStorage:", localStorage.getItem("user")); // Debugging line to check localStorage
+
+  const handleQuestionClick = (index) => {
+    setVisibleAnswer(visibleAnswer === index ? null : index); //toggle visibility of answer
+  };
 
   return (
     <main className="freelancer-home">
       <Navbar />
       <section className="welcome">
-        <h1 className="heading">SkillVerse</h1>
-        <h2 className="welcome-freelancer">Welcome to your profile</h2>
+        <h1 className="heading">SkillVerser</h1>
+        <p className="welcome-freelancer">One platform to find new clients, efficiently manage your projects and handle payments</p>
+      </section>
+
+      
+      <h2 className= "how">How it works</h2>
+        <section className= "worklist">
+        <h3 className='howbox'>Create an assignment</h3>
+        <h3 className='howbox'> Deliver great work</h3>
+        <h3 className='howbox'> Get paid</h3>
+        </section>
+
+        <h2 className="servheading">Popular Services</h2>
+        <section className="services">
+        <h3 className='servbox'>Website development</h3>
+            <h3 className= "servbox">Digital marketing</h3>
+            <h3 className= "servbox">Software development</h3>
+            <h3 className= "servbox">Creating Logos</h3>
+            <h3 className="servbox">Graphic Designer</h3>
       </section>
 
       <section>
-        <button onClick={() => navigate("/freelancer/jobs")}>Find Jobs</button>
-      </section>
-      <h1 className="how">How it works</h1>
-      <ol className="worklist">
-        <li>Create an assignment</li>
-        <li>Deliver great work</li>
-        <li>Get paid</li>
-      </ol>
-      <section className="offers">
-        <h2>What SkillVerse offers you</h2>
-        <p>
-          One platform to find new clients, efficiently manage your projects,
-          invoicing and payments{" "}
-        </p>
+        <button className="findjobbutton" onClick={() => navigate("/freelancer/jobs")}>Find Jobs</button>
       </section>
 
-      <section className="services">
-        <h2 className="servheading">Popular Services</h2>
-        <ul>
-          <li>Website development</li>
-          <li>Digital marketing</li>
-          <li>Software development</li>
-          <li>Creating Logos</li>
-          <li>Graphic Designer</li>
-        </ul>
-      </section>
 
-      <button className="btn">Get started</button>
-
+      <h2 className="Qs">FAQ's</h2>
       <section className="questions">
-        <h2 className="Qs">Q&A</h2>
+        <section className="faq1">
+        <button className="Qbutton1" onClick={() =>handleQuestionClick(1)}>
+            What can I sell?
+            </button>
+            {visibleAnswer === 1 && (
+            <p className="answer1">You may sell any service that you are good at or qualified in, such as graphic design, programming, writing etc.</p>
+            )}
+        </section>
 
-        <button className="button1">What can I sell?</button>
-        <button className="button2">How much money can I make?</button>
-        <button className="button3">How do payments work?</button>
-        <button className="button4">Can I set my own rates?</button>
+        <section className="faq2">
+        <button className="Qbutton2" onClick={() => handleQuestionClick(2)}>
+            How much money can I make?
+            </button>
+            {visibleAnswer === 2 && (
+            <p className="answer2">Depends on the services you offer and the demand for those services.</p>
+            )}
+        </section>
+
+        <section className="faq3">
+        <button className="Qbutton3" onClick={() => handleQuestionClick(3)}>
+            How do payments work?
+            </button>
+            {visibleAnswer === 3 && (
+            <p className="answer3">Payments are processed through our secure platform.</p>
+            )}
+            </section>
+        <section className="faq4">
+        <button className="Qbutton4" onClick={() => handleQuestionClick(4)}>
+            Can I set my own rates?</button>
+            {visibleAnswer === 4 && (
+            <p className="answer4">Yes, based on your skills and experience.</p>
+            )}
+        </section>
       </section>
 
-      <section className="profile">
-        <h2> Projects </h2>
-        <ul>
-          <li>List of your projects </li>
-        </ul>
-      </section>
-
-      <section className="guides">
-        <h2>Guides to help you grow</h2>
-        <button className="btn1">start a side business</button>
-        <button className="btn2">create content</button>
-      </section>
-
+        <section className="projects">
+            <h2 className="projectheading">Your Projects</h2>
+            </section>
+            <section className="projectlist">
+            <h3 className="projectbox">Project 1</h3>
+            <h3 className="projectbox">Project 2</h3>
+            </section>
       <footer className="footer">
         <p>© 2025 SkillVerse. All rights reserved. </p>
       </footer>
