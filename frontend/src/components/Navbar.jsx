@@ -63,6 +63,7 @@ const Navbar = () => {
     try {
       const response = await fetch(`${API_URL}/users/request-role-change`, {
         method: "POST",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },

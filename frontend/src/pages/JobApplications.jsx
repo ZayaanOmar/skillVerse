@@ -3,7 +3,7 @@ import "./JobApplications.css"; // Importing CSS style file
 //import { Card, Button, Badge } from "react-bootstrap";
 //import { FaStar, FaMapMarkerAlt, FaEnvelope } from "react-icons/fa";
 //import Navbar from "../components/Navbar";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import API_URL from "../config/api";
 
@@ -11,6 +11,7 @@ const ViewFreelancers = () => {
   const { jobId } = useParams(); // Get the jobId from the URL parameters
   console.log("Job ID:", jobId); // Log the jobId for debugging
   const [applications, setApplications] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchApplications = async () => {
@@ -36,6 +37,7 @@ const ViewFreelancers = () => {
         { withCredentials: true }
       );
       alert("Application Accepted"); // Show success message
+      navigate("/client/home"); // Redirect to the client home page
     } catch (error) {
       console.error("Error accepting application:", error);
       alert("Error accepting application"); // Show error message
@@ -56,7 +58,7 @@ const ViewFreelancers = () => {
                   {application.freelancerId.username}
                 </p>
                 <p>
-                  <strong>Price: </strong>${application.price}
+                  <strong>Price: </strong>R{application.price}
                 </p>
                 {application.coverLetter && (
                   <p>
