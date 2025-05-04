@@ -1,44 +1,44 @@
 .ticket-support-container {
-    padding: 20px;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-  
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.tickets-table {
+  margin-top: 20px;
+}
+
+.tickets-table th {
+  background-color: #343a40;
+  color: white;
+}
+
+.action-buttons {
+  white-space: nowrap;
+}
+
+.text-capitalize {
+  text-transform: capitalize;
+}
+
+/* Status badges */
+.badge-warning {
+  background-color: #ffc107;
+  color: #212529;
+}
+
+.badge-success {
+  background-color: #28a745;
+}
+
+.badge-danger {
+  background-color: #dc3545;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
   .tickets-table {
-    margin-top: 20px;
+    display: block;
+    overflow-x: auto;
   }
-  
-  .tickets-table th {
-    background-color: #343a40;
-    color: white;
-  }
-  
-  .action-buttons {
-    white-space: nowrap;
-  }
-  
-  .text-capitalize {
-    text-transform: capitalize;
-  }
-  
-  /* Status badges */
-  .badge-warning {
-    background-color: #ffc107;
-    color: #212529;
-  }
-  
-  .badge-success {
-    background-color: #28a745;
-  }
-  
-  .badge-danger {
-    background-color: #dc3545;
-  }
-  
-  /* Responsive adjustments */
-  @media (max-width: 768px) {
-    .tickets-table {
-      display: block;
-      overflow-x: auto;
-    }
-  }
+}

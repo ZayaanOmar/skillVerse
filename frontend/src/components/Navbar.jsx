@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Dropdown from "react-bootstrap/Dropdown";
 import { Modal, Button, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import API_URL from "../config/api";
 
 const Navbar = () => {
   const [showModal, setShowModal] = useState(false);
@@ -28,9 +29,24 @@ const Navbar = () => {
   const handleCloseModal = () => setShowModal(false);
 
   //Added the logout handler
-  const handleLogout = () => {
-    console.log("Logging out...");
-    navigate("/"); //Redirect to the AuthLogin page
+  const handleLogout = async () => {
+    try {
+      console.log("Logging out...");
+
+      const res = await fetch(`${API_URL}/auth/logout`, {
+        method: "GET",
+        credentials: "include",
+      });
+
+      if (res.ok) {
+        console.log("Logout successful");
+        navigate("/"); // redirect to the AuthLogin page
+      } else {
+        console.error("Logout failed:", res.status);
+      }
+    } catch (error) {
+      console.error("Error during logout:", error);
+    }
   };
 
   // Function to handle form submission (this is just an example for now)
@@ -45,7 +61,7 @@ const Navbar = () => {
     };
 
     try {
-      const response = await fetch("/users/request-role-change", {
+      const response = await fetch(`${API_URL}/users/request-role-change`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

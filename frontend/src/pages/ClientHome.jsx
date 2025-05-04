@@ -3,18 +3,26 @@ import "./ClientHome.css";
 import Navbar from "../components/Navbar";
 import axios from "axios";
 import { Modal, Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import API_URL from "../config/api";
 
 const ClientHome = () => {
   const [showModal, setShowModal] = useState(false); //this is for req submitted successfully(popup)
   const [showConfirmModal, setShowConfirmModal] = useState(false); //this brings up the yes no pop up, on yes sends req
   const [pendingCategory, setPendingCategory] = useState(null); //save the req on button click but dont send it yet
   const [user, setUser] = useState(null);
+  const [jobs, setJobs] = useState([]); //this is
+  // for the jobs that are fetched from the backend
   const [message /*setMessage*/] = useState("");
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = await fetch("http://localhost:5000/auth/me", {
+        const res = await fetch(`${API_URL}/auth/me`, {
           credentials: "include",
         });
         if (res.ok) {
@@ -32,8 +40,47 @@ const ClientHome = () => {
     fetchUser();
   }, []);
 
+  const userId = user ? user._id : null;
+
+  useEffect(() => {
+    const fetchJobs = async () => {
+      if (!userId || userId === null) {
+        console.error("User ID is not available or null");
+        return;
+      }
+      try {
+        const res = await fetch(
+          `${API_URL}/api/service-requests/jobs/${userId}`,
+          {
+            method: "GET",
+            credentials: "include",
+          }
+        );
+
+        if (res.ok) {
+          const data = await res.json();
+          setJobs(data);
+          setError(""); // Clear error if fetch is successful
+          setSuccess("Jobs fetched successfully!"); // Set success message
+          console.log(success);
+        } else {
+          setError("Failed to fetch jobs");
+          console.log(error);
+        }
+      } catch (err) {
+        setError("Error fetching jobs: " + err.message);
+      }
+    };
+
+    fetchJobs();
+  }, [userId, error, success]); // Fetch jobs whenever userId is updated
+
+  /* Debugging logs
   console.log("User in useEffect:", user); // Debugging line to check user data
+  console.log("User ID:", user ? user._id : "User not available"); // Debugging line to check user ID
   console.log("User in localStorage:", localStorage.getItem("user")); // Debugging line to check localStorage
+  console.log("Jobs fetched:", jobs); // Debugging line to check jobs data
+  */
 
   const handleServiceSelection = async (category) => {
     if (!user || !user._id) {
@@ -49,7 +96,7 @@ const ClientHome = () => {
       });
 
       const response = await axios.post(
-        "http://localhost:5000/api/service-requests/create",
+        `${API_URL}/api/service-requests/create`,
         {
           clientId: user._id,
           serviceType: category,
@@ -57,6 +104,7 @@ const ClientHome = () => {
         },
         { withCredentials: true }
       );
+      setJobs((prevJobs) => [...prevJobs, response.data.newServiceRequest]); // Update jobs state with the new job
       console.log("Service request response:", response.data);
       setShowModal(true);
     } catch (error) {
@@ -65,67 +113,32 @@ const ClientHome = () => {
   };
 
   const handlePay = async () => {
-    console.log("Button clicked!");
+    //console.log("Button clicked!");
     const email = "johndoe@example.com";
 
-    try{
-
-      const response = await axios.post("http://localhost:5000/payments/create-checkout-session", {
-      email: email,
-      amount: 1000
-      }, {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
-
-    console.log("Full response:", response);  
-    const { checkoutUrl } = response.data;
-
-    // Redirect user to the checkout page
-    window.location.href = checkoutUrl;
-
-  } catch (error) {
-    console.error("Error creating checkout session:", error);
-  }
-
-  };
-  //Handling role change request by a user
-
-  /* const [requestedRole, setRequestedRole] = useState("");
-  const [message, setMessage] = useState("");
-  const [status, setStatus] = useState(null);
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    const payload = {
-      requestedRole,
-      message,
-    };
-
     try {
-      const response = await fetch("/users/request-role-change", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+      const response = await axios.post(
+        `${API_URL}/payments/create-checkout-session`,
+        {
+          email: email,
+          amount: 1000,
         },
-        body: JSON.stringify(payload),
-      });
-      
-      if (response.ok) {
-        setStatus("success");
-        setRequestedRole("");
-        setMessage("");
-        console.log("response is ok here") //debugging
-      } else {
-        setStatus("error");
-      }
-    } catch (err) {
-      console.error("Submission error:", err);
-      setStatus("error");
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      console.log("Full response:", response);
+      const { checkoutUrl } = response.data;
+
+      // Redirect user to the checkout page
+      window.location.href = checkoutUrl;
+    } catch (error) {
+      console.error("Error creating checkout session:", error);
     }
-  }; */
+  };
 
   return (
     <main className="client-home">
@@ -223,10 +236,60 @@ const ClientHome = () => {
                 Access powerful tools to manage your projects and teams with
                 ease.
               </p>
-              <button onClick={handlePay}>Checkout</button>
             </section>
           </section>
         </article>
+
+        <section className="jobs-banner"></section>
+
+        <section className="section-jobs">
+          <h1 className="header-text">Your Current Job Requests</h1>
+          <h5>
+            Manage your current jobs. View applications for your pending
+            requests, and track progress for your jobs that are currently being
+            worked on.
+          </h5>
+          {jobs.length === 0 ? (
+            <p>No available jobs at the moment.</p>
+          ) : (
+            <section className="jobs-grid">
+              {Array.isArray(jobs) /* Check if jobs is an array */ &&
+                jobs.map((job) => (
+                  <article key={job._id} className="my-jobs-card">
+                    <p>
+                      <strong>Service Type:</strong> {job.serviceType}
+                    </p>
+                    <p>
+                      <strong>Freelancer: </strong>
+                      {job.status === "Accepted" ||
+                      job.status === "In Progress" ||
+                      job.status === "Completed"
+                        ? job.freelancerId?.username
+                        : "No Freelancer Assigned Yet"}
+                    </p>
+                    <p>
+                      <strong>Status:</strong> {job.status}
+                    </p>
+                    <p>
+                      <strong>Progress:</strong> {job.progress} %
+                    </p>
+                    <button
+                      className="btn btn-outline-success"
+                      onClick={handlePay}
+                    >
+                      Checkout
+                    </button>
+                    <button
+                      className="btn btn-outline-primary"
+                      onClick={() => navigate(`/myjobs/${job._id}`)}
+                    >
+                      View Details
+                    </button>
+                  </article>
+                ))}
+            </section>
+          )}
+        </section>
 
         {/* Footer */}
         <footer className="Ebrahimfooter">

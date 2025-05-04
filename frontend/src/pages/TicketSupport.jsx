@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Table, Button, Badge, Alert } from "react-bootstrap";
 import "./TicketSupport.css"; // link styles
 import axios from "axios";
+import API_URL from "../config/api";
 
 function TicketSupport() {
   const [tickets, setTickets] = useState([]);
@@ -11,7 +12,7 @@ function TicketSupport() {
   useEffect(() => {
     const fetchTickets = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/users/alltickets", {
+        const res = await axios.get(`${API_URL}/users/alltickets`, {
           withCredentials: true,
         });
 
@@ -25,13 +26,16 @@ function TicketSupport() {
 
     fetchTickets();
   }, []);
-  
 
-  const handleDecision = async (ticketId, decision) =>{
-    try{
+  const handleDecision = async (ticketId, decision) => {
+    try {
       //const response = await axios.post("http://localhost:5000/users/process-request", {ticketId, decision}, {withCredentials: true});
-      setSuccess(`Request ${decision === 'approve' ? 'approved' : 'rejected'} successfully`);
-      setTickets(tickets.filter(ticket => ticket._id !== ticketId));
+      setSuccess(
+        `Request ${
+          decision === "approve" ? "approved" : "rejected"
+        } successfully`
+      );
+      setTickets(tickets.filter((ticket) => ticket._id !== ticketId));
 
       // Success message disappear after 3 secs
       setTimeout(() => setSuccess(""), 3000);

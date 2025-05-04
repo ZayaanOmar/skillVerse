@@ -6,14 +6,16 @@
     "test": "jest",
     "test:coverage": "jest --coverage",
     "start": "node server.js",
-    "dev": "nodemon server.js"
+    "dev": "nodemon server.js",
+    "build": "echo 'Backend build complete'"
   },
   "jest": {
     "testEnvironment": "node",
     "collectCoverage": true,
     "collectCoverageFrom": [
-      "**/*js",
-      "!*/node_modules/*"
+      "**/*.js",
+      "!*/node_modules/*",
+      "!**/coverage/lcov-report/**"
     ],
     "coverageDirectory": "./coverage"
   },
@@ -22,7 +24,7 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^1.9.0",
-    "bootstrap": "^5.3.5",
+    "connect-mongo": "^5.1.0",
     "cookie-session": "^2.1.0",
     "cors": "^2.8.5",
     "dotenv": "^16.5.0",
@@ -31,12 +33,12 @@
     "mongoose": "^8.13.2",
     "passport": "^0.7.0",
     "passport-google-oauth20": "^2.0.0",
-    "react-bootstrap": "^2.10.9",
     "stripe": "^18.0.0"
   },
   "devDependencies": {
     "jest": "^29.7.0",
-    "nodemon": "^3.1.9",
+    "jsonwebtoken": "^9.0.2",
+    "nodemon": "^3.1.10",
     "supertest": "^7.1.0"
   },
   "description": ""

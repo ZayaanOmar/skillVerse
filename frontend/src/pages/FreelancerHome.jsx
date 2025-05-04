@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./FreelancerHome.css";
 import Navbar from "../components/Navbar";
 import { useNavigate } from "react-router-dom";
+import API_URL from "../config/api";
 
 const FreelancerHome = () => {
   const navigate = useNavigate();
@@ -12,7 +13,7 @@ const FreelancerHome = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = await fetch("http://localhost:5000/auth/me", {
+        const res = await fetch(`${API_URL}/auth/me`, {
           credentials: "include",
         });
         if (res.ok) {

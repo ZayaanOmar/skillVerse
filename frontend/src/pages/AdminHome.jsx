@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./AdminHome.css";
 import { useNavigate } from "react-router-dom";
+import API_URL from "../config/api";
 
 const AdminHome = () => {
   const navigate = useNavigate();
@@ -9,7 +10,7 @@ const AdminHome = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = await fetch("http://localhost:5000/auth/me", {
+        const res = await fetch(`${API_URL}/auth/me`, {
           credentials: "include",
         });
         if (res.ok) {
@@ -83,7 +84,7 @@ const AdminHome = () => {
               </section>
             </section>
 
-            <section class="col-4">
+            <section className="col-4">
               <section className="card">
                 <section className="card-body">
                   <h5 className="card-title">

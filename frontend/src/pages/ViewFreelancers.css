@@ -1,9 +1,0 @@
-.freelancer-card:hover {
-    transform: translateY(-3px);
-    transition: 0.3s ease;
-    border-left: 5px solid #28a745;
-  }
-
-  .main {
-    padding-top: 30px; /* Adjust based on the height of your navbar */
-}

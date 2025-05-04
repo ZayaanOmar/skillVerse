@@ -1,9 +1,84 @@
-import React from "react";
-import "./ViewFreelancers.css"; // Importing CSS style file
-import { Card, Button, Badge } from "react-bootstrap";
-import { FaStar, FaMapMarkerAlt, FaEnvelope } from "react-icons/fa";
-import Navbar from "../components/Navbar";
+import React, { useEffect, useState } from "react";
+import "./JobApplications.css"; // Importing CSS style file
+//import { Card, Button, Badge } from "react-bootstrap";
+//import { FaStar, FaMapMarkerAlt, FaEnvelope } from "react-icons/fa";
+//import Navbar from "../components/Navbar";
+import { useParams } from "react-router-dom";
+import axios from "axios";
+import API_URL from "../config/api";
 
+const ViewFreelancers = () => {
+  const { jobId } = useParams(); // Get the jobId from the URL parameters
+  console.log("Job ID:", jobId); // Log the jobId for debugging
+  const [applications, setApplications] = useState([]);
+
+  useEffect(() => {
+    const fetchApplications = async () => {
+      try {
+        const response = await axios.get(
+          `${API_URL}/api/applications/jobs/${jobId}`
+        );
+        setApplications(response.data);
+        console.log("Applications:", response.data);
+      } catch (error) {
+        console.error("Error fetching applications:", error);
+      }
+    };
+
+    fetchApplications();
+  }, [jobId]);
+
+  const handleAccept = async (applicationId) => {
+    try {
+      await axios.post(
+        `${API_URL}/api/applications/jobs/accept/${applicationId}`,
+        {},
+        { withCredentials: true }
+      );
+      alert("Application Accepted"); // Show success message
+    } catch (error) {
+      console.error("Error accepting application:", error);
+      alert("Error accepting application"); // Show error message
+    }
+  };
+
+  return (
+    <main>
+      <section>
+        {applications.length === 0 ? (
+          <p>No Current Applications</p>
+        ) : (
+          <section>
+            {applications.map((application) => (
+              <article key={application._id}>
+                <p>
+                  <strong>Freelancer: </strong>
+                  {application.freelancerId.username}
+                </p>
+                <p>
+                  <strong>Price: </strong>${application.price}
+                </p>
+                {application.coverLetter && (
+                  <p>
+                    <strong>Cover Letter: </strong>
+                    {application.coverLetter}
+                  </p>
+                )}
+                <button onClick={() => handleAccept(application._id)}>
+                  Accept Application
+                </button>
+              </article>
+            ))}
+          </section>
+        )}
+      </section>
+    </main>
+  );
+};
+
+export default ViewFreelancers;
+
+/* Tazeem's boilerplate code 
 const freelancers = [
   {
     id: 1,
@@ -93,10 +168,8 @@ const FreelancerCard = ({ freelancer }) => (
   </Card>
 );
 
-const ViewFreelancers = () => {
-  return (
-    <main className="main">
-      <Navbar /> {/* This puts the navbar at the top */}
+<main className="main">
+      <Navbar /> 
       <section className="container py-4">
         <h2 className="mb-4">Freelancers Who Applied</h2>
         <section className="row">
@@ -108,7 +181,4 @@ const ViewFreelancers = () => {
         </section>
       </section>
     </main>
-  );
-};
-
-export default ViewFreelancers;
+*/
