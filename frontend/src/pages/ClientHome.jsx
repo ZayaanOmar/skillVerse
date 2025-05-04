@@ -274,13 +274,13 @@ const ClientHome = () => {
                       <strong>Progress:</strong> {job.progress} %
                     </p>
                     <button
-                      className="btn btn-outline-success"
+                      className="btnCheck"
                       onClick={handlePay}
                     >
                       Checkout
                     </button>
                     <button
-                      className="btn btn-outline-primary"
+                      className="btnDetails"
                       onClick={() => navigate(`/myjobs/${job._id}`)}
                     >
                       View Details
@@ -324,13 +324,13 @@ const ClientHome = () => {
           <strong>{pendingCategory}</strong>?
         </Modal.Body>
         <Modal.Footer>
-          <Button
+          <Button className="noButton"
             variant="secondary"
             onClick={() => setShowConfirmModal(false)}
           >
             No
           </Button>
-          <Button
+          <Button className="yesButton"
             variant="primary"
             onClick={() => {
               handleServiceSelection(
