@@ -50,7 +50,7 @@ const RoleSelection = () => {
 
           // Navigate to correct dashboard
           if (role === "client") navigate("/client/home");
-          else if (role === "freelancer") navigate("/freelancer/home");
+          else if (role === "freelancer") navigate("/create-profile");
         } else {
           console.error("Failed to fetch user data");
         }

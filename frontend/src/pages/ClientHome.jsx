@@ -75,10 +75,12 @@ const ClientHome = () => {
     fetchJobs();
   }, [userId, error, success]); // Fetch jobs whenever userId is updated
 
+  /* Debugging logs
   console.log("User in useEffect:", user); // Debugging line to check user data
   console.log("User ID:", user ? user._id : "User not available"); // Debugging line to check user ID
   console.log("User in localStorage:", localStorage.getItem("user")); // Debugging line to check localStorage
   console.log("Jobs fetched:", jobs); // Debugging line to check jobs data
+  */
 
   const handleServiceSelection = async (category) => {
     if (!user || !user._id) {
@@ -111,7 +113,7 @@ const ClientHome = () => {
   };
 
   const handlePay = async () => {
-    console.log("Button clicked!");
+    //console.log("Button clicked!");
     const email = "johndoe@example.com";
 
     try {
@@ -234,7 +236,6 @@ const ClientHome = () => {
                 Access powerful tools to manage your projects and teams with
                 ease.
               </p>
-              <button onClick={handlePay}>Checkout</button>
             </section>
           </section>
         </article>
@@ -259,10 +260,27 @@ const ClientHome = () => {
                       <strong>Service Type:</strong> {job.serviceType}
                     </p>
                     <p>
+                      <strong>Freelancer: </strong>
+                      {job.status === "Accepted" ||
+                      job.status === "In Progress" ||
+                      job.status === "Completed"
+                        ? job.freelancerId?.username
+                        : "No Freelancer Assigned Yet"}
+                    </p>
+                    <p>
                       <strong>Status:</strong> {job.status}
                     </p>
+                    <p>
+                      <strong>Progress:</strong> {job.progress} %
+                    </p>
                     <button
-                      className="btn btn-outline-primary"
+                      className="btnCheck"
+                      onClick={handlePay}
+                    >
+                      Checkout
+                    </button>
+                    <button
+                      className="btnDetails"
                       onClick={() => navigate(`/myjobs/${job._id}`)}
                     >
                       View Details
@@ -306,13 +324,13 @@ const ClientHome = () => {
           <strong>{pendingCategory}</strong>?
         </Modal.Body>
         <Modal.Footer>
-          <Button
+          <Button className="noButton"
             variant="secondary"
             onClick={() => setShowConfirmModal(false)}
           >
             No
           </Button>
-          <Button
+          <Button className="yesButton"
             variant="primary"
             onClick={() => {
               handleServiceSelection(

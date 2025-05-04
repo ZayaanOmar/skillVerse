@@ -16,6 +16,8 @@ const MongoStore = require("connect-mongo"); // for storing sessions in MongoDB
 
 const app = express();
 
+// allows session to work properly with Azure's reverse proxy
+// (this is needed for production, but not for local development)
 if (process.env.NODE_ENV === "production") {
   app.set("trust proxy", 1);
 }
@@ -30,7 +32,7 @@ app.use(
   cors({
     origin:
       process.env.NODE_ENV === "production"
-        ? process.env.FRONTEND_URL // Your Azure Static Web App URL
+        ? process.env.FRONTEND_URL
         : "http://localhost:3000",
     credentials: true,
   })
@@ -50,6 +52,7 @@ app.use(
       sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
       secure: process.env.NODE_ENV === "production",
     },
+    // stores user sessions in MongoDB
     store: MongoStore.create({
       mongoUrl: process.env.MONGO_URI,
       collectionName: "sessions",

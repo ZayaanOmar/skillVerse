@@ -1,9 +1,39 @@
-import React from "react";
+//FreelancerProfile.jsx
+import React, { useEffect, useState } from "react";
 import "./FreelancerProfile.css";
 import { Card, Container, Row, Col, Badge } from "react-bootstrap";
 import Navbar from "../components/Navbar";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import API_URL from "../config/api";
+const User = JSON.parse(localStorage.getItem("user"));
 
 const FreelancerProfile = () => {
+  const navigate = useNavigate();
+
+  const [profile, setProfile] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const response = await axios.get(
+          `${API_URL}/users/profile/${User._id}`
+        );
+        console.log("Profile response data", response.data); // Debugging line to check the response
+        setProfile(response.data);
+      } catch (error) {
+        console.error("Error fetching profile:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (User._id) {
+      fetchProfile();
+    }
+  }, [User._id]);
+
   const freelancer = {
     name: "Tazeem Tayob",
     gender: "Male",
@@ -16,9 +46,14 @@ const FreelancerProfile = () => {
     hourlyRate: "$30/hr",
     email: "ahmed@example.com",
     role: "Freelancer",
-    profilePic: "https://randomuser.me/api/portraits/women/44.jpg",
+    profilePic:
+      "https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png",
     occupation: "Software Engineer",
   };
+
+  if (loading) {
+    return <p>Loading</p>;
+  }
 
   return (
     <main className="freelancer-profile">
@@ -43,31 +78,26 @@ const FreelancerProfile = () => {
                     />
                   </Row>
                   <Row className="profile-name-row">
-                    <h3 className="profile-name">{freelancer.name}</h3>
+                    <h3 className="profile-name">{User.username}</h3>
                   </Row>
                   <Row className="profile-info-row">
                     <p className="profile-info">
-                      <strong>Email:</strong> {freelancer.email}
+                      <strong>Location:</strong> {profile.location}
                     </p>
                   </Row>
                   <Row className="profile-info-row">
                     <p className="profile-info">
-                      <strong>Location:</strong> {freelancer.location}
+                      <strong>Gender:</strong> {profile.gender}
                     </p>
                   </Row>
                   <Row className="profile-info-row">
                     <p className="profile-info">
-                      <strong>Gender:</strong> {freelancer.gender}
+                      <strong>Role:</strong> {User.role}
                     </p>
                   </Row>
                   <Row className="profile-info-row">
                     <p className="profile-info">
-                      <strong>Role:</strong> {freelancer.role}
-                    </p>
-                  </Row>
-                  <Row className="profile-info-row">
-                    <p className="profile-info">
-                      <strong>Occupation:</strong> {freelancer.occupation}
+                      <strong>Occupation:</strong> {profile.occupation}
                     </p>
                   </Row>
                   <Row className="profile-info-row">
@@ -78,7 +108,7 @@ const FreelancerProfile = () => {
                   <Row className="profile-info-row">
                     <p className="profile-info">
                       <strong>Skills:</strong>
-                      {freelancer.skills.map((skill, idx) => (
+                      {profile.skills.map((skill, idx) => (
                         <Badge
                           key={idx}
                           bg="black"
@@ -91,11 +121,16 @@ const FreelancerProfile = () => {
                   </Row>
                   <Row className="profile-info-row">
                     <p className="profile-info">
-                      <strong>About:</strong> {freelancer.about}
+                      <strong>About:</strong> {profile.about}
                     </p>
                   </Row>
                   <Row className="edit-btn-row">
-                    <button className="edit-btn">Edit Profile</button>
+                    <button
+                      className="edit-btn"
+                      onClick={() => navigate("/create-profile")}
+                    >
+                      Edit Profile
+                    </button>
                   </Row>
                 </Card.Body>
               </Card>

@@ -17,7 +17,7 @@
   font-weight: 600;
 }
 .chooseDesc {
-  background-color: #102e69;
+  background-color: #AFEEEE;
   height: 250px;
   padding: 1.5rem;
   border-radius: 12px;
@@ -27,7 +27,7 @@
 .description {
   font-size: 40px;
   font-weight: 500;
-  color: #f3f4f6;
+  color: #000000;
 }
 .section1 {
   display: flex;
@@ -49,7 +49,7 @@
   border-radius: 12px;
   height: 200px; /* Fixed height for all buttons */
   width: 200px;
-  background-color: #12357c;
+  background-color: #a3e6e6;
   color: white;
   font-size: 1rem;
   font-weight: 700;
@@ -65,7 +65,7 @@
 .buttonCL:hover,
 .buttonGD:hover,
 .buttonDM:hover {
-  background-color: #1a449c; /* Slightly lighter blue */
+  background-color: #000000; /* Slightly lighter blue */
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Subtle shadow */
   transform: translateY(-4px); /* Slight lift effect */
 }
@@ -105,7 +105,7 @@
 }
 
 nav {
-  background-color: #1e293b; /* dark slate */
+  background-color: #000000; /* dark slate */
   color: white;
   padding: 1rem 2rem;
   display: flex;
@@ -113,6 +113,7 @@ nav {
   align-items: center;
   height: 20px;
   margin-top: -32px;
+  width: 100%;
 }
 
 nav h1 {
@@ -144,7 +145,7 @@ nav a:hover {
 }
 
 .jobs-banner {
-  background-color: #102e69;
+  background-color: #AFEEEE;
   padding: 1.5rem;
   border-radius: 12px;
   margin-top: 8rem;
@@ -176,14 +177,26 @@ nav a:hover {
   width: 50%;
   margin-left: auto;
   margin-right: auto;
+  border-radius: 8px;
+  margin-top: 7px;
+  border: none;
+  height: 35px;
   transition: all 0.3s ease;
+
 }
 
 .my-jobs-card button:hover {
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Subtle shadow */
   transform: translateY(-5px); /* Slight lift effect */
 }
-
+.btnCheck{
+  background-color:#AFEEEE;
+  color: #000000;
+}
+.btnDetails{
+  background-color: #000000;
+  color: white;
+}
 .jobs-grid {
   display: grid;
   grid-template-columns: repeat(
@@ -193,10 +206,21 @@ nav a:hover {
   gap: 1.5rem; /* Space between the cards */
   margin-top: 1rem;
 }
+.noButton {
+  background-color: gray !important;/*the !important negates bootsrap from overwriting the button colours*/
+  border-color: gray!important;
+  color: white !important;
+}
+
+.yesButton {
+  background-color: #000000 !important;
+  border-color: #000000 !important;
+  color: white !important;
+}
 
 .Ebrahimfooter {
   height: 300px;
-  background-color: #1e293b;
+  background-color: rgb(0, 0, 0);
   color: white;
   width: 100%;
   padding: 1rem 2rem;

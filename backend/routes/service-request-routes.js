@@ -112,6 +112,7 @@ router.get("/jobs/:id", async (req, res) => {
   try {
     const jobs = await ServiceRequest.find({ clientId: id })
       .populate("clientId", "username")
+      .populate("freelancerId", "username")
       .exec();
     if (!jobs) {
       return res.status(404).json({ message: "Job not found" });
