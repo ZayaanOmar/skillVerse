@@ -1,14 +1,38 @@
 //FreelancerProfile.jsx
-import React from 'react';
-import './FreelancerProfile.css';
-import { Card, Container, Row, Col, Badge } from 'react-bootstrap';
-import Navbar from '../components/Navbar';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import "./FreelancerProfile.css";
+import { Card, Container, Row, Col, Badge } from "react-bootstrap";
+import Navbar from "../components/Navbar";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import API_URL from "../config/api";
 const User = JSON.parse(localStorage.getItem("user"));
 
 const FreelancerProfile = () => {
-
   const navigate = useNavigate();
+
+  const [profile, setProfile] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const response = await axios.get(
+          `${API_URL}/users/profile/${User._id}`
+        );
+        console.log("Profile response data", response.data); // Debugging line to check the response
+        setProfile(response.data);
+      } catch (error) {
+        console.error("Error fetching profile:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (User._id) {
+      fetchProfile();
+    }
+  }, [User._id]);
 
   const freelancer = {
     name: "Tazeem Tayob",
@@ -17,113 +41,151 @@ const FreelancerProfile = () => {
     rating: 4.8,
     location: "Polokwane, South Africa",
     completedProjects: 12,
-    about: "I'm a passionate full-stack developer with experience in modern web technologies.",
+    about:
+      "I'm a passionate full-stack developer with experience in modern web technologies.",
     hourlyRate: "$30/hr",
     email: "ahmed@example.com",
     role: "Freelancer",
-    profilePic: "https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png",
+    profilePic:
+      "https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png",
     occupation: "Software Engineer",
   };
 
+  if (loading) {
+    return <p>Loading</p>;
+  }
+
   return (
     <main className="freelancer-profile">
-        <Navbar />
-        <section className="body" style={{ backgroundColor: '#AFEEEE', minHeight: "100vh" }}>
+      <Navbar />
+      <section
+        className="body"
+        style={{ backgroundColor: "#AFEEEE", minHeight: "100vh" }}
+      >
         <Container className="mt-5">
-  <Row className="d-flex justify-content-start">
-    {/* Card 1 */}
-    <Col md={6} className="col-1">
-      <Card className="profile-card border-white">
-        <Card.Body>
-          <Row className="profile-image d-flex justify-content-center align-items-center">
-            <img
-              src={freelancer.profilePic}
-              alt="ProfilePic"
-              className="profile-pic"
-              width="70"
-              height="70"
-            />
-          </Row>
-          <Row className="profile-name-row">
-            <h3 className="profile-name">{User.username}</h3>
-          </Row>
-          <Row className="profile-info-row">
-            <p className="profile-info"><strong>Email:</strong> {freelancer.email}</p>
-          </Row>
-          <Row className="profile-info-row">
-            <p className="profile-info"><strong>Location:</strong> {User.location}</p>
-          </Row>
-          <Row className="profile-info-row">
-            <p className="profile-info"><strong>Gender:</strong> {User.gender}</p>
-          </Row>
-          <Row className="profile-info-row">
-            <p className="profile-info"><strong>Role:</strong> {User.role}</p>
-          </Row>
-          <Row className="profile-info-row">
-            <p className="profile-info"><strong>Occupation:</strong> {User.occupation}</p>
-          </Row>
-          <Row className="profile-info-row">
-            <p className="profile-info"><strong>Rating:</strong> {freelancer.rating} / 5</p>
-          </Row>
-          <Row className="profile-info-row">
-            <p className="profile-info">
-              <strong>Skills:</strong>
-              {freelancer.skills.map((skill, idx) => (
-                <Badge key={idx} bg="black" className="mx-1 profile-badge">{skill}</Badge>
-              ))}
-            </p>
-          </Row>
-          <Row className="profile-info-row">
-            <p className="profile-info"><strong>About:</strong> {User.about}</p>
-          </Row>
-          <Row className="edit-btn-row">
-            <button className="edit-btn" onClick={() => navigate('/create-profile')}>Edit Profile</button>
-          </Row>
-        </Card.Body>
-      </Card>
-    </Col>
+          <Row className="d-flex justify-content-start">
+            {/* Card 1 */}
+            <Col md={6} className="col-1">
+              <Card className="profile-card border-white">
+                <Card.Body>
+                  <Row className="profile-image d-flex justify-content-center align-items-center">
+                    <img
+                      src={freelancer.profilePic}
+                      alt="ProfilePic"
+                      className="profile-pic"
+                      width="70"
+                      height="70"
+                    />
+                  </Row>
+                  <Row className="profile-name-row">
+                    <h3 className="profile-name">{User.username}</h3>
+                  </Row>
+                  <Row className="profile-info-row">
+                    <p className="profile-info">
+                      <strong>Location:</strong> {profile.location}
+                    </p>
+                  </Row>
+                  <Row className="profile-info-row">
+                    <p className="profile-info">
+                      <strong>Gender:</strong> {profile.gender}
+                    </p>
+                  </Row>
+                  <Row className="profile-info-row">
+                    <p className="profile-info">
+                      <strong>Role:</strong> {User.role}
+                    </p>
+                  </Row>
+                  <Row className="profile-info-row">
+                    <p className="profile-info">
+                      <strong>Occupation:</strong> {profile.occupation}
+                    </p>
+                  </Row>
+                  <Row className="profile-info-row">
+                    <p className="profile-info">
+                      <strong>Rating:</strong> {freelancer.rating} / 5
+                    </p>
+                  </Row>
+                  <Row className="profile-info-row">
+                    <p className="profile-info">
+                      <strong>Skills:</strong>
+                      {profile.skills.map((skill, idx) => (
+                        <Badge
+                          key={idx}
+                          bg="black"
+                          className="mx-1 profile-badge"
+                        >
+                          {skill}
+                        </Badge>
+                      ))}
+                    </p>
+                  </Row>
+                  <Row className="profile-info-row">
+                    <p className="profile-info">
+                      <strong>About:</strong> {profile.about}
+                    </p>
+                  </Row>
+                  <Row className="edit-btn-row">
+                    <button
+                      className="edit-btn"
+                      onClick={() => navigate("/create-profile")}
+                    >
+                      Edit Profile
+                    </button>
+                  </Row>
+                </Card.Body>
+              </Card>
+            </Col>
 
-    {/* Cards 2,3,4 */}
-    <Col md={6} className="col-2">
-      {/* Card 2 - Projects Card */}
-      <Card className="additional-card border-white">
-        <Card.Body>
-          <Row className="profile-name-row">
-            <h3 className="profile-name">My Projects</h3>
-          </Row>
-          <Row className="profile-info-row">
-            <p className="profile-info"><strong>Details:</strong> Additional details for the second card.</p>
-          </Row>
-        </Card.Body>
-      </Card>
+            {/* Cards 2,3,4 */}
+            <Col md={6} className="col-2">
+              {/* Card 2 - Projects Card */}
+              <Card className="additional-card border-white">
+                <Card.Body>
+                  <Row className="profile-name-row">
+                    <h3 className="profile-name">My Projects</h3>
+                  </Row>
+                  <Row className="profile-info-row">
+                    <p className="profile-info">
+                      <strong>Details:</strong> Additional details for the
+                      second card.
+                    </p>
+                  </Row>
+                </Card.Body>
+              </Card>
 
-      {/* Card 3 - Payment Card */}
-      <Card className="additional-card border-white">
-        <Card.Body>
-          <Row className="profile-name-row">
-            <h3 className="profile-name">Payment Information</h3>
-          </Row>
-          <Row className="profile-info-row">
-            <p className="profile-info"><strong>Details:</strong> Additional details for the third card.</p>
-          </Row>
-        </Card.Body>
-      </Card>
+              {/* Card 3 - Payment Card */}
+              <Card className="additional-card border-white">
+                <Card.Body>
+                  <Row className="profile-name-row">
+                    <h3 className="profile-name">Payment Information</h3>
+                  </Row>
+                  <Row className="profile-info-row">
+                    <p className="profile-info">
+                      <strong>Details:</strong> Additional details for the third
+                      card.
+                    </p>
+                  </Row>
+                </Card.Body>
+              </Card>
 
-      {/* Card 4 - Reviews Card */}
-      <Card className="additional-card border-white">
-        <Card.Body>
-          <Row className="profile-name-row">
-            <h3 className="profile-name">My Reviews</h3>
+              {/* Card 4 - Reviews Card */}
+              <Card className="additional-card border-white">
+                <Card.Body>
+                  <Row className="profile-name-row">
+                    <h3 className="profile-name">My Reviews</h3>
+                  </Row>
+                  <Row className="profile-info-row">
+                    <p className="profile-info">
+                      <strong>Details:</strong> Additional details for the
+                      fourth card.
+                    </p>
+                  </Row>
+                </Card.Body>
+              </Card>
+            </Col>
           </Row>
-          <Row className="profile-info-row">
-            <p className="profile-info"><strong>Details:</strong> Additional details for the fourth card.</p>
-          </Row>
-        </Card.Body>
-      </Card>
-    </Col>
-  </Row>
-</Container>
-    </section>
+        </Container>
+      </section>
     </main>
   );
 };

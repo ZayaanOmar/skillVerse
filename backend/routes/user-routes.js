@@ -19,26 +19,40 @@ router.put("/:id", updateUser);
 
 // Handles creating new profile details document
 router.post("/create-user", async (req, res) => {
-  console.log(req.body); //debugging
+  console.log("request body", req.body); //debugging
+  console.log("user", req.user); //debugging
   const { user, location, gender, occupation, skills, about } = req.body;
-  const userID = user._id;
+
   try {
-    const user = await User.findOne( {userID} );
+    const existingUser = await User.findById(req.user._id); // safer than querying by custom 'userID'
 
-    const newDetails = new ProfileDetails({
-      user: user._id, //taken from logged-in user
-      location: location,
-      gender: gender,
-      occupation: occupation,
-      skills: skills,
-      about: about
+    if (!existingUser) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const updatedDetails = await ProfileDetails.findOneAndUpdate(
+      { user: req.user._id }, // match by user ID
+      {
+        user: req.user._id,
+        location,
+        gender,
+        occupation,
+        skills,
+        about,
+      },
+      {
+        new: true,
+        upsert: true, // create a new document if no match is found
+        setDefaultsOnInsert: true,
+      }
+    );
+
+    res.status(200).json({
+      message: "Profile details saved successfully",
+      profile: updatedDetails,
     });
-
-    await newDetails.save();
-
-    res.status(200).json({ message: "Profile details added successfully", success: true });
   } catch (err) {
-    console.error("Error setting profile up:", err);
+    console.error("Error saving profile details:", err);
     res.status(500).json({ message: "Server error" });
   }
 });
@@ -57,7 +71,7 @@ router.post("/set-role", authCheck, async (req, res) => {
       { role },
       { new: true }
     );
-    
+
     res.status(200).json({ message: "Role set successfully", user });
   } catch (err) {
     console.error("Error setting role:", err);
@@ -162,5 +176,23 @@ router.post("/process-request", async (req, res) => {
 const { getFreelancerInfo } = require("../controllers/user_controller");
 // Route to get freelancer info by freelancerId
 router.get("/freelancer/:freelancerId", getFreelancerInfo);
+
+router.get("/profile/:userId", async (req, res) => {
+  const { userId } = req.params;
+  try {
+    const profileDetails = await ProfileDetails.findOne({
+      user: userId,
+    }).populate("user");
+
+    if (!profileDetails) {
+      return res.status(404).json({ message: "Profile not found" });
+    }
+
+    res.status(200).json(profileDetails);
+  } catch (error) {
+    console.error("Error fetching profile details:", error);
+    return res.status(500).json({ message: "Server error" });
+  }
+});
 
 module.exports = router;

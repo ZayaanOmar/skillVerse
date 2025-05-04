@@ -24,6 +24,7 @@ const CreateProfile = () => {
   const navigate = useNavigate(); // Hook for navigation
   const user = JSON.parse(localStorage.getItem("user"));
   const role = user?.role;
+  console.log("User role:", role); // Debugging log
 
   const handleAddSkill = () => {
     if (skillInput.trim() !== "") {
@@ -57,7 +58,7 @@ const CreateProfile = () => {
 
     setErrorMessage(""); // Clear the error message
 
-    console.log(user._id); //for debugging 
+    console.log(user._id); //for debugging
 
     const userData = {
       user: user._id,
@@ -71,10 +72,16 @@ const CreateProfile = () => {
     console.log("Sending user data:", userData); // Debugging log
 
     try {
-      const response = await axios.post(`${API_URL}/users/create-user`, userData);
+      const response = await axios.post(
+        `${API_URL}/users/create-user`,
+        userData,
+        {
+          withCredentials: true,
+        }
+      );
       console.log("Response from server:", response.data); // Debugging log
 
-      if (response.data.success) {
+      if (response.data.message === "Profile details saved successfully") {
         ///
 
         ///
@@ -111,7 +118,7 @@ const CreateProfile = () => {
     >
       <Container className="container mt-5">
         <Row className="d-flex justify-content-start">
-          <h1 className="welcome-heading">Welcome, Tazeem</h1>
+          <h1 className="welcome-heading">Welcome</h1>
         </Row>
         <Row className="d-flex justify-content-start">
           <Col md={6} className="col-1">
