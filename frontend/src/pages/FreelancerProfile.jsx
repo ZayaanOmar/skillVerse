@@ -4,7 +4,7 @@ import './FreelancerProfile.css';
 import { Card, Container, Row, Col, Badge } from 'react-bootstrap';
 import Navbar from '../components/Navbar';
 import { useNavigate } from 'react-router-dom';
-const user = JSON.parse(localStorage.getItem("user"));
+const User = JSON.parse(localStorage.getItem("user"));
 
 const FreelancerProfile = () => {
 
@@ -21,7 +21,7 @@ const FreelancerProfile = () => {
     hourlyRate: "$30/hr",
     email: "ahmed@example.com",
     role: "Freelancer",
-    profilePic: "https://randomuser.me/api/portraits/women/44.jpg",
+    profilePic: "https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png",
     occupation: "Software Engineer",
   };
 
@@ -45,22 +45,22 @@ const FreelancerProfile = () => {
             />
           </Row>
           <Row className="profile-name-row">
-            <h3 className="profile-name">{freelancer.name}</h3>
+            <h3 className="profile-name">{User.username}</h3>
           </Row>
           <Row className="profile-info-row">
             <p className="profile-info"><strong>Email:</strong> {freelancer.email}</p>
           </Row>
           <Row className="profile-info-row">
-            <p className="profile-info"><strong>Location:</strong> {freelancer.location}</p>
+            <p className="profile-info"><strong>Location:</strong> {User.location}</p>
           </Row>
           <Row className="profile-info-row">
-            <p className="profile-info"><strong>Gender:</strong> {freelancer.gender}</p>
+            <p className="profile-info"><strong>Gender:</strong> {User.gender}</p>
           </Row>
           <Row className="profile-info-row">
-            <p className="profile-info"><strong>Role:</strong> {freelancer.role}</p>
+            <p className="profile-info"><strong>Role:</strong> {User.role}</p>
           </Row>
           <Row className="profile-info-row">
-            <p className="profile-info"><strong>Occupation:</strong> {freelancer.occupation}</p>
+            <p className="profile-info"><strong>Occupation:</strong> {User.occupation}</p>
           </Row>
           <Row className="profile-info-row">
             <p className="profile-info"><strong>Rating:</strong> {freelancer.rating} / 5</p>
@@ -74,7 +74,7 @@ const FreelancerProfile = () => {
             </p>
           </Row>
           <Row className="profile-info-row">
-            <p className="profile-info"><strong>About:</strong> {freelancer.about}</p>
+            <p className="profile-info"><strong>About:</strong> {User.about}</p>
           </Row>
           <Row className="edit-btn-row">
             <button className="edit-btn" onClick={() => navigate('/create-profile')}>Edit Profile</button>
