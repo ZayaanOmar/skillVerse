@@ -91,6 +91,7 @@ import FreelancerProfile from "./pages/FreelancerProfile";
 import CreateProfile from "./pages/CreateProfile";
 import TicketSupport from "./pages/TicketSupport";
 import AdminHome from "./pages/AdminHome";
+import JobApplications from "./pages/JobApplications";
 //import ViewFreelancers from "./pages/ViewFreelancers";
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -119,7 +120,12 @@ function App() {
         {/* Role Selection Page */}
         <Route
           path="/roles"
-          element={<RoleSelection setRole={setRole} setEmail={(email) => user.email = email} />}
+          element={
+            <RoleSelection
+              setRole={setRole}
+              setEmail={(email) => (user.email = email)}
+            />
+          }
         />
 
         {/* Freelancer Job Requests */}
@@ -132,13 +138,11 @@ function App() {
         />
 
         {/* Freelancer Profile Page */}
-        <Route
-          path="/profile"
-          element={<FreelancerProfile user={user} />}
-        />
+        <Route path="/profile" element={<FreelancerProfile user={user} />} />
 
         {/* Admin Ticket Support Page */}
         <Route path="/admin/support" element={<TicketSupport />} />
+        <Route path="/myjobs/:jobId" element={<JobApplications />} />
       </Routes>
     </Router>
   );
