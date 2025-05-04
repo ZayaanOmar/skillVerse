@@ -33,5 +33,5 @@ const profileSchema = new mongoose.Schema(
   }
 );
 
-//tells mongoose to create a new collection called "users", and to use the previously defined schema
+//tells mongoose to create a new collection called "profiledetails", and to use the previously defined schema
 module.exports = mongoose.model("ProfileDetails", profileSchema);

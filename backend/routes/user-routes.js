@@ -8,6 +8,7 @@ const {
 const router = express.Router();
 const User = require("../models/User");
 const ChangeRequest = require("../models/RoleChange");
+const ProfileDetails = require("../models/ProfileDetails");
 
 // redirect to homepage
 router.get("/homepage", authCheck, logIn);
@@ -35,7 +36,7 @@ router.post("/create-user", async (req, res) => {
 
     await newDetails.save();
 
-    res.status(200).json({ message: "Profile details added successfully", user });
+    res.status(200).json({ message: "Profile details added successfully", success: true });
   } catch (err) {
     console.error("Error setting profile up:", err);
     res.status(500).json({ message: "Server error" });
