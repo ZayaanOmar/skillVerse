@@ -22,6 +22,8 @@ const CreateProfile = () => {
   const [occupation, setOccupation] = useState(""); // State for occupation
   const [errorMessage, setErrorMessage] = useState(""); // State for error message
   const navigate = useNavigate(); // Hook for navigation
+  const user = JSON.parse(localStorage.getItem("user"));
+  const role = user?.role;
 
   const handleAddSkill = () => {
     if (skillInput.trim() !== "") {
@@ -55,10 +57,10 @@ const CreateProfile = () => {
 
     setErrorMessage(""); // Clear the error message
 
+    console.log(user._id); //for debugging 
+
     const userData = {
-      user: {
-        _id: user._id,  // This should be the ObjectId of the logged-in user
-      },
+      user: user._id,
       location,
       gender,
       occupation,
@@ -73,6 +75,9 @@ const CreateProfile = () => {
       console.log("Response from server:", response.data); // Debugging log
 
       if (response.data.success) {
+        ///
+
+        ///
         alert("Profile created successfully!");
         // Redirect based on role
         if (role === "client") {

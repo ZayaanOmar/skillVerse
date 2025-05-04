@@ -4,10 +4,11 @@ import './FreelancerProfile.css';
 import { Card, Container, Row, Col, Badge } from 'react-bootstrap';
 import Navbar from '../components/Navbar';
 import { useNavigate } from 'react-router-dom';
+const user = JSON.parse(localStorage.getItem("user"));
 
 const FreelancerProfile = () => {
 
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const freelancer = {
     name: "Tazeem Tayob",
