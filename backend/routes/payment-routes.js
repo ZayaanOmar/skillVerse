@@ -3,6 +3,11 @@ require("dotenv").config();
 const axios = require("axios");
 const router = express.Router();
 
+const FRONTEND_URL =
+  process.env.NODE_ENV === "production"
+    ? process.env.FRONTEND_URL
+    : "http://localhost:3000";
+
 router.post("/create-checkout-session", async (req, res) => {
   const { email, amount } = req.body;
 
@@ -17,7 +22,7 @@ router.post("/create-checkout-session", async (req, res) => {
       {
         email: email,
         amount: amount * 100,
-        callback_url: "https://zoomquilt.org", // after payment, Paystack redirects here
+        callback_url: `${FRONTEND_URL}/client/home`, // after payment, Paystack redirects here
       },
       {
         headers: {
