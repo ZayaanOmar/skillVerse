@@ -74,7 +74,6 @@
 
 .edit-btn{
   background-color: black;
-  width: auto; /* Allow the button width to adjust based on content */
   padding: 10px 22px; /* Reduce left and right padding */
   font-size: 12px;
   font-weight: bold;

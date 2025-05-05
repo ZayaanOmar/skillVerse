@@ -130,54 +130,6 @@ const FreelancerProfile = () => {
                 </Card.Body>
               </Card>
             </Col>
-
-            {/* Cards 2,3,4 */}
-            <Col md={6} className="col-2">
-              {/* Card 2 - Projects Card */}
-              <Card className="additional-card border-white">
-                <Card.Body>
-                  <Row className="profile-name-row">
-                    <h3 className="profile-name">My Projects</h3>
-                  </Row>
-                  <Row className="profile-info-row">
-                    <p className="profile-info">
-                      <strong>Details:</strong> Additional details for the
-                      second card.
-                    </p>
-                  </Row>
-                </Card.Body>
-              </Card>
-
-              {/* Card 3 - Payment Card */}
-              <Card className="additional-card border-white">
-                <Card.Body>
-                  <Row className="profile-name-row">
-                    <h3 className="profile-name">Payment Information</h3>
-                  </Row>
-                  <Row className="profile-info-row">
-                    <p className="profile-info">
-                      <strong>Details:</strong> Additional details for the third
-                      card.
-                    </p>
-                  </Row>
-                </Card.Body>
-              </Card>
-
-              {/* Card 4 - Reviews Card */}
-              <Card className="additional-card border-white">
-                <Card.Body>
-                  <Row className="profile-name-row">
-                    <h3 className="profile-name">My Reviews</h3>
-                  </Row>
-                  <Row className="profile-info-row">
-                    <p className="profile-info">
-                      <strong>Details:</strong> Additional details for the
-                      fourth card.
-                    </p>
-                  </Row>
-                </Card.Body>
-              </Card>
-            </Col>
           </Row>
         </Container>
       </section>
