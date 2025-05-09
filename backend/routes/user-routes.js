@@ -9,13 +9,44 @@ const router = express.Router();
 const User = require("../models/User");
 const ChangeRequest = require("../models/RoleChange");
 const ProfileDetails = require("../models/ProfileDetails");
-
 // redirect to homepage
 router.get("/homepage", authCheck, logIn);
 
 router.post("/", addUser);
 
 router.put("/:id", updateUser);
+//this part is added to get all user accounts for admin manage accts
+router.get("/", async (req, res) => {
+  try {
+    const users = await User.find();
+    res.status(200).json(users);
+  } catch (err) {
+    console.error("Error fetching users:", err);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+//used now to delete the account of a user
+router.delete("/:id", authCheck, async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    if (req.user.role !== "admin") {//check if role is not an admin
+      return res.status(403).json({ message: "Not authorized to delete user" });
+    }
+
+    const user = await User.findByIdAndDelete(id);//req.params.id in the brackets
+    console.log("Deleting user:", user);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.status(200).json({ message: "User deleted successfully" });
+  } catch (err) {
+    console.error("Error deleting user:", err);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
 
 // Handles creating new profile details document
 router.post("/create-user", async (req, res) => {
