@@ -107,7 +107,8 @@ const AdminHome = () => {
                     Listings
                   </h5>
                   <p className="card-text">View and manage job listings</p>
-                  <button className="btn btn-outline-primary">
+                  <button className="btn btn-outline-primary"
+                    onClick={() => navigate("/admin/manage-jobs")}>
                     Manage Job Listings
                   </button>
                 </section>

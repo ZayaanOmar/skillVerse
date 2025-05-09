@@ -3,6 +3,7 @@ const ServiceRequest = require("../models/ServiceRequest");
 const User = require("../models/User");
 const Application = require("../models/Application");
 const router = express.Router();
+const { createServiceRequest, getAllServiceRequests } = require("../controllers/serviceRequestController");
 //http://localhost:5000/api/service-requests/create (postman check)
 // Create a new service request (from client obs POST)
 router.post("/create", async (req, res) => {
@@ -38,6 +39,7 @@ router.post("/create", async (req, res) => {
       .json({ message: `Error creating service request: ${error.message}` });
   }
 });
+//router.get("/all", getAllServiceRequests);
 router.get("/all", async (req, res) => {
   try {
     const requests = await ServiceRequest.find({
@@ -122,6 +124,25 @@ router.get("/jobs/:id", async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Error fetching job details" });
+  }
+});
+router.get("/manage-jobs", async (req, res) => {
+  try {
+    const serviceRequests = await ServiceRequest.find()
+      .populate("clientId", "username")//show client name
+      .populate("freelancerId", "username")//show freelancer name
+      .exec();
+//console.log("Populated serviceRequests:", serviceRequests);
+   // serviceRequests.forEach(req => {
+   //   console.log({
+    //    client: req.clientId,
+    //    freelancer: req.freelancerId,
+   //   });
+   // });
+    res.status(200).json(serviceRequests);
+  } catch (error) {
+    console.error("Error fetching service requests:", error);
+    res.status(500).json({ message: "Failed to fetch service requests" });
   }
 });
 
