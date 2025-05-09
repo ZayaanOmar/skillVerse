@@ -91,7 +91,8 @@ const AdminHome = () => {
                     <i className="bi bi-people"></i>Manage Users
                   </h5>
                   <p className="card-text">View and manage user accounts</p>
-                  <button className="btn btn-outline-primary">
+                  <button className="btn btn-outline-primary"
+                    onClick={() => navigate("/admin/manage-accounts")}>
                     Manage Accounts
                   </button>
                 </section>
@@ -106,7 +107,8 @@ const AdminHome = () => {
                     Listings
                   </h5>
                   <p className="card-text">View and manage job listings</p>
-                  <button className="btn btn-outline-primary">
+                  <button className="btn btn-outline-primary"
+                    onClick={() => navigate("/admin/manage-jobs")}>
                     Manage Job Listings
                   </button>
                 </section>

@@ -92,6 +92,8 @@ import CreateProfile from "./pages/CreateProfile";
 import TicketSupport from "./pages/TicketSupport";
 import AdminHome from "./pages/AdminHome";
 import JobApplications from "./pages/JobApplications";
+import ManageAccounts from "./pages/ManageAccounts";
+import ManageJobs from "./pages/ManageJobs";
 //import ViewFreelancers from "./pages/ViewFreelancers";
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -143,6 +145,9 @@ function App() {
         {/* Admin Ticket Support Page */}
         <Route path="/admin/support" element={<TicketSupport />} />
         <Route path="/myjobs/:jobId" element={<JobApplications />} />
+        {/* route to show all user accounts on admin dashboard */}
+        <Route path="/admin/manage-accounts" element={<ManageAccounts />} />
+        <Route path="/admin/manage-jobs" element={<ManageJobs />} />
       </Routes>
     </Router>
   );
