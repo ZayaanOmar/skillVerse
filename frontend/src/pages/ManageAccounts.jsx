@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import API_URL from "../config/api";
 import { Modal, Button } from "react-bootstrap";
-
+import "./ManageAccounts.css";
 const ManageAccounts = () => {
   const [users, setUsers] = useState([]);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -14,7 +14,8 @@ const ManageAccounts = () => {
         const res = await fetch(`${API_URL}/api/users`);
         const data = await res.json();
         if (res.ok) {
-          setUsers(data);
+          const filteredUsers = data.filter(user => user.role !== 'admin');//dont show me other admins in this list
+          setUsers(filteredUsers);//show all users except admins
         } else {
           console.error("Failed to fetch users");
         }
@@ -56,6 +57,12 @@ const res = await fetch(`${API_URL}/api/users/${userId}`, {
       <h2>Manage User Accounts</h2>
       <table className="table table-bordered mt-3">
         <thead>
+
+          <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"
+            rel="stylesheet"
+          link/>
+
           <tr>
             <th>Username</th>
             <th>Role</th>
@@ -75,15 +82,15 @@ const res = await fetch(`${API_URL}/api/users/${userId}`, {
                 <td>{user.role}</td>
                 <td>{user.googleID}</td>
                 <td>
-                  <button
-                    className="btn btn-sm btn-danger"
-                    onClick={() => {
-                      setUserToDelete(user);  // Set the user to delete
-                      setShowDeleteModal(true); // Show the confirmation modal
-                    }}
-                  >
-                    Delete
-                  </button>
+                <button
+                  className="deleteicn"
+                  onClick={() => {
+                    setUserToDelete(user);  // Set the user to delete
+                    setShowDeleteModal(true); // Show the confirmation modal
+                  }}
+                >
+                  <i className="bi bi-trash"></i> {/* Trash bin icon */}
+                </button>
                 </td>
               </tr>
             ))
