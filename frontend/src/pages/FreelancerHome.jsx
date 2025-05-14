@@ -91,11 +91,11 @@ const FreelancerHome = () => {
 
       <h2 className="servheading">Popular Services</h2>
       <section className="services">
-        <h3 className="servbox">Website development</h3>
-        <h3 className="servbox">Digital marketing</h3>
-        <h3 className="servbox">Software development</h3>
+        <h3 className="servbox">Software Development</h3>
+        <h3 className="servbox">Data Science</h3>
         <h3 className="servbox">Creating Logos</h3>
-        <h3 className="servbox">Graphic Designer</h3>
+        <h3 className="servbox">Graphic Design</h3>
+        <h3 className="servbox">Digital Marketing</h3>
       </section>
 
       <section>

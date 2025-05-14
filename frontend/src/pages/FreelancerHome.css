@@ -141,7 +141,7 @@ nav a:hover {
 .btn1,
 .btn2 :hover {
   color: white;
-  background-color: #1e293b; /* Change to your desired hover color */
+  background-color: #1e293b;
 }
 
 .questions {
@@ -179,6 +179,12 @@ nav a:hover {
   margin: 1.5rem 0 3rem 0;
 }
 
+.projectlist:hover > .projectbox:not(:hover) {
+  filter: blur(3px);
+  opacity: 0.5;
+  transition: all 0.3s ease;
+}
+
 .projectbox {
   width: 280px;
   min-height: 180px;
@@ -206,7 +212,7 @@ nav a:hover {
 }
 
 .projectbox:hover {
-  transform: translateY(-5px);
+  transform: scale(1.025);
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
 }
 
