@@ -107,7 +107,8 @@ router.post("/applications", async (req, res) => {
   }
 });
 
-router.get("/jobs/:id", async (req, res) => {
+// Get all jobs a client has posted
+router.get("/client/jobs/:id", async (req, res) => {
   const { id } = req.params;
   try {
     const jobs = await ServiceRequest.find({ clientId: id })
@@ -125,6 +126,7 @@ router.get("/jobs/:id", async (req, res) => {
   }
 });
 
+// Get all jobs a freelancer is working on
 router.get("/freelancer/jobs/:id", async (req, res) => {
   console.log("Received request to fetch freelancer jobs"); // Debugging line
   console.log("Request params:", req.params); // Debugging line
@@ -142,6 +144,26 @@ router.get("/freelancer/jobs/:id", async (req, res) => {
   } catch (error) {
     console.error("Error fetching freelancer jobs:", error);
     res.status(500).json({ message: "Error fetching assigned jobs" });
+  }
+});
+
+// Get specific job details by ID
+router.get("/job/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const job = await ServiceRequest.findById(id)
+      .populate("clientId", "username email")
+      .populate("freelancerId", "username email")
+      .exec();
+
+    if (!job) {
+      return res.status(404).json({ message: "Job not found" });
+    }
+
+    res.status(200).json(job);
+  } catch (error) {
+    console.error("Error fetching job details:", error);
+    res.status(500).json({ message: "Error fetching job details" });
   }
 });
 

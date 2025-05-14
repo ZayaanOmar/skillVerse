@@ -21,6 +21,7 @@ const FreelancerHome = () => {
           const userData = await res.json();
           localStorage.setItem("user", JSON.stringify(userData));
           setUser(userData);
+          console.log("User data:", userData);
 
           // After fetching user, fetch their accepted jobs
           if (userData && userData._id) {
@@ -51,6 +52,7 @@ const FreelancerHome = () => {
       if (res.ok) {
         const jobsData = await res.json();
         setAcceptedJobs(jobsData);
+        console.log("Accepted jobs:", jobsData);
       } else {
         console.error("Failed to fetch accepted jobs");
       }
