@@ -125,4 +125,24 @@ router.get("/jobs/:id", async (req, res) => {
   }
 });
 
+router.get("/freelancer/jobs/:id", async (req, res) => {
+  console.log("Received request to fetch freelancer jobs"); // Debugging line
+  console.log("Request params:", req.params); // Debugging line
+  console.log("Fetching freelancer jobs for ID:", req.params.id); // Debugging line
+  const { id } = req.params;
+  try {
+    const freelancerJobs = await ServiceRequest.find({
+      freelancerId: id,
+    })
+      .populate("clientId", "username")
+      .populate("freelancerId", "username")
+      .exec();
+
+    res.status(200).json(freelancerJobs);
+  } catch (error) {
+    console.error("Error fetching freelancer jobs:", error);
+    res.status(500).json({ message: "Error fetching assigned jobs" });
+  }
+});
+
 module.exports = router;
