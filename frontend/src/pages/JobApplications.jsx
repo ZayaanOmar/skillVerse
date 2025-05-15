@@ -6,11 +6,14 @@ import "./JobApplications.css"; // Importing CSS style file
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import API_URL from "../config/api";
+import { Modal, Button } from "react-bootstrap";
 
 const ViewFreelancers = () => {
   const { jobId } = useParams(); // Get the jobId from the URL parameters
   console.log("Job ID:", jobId); // Log the jobId for debugging
   const [applications, setApplications] = useState([]);
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [pendingApplicationId, setPendingApplicationId] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -28,159 +31,97 @@ const ViewFreelancers = () => {
 
     fetchApplications();
   }, [jobId]);
-
-  const handleAccept = async (applicationId) => {
+  const handleShowConfirm = (applicationId) => {
+    setPendingApplicationId(applicationId);
+    setShowConfirmModal(true);
+  };
+  const handleAcceptConfirmed = async () => {
     try {
       await axios.post(
-        `${API_URL}/api/applications/jobs/accept/${applicationId}`,
+        `${API_URL}/api/applications/jobs/accept/${pendingApplicationId}`,
         {},
         { withCredentials: true }
       );
-      alert("Application Accepted"); // Show success message
-      navigate("/client/home"); // Redirect to the client home page
+      alert("Application Accepted");
+      setShowConfirmModal(false);
+      navigate("/client/home");
     } catch (error) {
       console.error("Error accepting application:", error);
-      alert("Error accepting application"); // Show error message
+      alert("Error accepting application");
     }
   };
 
+
   return (
-    <main>
-      <section>
-        {applications.length === 0 ? (
-          <p>No Current Applications</p>
-        ) : (
-          <section>
+
+<main className="available-jobs-main-jobRequest">
+      <h2 className="available-jobs-title-jobRequest">Applications for this Job</h2>
+
+      {applications.length === 0 ? (
+        <p style={{ textAlign: "center", fontSize: "1.2rem" }}>
+          No applications yet. Come back later!
+        </p>
+      ) : (
+        <>
+          <section className="applications-summary">
+            <h3>Total Applications: {applications.length}</h3>
+          </section>
+
+          <section className="available-jobs-section-jobRequest">
             {applications.map((application) => (
-              <article key={application._id}>
+              <article key={application._id} className="available-job-card-jobRequest">
                 <p>
-                  <strong>Freelancer: </strong>
-                  {application.freelancerId.username}
+                  <strong>Freelancer:</strong>{" "}
+                  {application.freelancerId?.username || "Unknown"}
                 </p>
                 <p>
-                  <strong>Price: </strong>R{application.price}
+                  <strong>Price:</strong> R{application.price}
                 </p>
-                {application.coverLetter && (
-                  <p>
-                    <strong>Cover Letter: </strong>
-                    {application.coverLetter}
-                  </p>
-                )}
-                <button onClick={() => handleAccept(application._id)}>
+                <p>
+                  <strong>Rating:</strong>  4.9
+                </p>
+
+                <button
+                  className="available-job-apply-button-jobRequest"
+                  onClick={() => handleShowConfirm(application._id)}
+                >
                   Accept Application
                 </button>
               </article>
             ))}
           </section>
-        )}
-      </section>
+        </>
+      )}
+
+      {/* Modal */}
+      <Modal show={showConfirmModal} onHide={() => setShowConfirmModal(false)} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Confirm Acceptance</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          Are you sure you want to <strong>accept this application</strong>?
+        </Modal.Body>
+        <Modal.Footer>
+          <Button
+            variant="secondary"
+            className="noButton"
+            onClick={() => setShowConfirmModal(false)}
+          >
+            No
+          </Button>
+          <Button
+            variant="primary"
+            className="yesButton"
+            onClick={handleAcceptConfirmed}
+          >
+            Yes
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </main>
-  );
+
+);
+
 };
 
 export default ViewFreelancers;
-
-/* Tazeem's boilerplate code 
-const freelancers = [
-  {
-    id: 1,
-    name: "Amina Khumalo",
-    title: "Web Developer",
-    location: "Johannesburg, SA",
-    rating: 4.8,
-    reviews: 34,
-    description:
-      "Experienced full-stack developer specializing in React and Node.js. Clean code, fast delivery.",
-    skills: ["React", "Node.js", "MongoDB", "Express"],
-    avatar: "https://randomuser.me/api/portraits/women/44.jpg",
-  },
-  {
-    id: 2,
-    name: "Tebogo Sithole",
-    title: "UI/UX Designer",
-    location: "Cape Town, SA",
-    rating: 4.5,
-    reviews: 21,
-    description:
-      "Creative UI/UX designer with a keen eye for minimal and functional design.",
-    skills: ["Figma", "Adobe XD", "HTML/CSS"],
-    avatar: "https://randomuser.me/api/portraits/men/45.jpg",
-  },
-  {
-    id: 3,
-    name: "Tebogo Sithole",
-    title: "UI/UX Designer",
-    location: "Cape Town, SA",
-    rating: 4.5,
-    reviews: 21,
-    description:
-      "Creative UI/UX designer with a keen eye for minimal and functional design.",
-    skills: ["Figma", "Adobe XD", "HTML/CSS"],
-    avatar: "https://randomuser.me/api/portraits/men/45.jpg",
-  },
-  // Add more freelancers here...
-];
-
-const FreelancerCard = ({ freelancer }) => (
-  <Card className="mb-4 shadow-sm freelancer-card">
-    <Card.Body>
-      <section className="d-flex align-items-center">
-        <img
-          src={freelancer.avatar}
-          alt={freelancer.name}
-          className="rounded-circle me-3"
-          width="70"
-          height="70"
-        />
-        <section>
-          <h5 className="mb-0">{freelancer.name}</h5>
-          <small className="text-muted">{freelancer.title}</small>
-          <section className="text-warning mt-1">
-            {Array(Math.floor(freelancer.rating))
-              .fill()
-              .map((_, i) => (
-                <FaStar key={i} />
-              ))}
-            <span className="text-dark ms-2">
-              {freelancer.rating} ({freelancer.reviews} reviews)
-            </span>
-          </section>
-        </section>
-      </section>
-      <Card.Text className="mt-3">{freelancer.description}</Card.Text>
-      <section className="mb-2">
-        <FaMapMarkerAlt className="me-1 text-secondary" />
-        <small className="text-muted">{freelancer.location}</small>
-      </section>
-      <section className="mb-3">
-        {freelancer.skills.map((skill, idx) => (
-          <Badge bg="light" text="dark" className="me-1 mb-1" key={idx}>
-            {skill}
-          </Badge>
-        ))}
-      </section>
-      <section className="d-flex justify-content-between">
-        <Button variant="success">Hire</Button>
-        <Button variant="outline-secondary">
-          <FaEnvelope className="me-2" />
-          Message
-        </Button>
-      </section>
-    </Card.Body>
-  </Card>
-);
-
-<main className="main">
-      <Navbar /> 
-      <section className="container py-4">
-        <h2 className="mb-4">Freelancers Who Applied</h2>
-        <section className="row">
-          {freelancers.map((freelancer) => (
-            <section className="col-md-6" key={freelancer.id}>
-              <FreelancerCard freelancer={freelancer} />
-            </section>
-          ))}
-        </section>
-      </section>
-    </main>
-*/

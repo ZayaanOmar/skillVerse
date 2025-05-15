@@ -36,6 +36,7 @@ app.use(
         ? process.env.FRONTEND_URL
         : "http://localhost:3000",
     credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE"],//update backend to allow delete method
   })
 );
 
@@ -76,6 +77,8 @@ app.use("/payments", paymentRoutes);
 // Set up the service request routes (this should be before the app.listen)
 app.use("/api/service-requests", serviceRequestRoutes);
 
+//app.use("/api", userRoutes);//route that works
+app.use('/api/users', userRoutes);//get info of all users for admin list
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
