@@ -120,6 +120,16 @@ const ClientHome = () => {
     }
   };
 
+  const handleJobButtonClick = (job) => {
+    const page =
+      job.freelancerId !== null
+        ? `/myjobs/${job._id}`
+        : `/applications/${job._id}`;
+
+    console.log("Page: ", page);
+    navigate(page);
+  };
+
   const handlePay = async (id) => {
     //console.log("Button clicked!");
     const email = "***@example.com";
@@ -271,9 +281,7 @@ const ClientHome = () => {
                     </p>
                     <p>
                       <strong>Freelancer: </strong>
-                      {job.status === "Accepted" ||
-                      job.status === "In Progress" ||
-                      job.status === "Completed"
+                      {job.freelancerId !== null
                         ? job.freelancerId?.username
                         : "No Freelancer Assigned Yet"}
                     </p>
@@ -299,9 +307,11 @@ const ClientHome = () => {
                     </button>
                     <button
                       className="btnDetails"
-                      onClick={() => navigate(`/myjobs/${job._id}`)}
+                      onClick={() => handleJobButtonClick(job)}
                     >
-                      View Details
+                      {job.freelancerId !== null
+                        ? "View Details"
+                        : "View Applications"}
                     </button>
                     <button
                       className="btnMilestones"

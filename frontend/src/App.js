@@ -13,6 +13,7 @@ import JobApplications from "./pages/JobApplications";
 import ManageAccounts from "./pages/ManageAccounts";
 import ManageJobs from "./pages/ManageJobs";
 import FreelancerJobDetails from "./pages/FreelancerJobDetails";
+import ClientJobDetails from "./pages/ClientJobDetails";
 //import ViewFreelancers from "./pages/ViewFreelancers";
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -25,37 +26,30 @@ function App() {
       <Routes>
         {/* Authentication/Login Page */}
         <Route path="/" element={<AuthLogin />} />
-
         {/* Client Home Page */}
         <Route path="/client/home" element={<ClientHome user={user} />} />
-
         {/* Freelancer Home Page */}
         <Route
           path="/freelancer/home"
           element={<FreelancerHome user={user} />}
         />
-
         {/* Admin Home Page */}
         <Route path="/admin/home" element={<AdminHome />} />
-
         {/* Role Selection Page */}
         <Route path="/roles" element={<RoleSelection setRole={setRole} />} />
-
         {/* Freelancer Job Requests */}
         <Route path="/freelancer/jobs" element={<JobRequests />} />
-
         {/* Create Profile Page */}
         <Route path="/create-profile" element={<CreateProfile role={role} />} />
-
         {/* Freelancer Profile Page */}
         <Route path="/profile" element={<FreelancerProfile />} />
-
         {/* Admin Ticket Support Page */}
         <Route path="/admin/support" element={<TicketSupport />} />
         <Route
-          path="/myjobs/:jobId"
+          path="/applications/:jobId"
           element={<JobApplications user={user} />}
         />
+        <Route path="/myjobs/:jobId" element={<ClientJobDetails />} />
         <Route
           path="/freelancer/job/:jobId"
           element={<FreelancerJobDetails />}
