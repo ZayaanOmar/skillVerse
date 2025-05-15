@@ -120,14 +120,18 @@ const ClientHome = () => {
     }
   };
 
-  const handlePay = async () => {
+  const handlePay = async (progress) => {
     //console.log("Button clicked!");
-    const email = "johndoe@example.com";
+    const email = "***@example.com";
+    //need a call to backend to retrieve price from applications model.
+    //need to handle payment logic as well
+
 
     try {
       const response = await axios.post(
         `${API_URL}/payments/create-checkout-session`,
         {
+          prog: progress,
           email: email,
           amount: 1000,
         },
@@ -281,7 +285,7 @@ const ClientHome = () => {
                     <p>
                       <strong>Progress:</strong> {job.progress} %
                     </p>
-                    <button className="btnCheck" onClick={handlePay}>
+                    <button className="btnCheck" onClick={handlePay(job.progress)}>
                       Checkout
                     </button>
                     <button

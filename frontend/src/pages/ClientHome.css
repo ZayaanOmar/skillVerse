@@ -193,6 +193,15 @@ nav a:hover {
   background-color:#AFEEEE;
   color: #000000;
 }
+.btnCheck:disabled {
+  background-color: #ccc;
+  color: #777;
+  pointer-events: none;
+  animation: none !important;
+  transition: none !important;
+  opacity: 0.6;
+}
+
 .btnDetails{
   background-color: #000000;
   color: white;
