@@ -278,7 +278,12 @@ const ClientHome = () => {
                         : "No Freelancer Assigned Yet"}
                     </p>
                     <p>
-                      <strong>Price: R</strong> {job.price}
+                      <strong>Total Price: R</strong> {job.price}
+                    </p>
+                    <p>
+                      <strong>Amount Outstanding: R</strong>{" "}
+                      {((job.progressActual - job.progressPaid) / 100) *
+                        job.price}
                     </p>
                     <p>
                       <strong>Status:</strong> {job.status}
