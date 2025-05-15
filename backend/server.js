@@ -12,6 +12,7 @@ const serviceRequestRoutes = require("./routes/service-request-routes");
 const paymentRoutes = require("./routes/payment-routes");
 const applicationRoutes = require("./routes/application-routes");
 const milestoneRoutes = require("./routes/milestone-routes");
+const webhookRoutes = require("./routes/webhook");
 const MongoStore = require("connect-mongo"); // for storing sessions in MongoDB
 //const stripe = require('stripe')(process.env.STRIPE_PRIVATE_KEY);
 
@@ -36,7 +37,7 @@ app.use(
         ? process.env.FRONTEND_URL
         : "http://localhost:3000",
     credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE"],//update backend to allow delete method
+    methods: ["GET", "POST", "PUT", "DELETE"], //update backend to allow delete method
   })
 );
 
@@ -70,6 +71,7 @@ app.use("/auth", authRoutes);
 app.use("/users", userRoutes);
 app.use("/api/applications", applicationRoutes);
 app.use("/api/milestones", milestoneRoutes);
+app.use("/webhook", webhookRoutes);
 
 //set up payment routes
 app.use("/payments", paymentRoutes);
@@ -78,7 +80,7 @@ app.use("/payments", paymentRoutes);
 app.use("/api/service-requests", serviceRequestRoutes);
 
 //app.use("/api", userRoutes);//route that works
-app.use('/api/users', userRoutes);//get info of all users for admin list
+app.use("/api/users", userRoutes); //get info of all users for admin list
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {

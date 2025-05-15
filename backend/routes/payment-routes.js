@@ -14,6 +14,8 @@ router.post("/create-checkout-session", async (req, res) => {
 
   const serviceRequest = await ServiceRequest.findById(jobId);
 
+  console.log("Initializing payment for job:", jobId);
+
   // calculate progress completed since last payment
   const { progressActual, progressPaid } = serviceRequest;
   const progressDelta = progressActual - progressPaid;
@@ -30,11 +32,13 @@ router.post("/create-checkout-session", async (req, res) => {
     return res.status(400).json({ error: "Email and amount are required" });
   }
 
+  /*
   // Update the service request with the new payment details
   serviceRequest.paymentsPending = serviceRequest.paymentsPending - amountDue;
   serviceRequest.progressPaid = progressPaid + progressDelta;
   serviceRequest.paymentsMade = serviceRequest.paymentsMade + amountDue;
   await serviceRequest.save();
+  */
 
   try {
     //console.log("PAYSTACK_KEY:", process.env.PAYSTACK_SECRET_KEY ? "***loaded***" : "MISSING!");
@@ -44,6 +48,11 @@ router.post("/create-checkout-session", async (req, res) => {
         email: email,
         amount: amountDue * 100, // Paystack requires the amount in kobo
         callback_url: `${FRONTEND_URL}/client/home`, // after payment, Paystack redirects here
+        metadata: {
+          serviceRequestId: jobId,
+          progressDelta,
+          amountDue,
+        },
       },
       {
         headers: {
