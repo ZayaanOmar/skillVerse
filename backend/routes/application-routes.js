@@ -18,6 +18,7 @@ router.get("/jobs/:jobId", async (req, res) => {
   }
 });
 
+// accept a freelancer's application
 router.post("/jobs/accept/:applicationId", async (req, res) => {
   const { applicationId } = req.params;
 
@@ -45,6 +46,8 @@ router.post("/jobs/accept/:applicationId", async (req, res) => {
 
     serviceRequest.freelancerId = application.freelancerId; //assign the freelancer to the job
     serviceRequest.status = "In Progress"; //update the status of the job to In Progress
+    serviceRequest.price = application.price; //set the price for the job
+    serviceRequest.paymentsPending = application.price; //set the payments pending to the price of the job
     await serviceRequest.save();
 
     return res.status(200).json({ message: "Application Accepted" });

@@ -126,7 +126,6 @@ const ClientHome = () => {
     //need a call to backend to retrieve price from applications model.
     //need to handle payment logic as well
 
-
     try {
       const response = await axios.post(
         `${API_URL}/payments/create-checkout-session`,
@@ -280,12 +279,18 @@ const ClientHome = () => {
                         : "No Freelancer Assigned Yet"}
                     </p>
                     <p>
+                      <strong>Price: R</strong> {job.price}
+                    </p>
+                    <p>
                       <strong>Status:</strong> {job.status}
                     </p>
                     <p>
                       <strong>Progress:</strong> {job.progress} %
                     </p>
-                    <button className="btnCheck" onClick={() => handlePay(job.progress)}>
+                    <button
+                      className="btnCheck"
+                      onClick={() => handlePay(job.progress)}
+                    >
                       Checkout
                     </button>
                     <button

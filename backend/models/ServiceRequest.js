@@ -25,6 +25,18 @@ const serviceRequestSchema = new mongoose.Schema(
       type: Number,
       default: 0, // Progress percentage (0-100)
     },
+    price: {
+      type: Number,
+      default: 0,
+    },
+    paymentsMade: {
+      type: Number,
+      default: 0, // Payments made by the client
+    },
+    paymentsPending: {
+      type: Number,
+      default: 0, // Payments pending from the client
+    },
   },
   {
     timestamps: true, // Automatically adds createdAt and updatedAt fields

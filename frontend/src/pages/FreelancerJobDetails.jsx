@@ -139,6 +139,15 @@ const FreelancerJobDetails = () => {
               <strong>Client:</strong> {job.clientId?.username || "Unknown"}
             </p>
             <p>
+              <strong>Total Due:</strong> {"R" + job.price}
+            </p>
+            <p>
+              <strong>Amount Received:</strong> {"R" + job.paymentsMade}
+            </p>
+            <p>
+              <strong>Amount Pending:</strong> {"R" + job.paymentsPending}
+            </p>
+            <p>
               <strong>Created On:</strong> {formatDate(job.createdAt)}
             </p>
           </article>

@@ -172,6 +172,10 @@ const FreelancerHome = () => {
                 <span>{job.clientId?.username || "Unknown"}</span>
               </p>
               <p>
+                <span>Price: R</span>
+                <span>{job.price}</span>
+              </p>
+              <p>
                 <span>Status:</span>
                 <span className={`status-${job.status?.toLowerCase()}`}>
                   {job.status}
