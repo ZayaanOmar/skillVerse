@@ -12,8 +12,6 @@ const FRONTEND_URL =
 router.post("/create-checkout-session", async (req, res) => {
   const { email, jobId } = req.body;
 
-  console.log("Received data:", req.body);
-
   const serviceRequest = await ServiceRequest.findById(jobId);
 
   // calculate progress completed since last payment
@@ -37,7 +35,6 @@ router.post("/create-checkout-session", async (req, res) => {
   serviceRequest.progressPaid = progressPaid + progressDelta;
   serviceRequest.paymentsMade = serviceRequest.paymentsMade + amountDue;
   await serviceRequest.save();
-  console.log("Service request updated:", serviceRequest);
 
   try {
     //console.log("PAYSTACK_KEY:", process.env.PAYSTACK_SECRET_KEY ? "***loaded***" : "MISSING!");
