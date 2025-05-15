@@ -30,11 +30,12 @@ router.delete("/:id", authCheck, async (req, res) => {
   const { id } = req.params;
 
   try {
-    if (req.user.role !== "admin") {//check if role is not an admin
+    if (req.user.role !== "admin") {
+      //check if role is not an admin
       return res.status(403).json({ message: "Not authorized to delete user" });
     }
 
-    const user = await User.findByIdAndDelete(id);//req.params.id in the brackets
+    const user = await User.findByIdAndDelete(id); //req.params.id in the brackets
     console.log("Deleting user:", user);
     if (!user) {
       return res.status(404).json({ message: "User not found" });
@@ -47,11 +48,10 @@ router.delete("/:id", authCheck, async (req, res) => {
   }
 });
 
-
 // Handles creating new profile details document
 router.post("/create-user", async (req, res) => {
-  console.log("request body", req.body); //debugging
-  console.log("user", req.user); //debugging
+  //console.log("request body", req.body); //debugging
+  //console.log("user", req.user); //debugging
   const { user, location, gender, occupation, skills, about } = req.body;
 
   try {

@@ -72,7 +72,7 @@ const markMilestoneAsCompleted = async (req, res) => {
     const jobReq = await ServiceRequest.findById(milestone.jobId);
 
     // update progress of job based on milestone completion
-    jobReq.progress = Math.round(
+    jobReq.progressActual = Math.round(
       (allMilestones.filter((m) => m.status === "Completed").length /
         countMilestones) *
         100
