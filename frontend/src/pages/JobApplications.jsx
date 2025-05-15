@@ -59,7 +59,7 @@ const ViewFreelancers = () => {
 
       {applications.length === 0 ? (
         <p style={{ textAlign: "center", fontSize: "1.2rem" }}>
-          😔 No applications yet. Come back later!
+          No applications yet. Come back later!
         </p>
       ) : (
         <>
@@ -78,7 +78,7 @@ const ViewFreelancers = () => {
                   <strong>Price:</strong> R{application.price}
                 </p>
                 <p>
-                  <strong>Rating:</strong> ⭐ 4.9
+                  <strong>Rating:</strong>  4.9
                 </p>
 
                 <button
