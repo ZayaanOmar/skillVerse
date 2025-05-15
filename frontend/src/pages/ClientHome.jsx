@@ -285,7 +285,7 @@ const ClientHome = () => {
                     <p>
                       <strong>Progress:</strong> {job.progress} %
                     </p>
-                    <button className="btnCheck" onClick={handlePay(job.progress)}>
+                    <button className="btnCheck" onClick={() => handlePay(job.progress)}>
                       Checkout
                     </button>
                     <button

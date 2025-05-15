@@ -9,7 +9,7 @@ const FRONTEND_URL =
     : "http://localhost:3000";
 
 router.post("/create-checkout-session", async (req, res) => {
-  const { email, amount } = req.body;
+  const { prog, email, amount } = req.body;
 
   if (!email || !amount) {
     return res.status(400).json({ error: "Email and amount are required" });
@@ -21,7 +21,7 @@ router.post("/create-checkout-session", async (req, res) => {
       "https://api.paystack.co/transaction/initialize",
       {
         email: email,
-        amount: amount * 100,
+        amount: (amount * prog/100)* 100,
         callback_url: `${FRONTEND_URL}/client/home`, // after payment, Paystack redirects here
       },
       {
