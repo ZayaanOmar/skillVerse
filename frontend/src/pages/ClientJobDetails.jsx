@@ -10,9 +10,40 @@ const ClientJobDetails = () => {
   const [job, setJob] = useState(state?.job || null);
   const [loading, setLoading] = useState(!state?.job);
   const [error, setError] = useState("");
+  const [milestones, setMilestones] = useState([]);
+  const [milestonesLoading, setMilestonesLoading] = useState(true);
+  const [milestonesError, setMilestonesError] = useState("");
 
   useEffect(() => {
-    if (job) return;//dont fetch the job again since its already passed to state in client home
+    if (job) {
+      // Fetch milestones
+      const fetchMilestones = async () => {
+        try {
+          const res = await fetch(`${API_URL}/api/milestones/job/${jobId}`, {
+            method: "GET",
+            credentials: "include",
+          });
+
+          if (!res.ok) {
+            throw new Error(`HTTP error! status: ${res.status}`);
+          }
+
+          const data = await res.json();
+          setMilestones(data);
+        } catch (err) {
+          console.error("Error fetching milestones:", err);
+          setMilestonesError("Failed to load milestones.");
+        } finally {
+          setMilestonesLoading(false);
+        }
+      };
+
+      fetchMilestones();
+    }
+  }, [job, jobId]);
+
+  useEffect(() => {
+    if (job) return; // don't fetch the job again since it's already passed to state in client home
 
     const fetchJobDetails = async () => {
       try {
@@ -42,52 +73,87 @@ const ClientJobDetails = () => {
   }, [jobId, job]);
 
   if (loading) {
-    return <div className="loading">Loading job details...</div>;
+    return <section className="loading">Loading job details...</section>;
   }
 
   if (error) {
-    return <div className="error">{error}</div>;
+    return <section className="error">{error}</section>;
   }
 
   if (!job) {
-    return <div className="not-found">Job not found</div>;
+    return <section className="not-found">Job not found</section>;
   }
 
   return (
     <main className="client-job-details">
       <section className="job-details-container">
         <h1 className="header-text">Job Details</h1>
-        
+
         <article className="detailed-job-card">
-          <div className="job-info-section">
-            <p><strong>Service Type:</strong> {job.serviceType}</p>
+          <section className="job-info-section">
+            <p>
+              <strong>Service Type:</strong> {job.serviceType}
+            </p>
             <p>
               <strong>Freelancer: </strong>
               {job.freelancerId !== null
                 ? job.freelancerId?.username
                 : "No Freelancer Assigned Yet"}
             </p>
-            <p><strong>Status:</strong> {job.status}</p>
-            <p><strong>Progress:</strong> {job.progressActual}%</p>
-          </div>
+            <p>
+              <strong>Status:</strong> {job.status}
+            </p>
+            <p>
+              <strong>Progress:</strong> {job.progressActual}%
+            </p>
+          </section>
 
-          <div className="financial-info-section">
-            <p><strong>Total Price: R</strong> {job.price}</p>
+          <section className="financial-info-section">
+            <p>
+              <strong>Total Price: R</strong> {job.price}
+            </p>
             <p>
               <strong>Amount Outstanding: R</strong>{" "}
               {((job.progressActual - job.progressPaid) / 100) * job.price}
             </p>
-          </div>
+          </section>
 
-          <div className="action-buttons">
-            <button
-              className="btnBack"
-              onClick={() => navigate("/client/home")}
-            >
+          <section className="action-buttons">
+            <button className="btnBack" onClick={() => navigate("/client/home")}>
               Back to Jobs
             </button>
-          </div>
+          </section>
         </article>
+      </section>
+
+      <section className="milestones-section">
+        <h2>Project Milestones</h2>
+
+        {milestonesLoading && <p>Loading milestones...</p>}
+
+        {milestonesError && <p className="error">{milestonesError}</p>}
+
+        {!milestonesLoading && milestones.length === 0 && (
+          <p>No milestones have been set for this project yet.</p>
+        )}
+
+        <ul className="milestones-list">
+          {milestones.map((milestone) => (
+            <li
+              key={milestone._id}
+              className={`milestone-item ${milestone.status.toLowerCase()}`}
+            >
+              <h3>{milestone.description}</h3>
+              <p>
+                <strong>Due Date:</strong>{" "}
+                {new Date(milestone.dueDate).toLocaleDateString()}
+              </p>
+              <p>
+                <strong>Status:</strong> {milestone.status}
+              </p>
+            </li>
+          ))}
+        </ul>
       </section>
     </main>
   );
