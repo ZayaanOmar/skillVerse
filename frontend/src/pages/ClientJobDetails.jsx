@@ -45,12 +45,10 @@ const ClientJobDetails = () => {
   }, [job, jobId]);
 
   useEffect(() => {
-    if (job) return; // don't fetch the job again since it's already passed to state in client home
-
     const fetchJobDetails = async () => {
       try {
         const res = await fetch(
-          `${API_URL}/api/service-requests/client/job/${jobId}`,
+          `${API_URL}/api/service-requests/job/${jobId}`,
           {
             method: "GET",
             credentials: "include",
@@ -58,7 +56,9 @@ const ClientJobDetails = () => {
         );
 
         if (!res.ok) {
-          throw new Error(`HTTP error! status: ${res.status}`);
+          throw new Error(
+            `HTTP error! status: ${res.status}, message: ${res.message}`
+          );
         }
 
         const data = await res.json();
@@ -85,36 +85,36 @@ const ClientJobDetails = () => {
   if (!job) {
     return <section className="not-found">Job not found</section>;
   }
-const handlePay = async (id) => {
-  if (milestones.length === 0) {
-    setShowNoMilestoneModal(true);
-    return;
-  }
+  const handlePay = async (id) => {
+    if (milestones.length === 0) {
+      setShowNoMilestoneModal(true);
+      return;
+    }
     //console.log("Button clicked!");
-  const email = "***@example.com";
+    const email = "***@example.com";
     //need a call to backend to retrieve price from applications model.
     //need to handle payment logic as well
 
-  try {
-    const response = await axios.post(
-      `${API_URL}/payments/create-checkout-session`,
-      {
-        email: email,
-        jobId: id,
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
+    try {
+      const response = await axios.post(
+        `${API_URL}/payments/create-checkout-session`,
+        {
+          email: email,
+          jobId: id,
         },
-      }
-    );
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
-    const { checkoutUrl } = response.data;
-    window.location.href = checkoutUrl;
-  } catch (error) {
-    console.error("Error creating checkout session:", error);
-  }
-};
+      const { checkoutUrl } = response.data;
+      window.location.href = checkoutUrl;
+    } catch (error) {
+      console.error("Error creating checkout session:", error);
+    }
+  };
 
   return (
     <main className="client-job-details">
@@ -145,22 +145,23 @@ const handlePay = async (id) => {
               <strong>Total Price: R</strong> {job.price}
             </p>
             <p>
-              <strong>Amount Outstanding: R</strong>{" "}
+              <strong>Amount Owed Since Last Payment: R</strong>{" "}
               {((job.progressActual - job.progressPaid) / 100) * job.price}
+            </p>
+            <p>
+              <strong>Amount Paid: R</strong> {job.paymentsMade}
             </p>
           </section>
           <section className="action-buttons-rowebra">
-            <button
-              className="btnCheck"
-              onClick={() => handlePay(job._id)}>
+            <button className="btnCheck" onClick={() => handlePay(job._id)}>
               Checkout
             </button>
             <button
               className="btnBack"
-              onClick={() => navigate("/client/home")}>
+              onClick={() => navigate("/client/home")}
+            >
               Back to Client Home
             </button>
-
           </section>
         </article>
       </section>
@@ -194,7 +195,11 @@ const handlePay = async (id) => {
           ))}
         </ul>
       </section>
-      <Modal show={showNoMilestoneModal} onHide={() => setShowNoMilestoneModal(false)} centered>
+      <Modal
+        show={showNoMilestoneModal}
+        onHide={() => setShowNoMilestoneModal(false)}
+        centered
+      >
         <Modal.Header closeButton>
           <Modal.Title>No Milestones Set</Modal.Title>
         </Modal.Header>
@@ -202,12 +207,14 @@ const handlePay = async (id) => {
           You must set at least one milestone before checking out.
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowNoMilestoneModal(false)}>
+          <Button
+            variant="secondary"
+            onClick={() => setShowNoMilestoneModal(false)}
+          >
             Close
           </Button>
         </Modal.Footer>
       </Modal>
-
     </main>
   );
 };
