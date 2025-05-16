@@ -66,12 +66,12 @@
   opacity: 0.6;
 }
 .btnCheck:hover {
-  background-color:#343a40 ;/* Slightly lighter blue */
+  background-color:#009116 ;/* Slightly lighter blue */
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Subtle shadow */
   transform: translateY(-4px); /* Slight lift effect */
 }
 .btnBack:hover {
-  background-color:#6ed8f2 ;/* Slightly lighter blue */
+  background-color:#000000 ;/* Slightly lighter blue */
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Subtle shadow */
   transform: translateY(-4px); /* Slight lift effect */
 }

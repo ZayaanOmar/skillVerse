@@ -10,6 +10,7 @@ const ClientHome = () => {
   const [showModal, setShowModal] = useState(false); //this is for req submitted successfully(popup)
   const [showConfirmModal, setShowConfirmModal] = useState(false); //this brings up the yes no pop up, on yes sends req
   const [pendingCategory, setPendingCategory] = useState(null); //save the req on button click but dont send it yet
+  const [showMilestoneSuccessModal, setShowMilestoneSuccessModal] = useState(false);
   const [user, setUser] = useState(null);
   const [jobs, setJobs] = useState([]); //this is
   // for the jobs that are fetched from the backend
@@ -370,6 +371,27 @@ const handleJobButtonClick = (job) => {
           </Button>
         </Modal.Footer>
       </Modal>
+      {/*modal for success of milestone setting */}
+      <Modal
+        show={showMilestoneSuccessModal}
+        onHide={() => setShowMilestoneSuccessModal(false)}
+        centered
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Milestones Saved</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          The milestones have been successfully saved for this job.
+        </Modal.Body>
+        <Modal.Footer>
+          <Button
+            variant="primary"
+            onClick={() => setShowMilestoneSuccessModal(false)}
+          >
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
 
       {/* Milestones Modal */}
       <Modal
@@ -482,8 +504,9 @@ const handleJobButtonClick = (job) => {
                 );
 
                 console.log("Milestones created:", response.data);
-                alert("Milestones set successfully!");
                 setShowMilestonesModal(false);
+                setShowMilestoneSuccessModal(true);
+
               } catch (error) {
                 console.error("Error:", error.response?.data || error.message);
                 alert(

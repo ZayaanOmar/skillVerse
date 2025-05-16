@@ -13,6 +13,7 @@ const ViewFreelancers = () => {
   console.log("Job ID:", jobId); // Log the jobId for debugging
   const [applications, setApplications] = useState([]);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [pendingApplicationId, setPendingApplicationId] = useState(null);
   const navigate = useNavigate();
 
@@ -35,21 +36,21 @@ const ViewFreelancers = () => {
     setPendingApplicationId(applicationId);
     setShowConfirmModal(true);
   };
-  const handleAcceptConfirmed = async () => {
-    try {
-      await axios.post(
-        `${API_URL}/api/applications/jobs/accept/${pendingApplicationId}`,
-        {},
-        { withCredentials: true }
-      );
-      alert("Application Accepted");
-      setShowConfirmModal(false);
-      navigate("/client/home");
-    } catch (error) {
-      console.error("Error accepting application:", error);
-      alert("Error accepting application");
-    }
-  };
+const handleAcceptConfirmed = async () => {
+  try {
+    await axios.post(
+      `${API_URL}/api/applications/jobs/accept/${pendingApplicationId}`,
+      {},
+      { withCredentials: true }
+    );
+    setShowConfirmModal(false);
+    setShowSuccessModal(true); // Show success modal
+  } catch (error) {
+    console.error("Error accepting application:", error);
+    alert("Error accepting application");
+  }
+};
+
 
 
   return (
@@ -77,9 +78,6 @@ const ViewFreelancers = () => {
                 <p>
                   <strong>Price:</strong> R{application.price}
                 </p>
-                <p>
-                  <strong>Rating:</strong>  4.9
-                </p>
 
                 <button
                   className="available-job-apply-button-jobRequest"
@@ -92,6 +90,26 @@ const ViewFreelancers = () => {
           </section>
         </>
       )}
+      <Modal show={showSuccessModal} onHide={() => setShowSuccessModal(false)} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Application Accepted</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          The freelancer has been successfully hired for this job.
+        </Modal.Body>
+        <Modal.Footer>
+          <Button
+            variant="primary"
+            onClick={() => {
+              setShowSuccessModal(false);
+              navigate("/client/home");
+            }}
+          >
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
 
       {/* Modal */}
       <Modal show={showConfirmModal} onHide={() => setShowConfirmModal(false)} centered>
@@ -118,6 +136,7 @@ const ViewFreelancers = () => {
           </Button>
         </Modal.Footer>
       </Modal>
+      
     </main>
 
 );
