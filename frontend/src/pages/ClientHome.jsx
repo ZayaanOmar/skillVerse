@@ -131,35 +131,35 @@ const handleJobButtonClick = (job) => {
   });
 };
 
-  const handlePay = async (id) => {
-    //console.log("Button clicked!");
-    const email = "***@example.com";
-    //need a call to backend to retrieve price from applications model.
-    //need to handle payment logic as well
+  // const handlePay = async (id) => {
+  //   //console.log("Button clicked!");
+  //   const email = "***@example.com";
+  //   //need a call to backend to retrieve price from applications model.
+  //   //need to handle payment logic as well
 
-    try {
-      const response = await axios.post(
-        `${API_URL}/payments/create-checkout-session`,
-        {
-          email: email,
-          jobId: id,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+  //   try {
+  //     const response = await axios.post(
+  //       `${API_URL}/payments/create-checkout-session`,
+  //       {
+  //         email: email,
+  //         jobId: id,
+  //       },
+  //       {
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //       }
+  //     );
 
-      console.log("Full response:", response);
-      const { checkoutUrl } = response.data;
+  //     console.log("Full response:", response);
+  //     const { checkoutUrl } = response.data;
 
-      // Redirect user to the checkout page
-      window.location.href = checkoutUrl;
-    } catch (error) {
-      console.error("Error creating checkout session:", error);
-    }
-  };
+  //     // Redirect user to the checkout page
+  //     window.location.href = checkoutUrl;
+  //   } catch (error) {
+  //     console.error("Error creating checkout session:", error);
+  //   }
+  // };
 
   return (
     <main className="client-home">
@@ -286,18 +286,10 @@ const handleJobButtonClick = (job) => {
                         ? job.freelancerId?.username
                         : "No Freelancer Assigned Yet"}
                     </p>
-
-
                     <p>
                       <strong>Status:</strong> {job.status}
                     </p>
 
-                    <button
-                      className="btnCheck"
-                      onClick={() => handlePay(job._id)}
-                    >
-                      Checkout
-                    </button>
                     <button
                       className="btnDetails"
                       onClick={() => handleJobButtonClick(job)}

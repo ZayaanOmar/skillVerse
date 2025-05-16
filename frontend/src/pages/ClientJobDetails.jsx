@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 import "./ClientJobDetails.css";
 import API_URL from "../config/api";
-
+import axios from "axios";
 const ClientJobDetails = () => {
   const { jobId } = useParams();
   const { state } = useLocation();
@@ -83,7 +83,35 @@ const ClientJobDetails = () => {
   if (!job) {
     return <section className="not-found">Job not found</section>;
   }
+  const handlePay = async (id) => {
+    //console.log("Button clicked!");
+    const email = "***@example.com";
+    //need a call to backend to retrieve price from applications model.
+    //need to handle payment logic as well
 
+    try {
+      const response = await axios.post(
+        `${API_URL}/payments/create-checkout-session`,
+        {
+          email: email,
+          jobId: id,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      console.log("Full response:", response);
+      const { checkoutUrl } = response.data;
+
+      // Redirect user to the checkout page
+      window.location.href = checkoutUrl;
+    } catch (error) {
+      console.error("Error creating checkout session:", error);
+    }
+  };
   return (
     <main className="client-job-details">
       <section className="job-details-container">
@@ -117,11 +145,18 @@ const ClientJobDetails = () => {
               {((job.progressActual - job.progressPaid) / 100) * job.price}
             </p>
           </section>
-
-          <section className="action-buttons">
-            <button className="btnBack" onClick={() => navigate("/client/home")}>
-              Back to Jobs
+          <section className="action-buttons-rowebra">
+            <button
+              className="btnCheck"
+              onClick={() => handlePay(job._id)}>
+              Checkout
             </button>
+            <button
+              className="btnBack"
+              onClick={() => navigate("/client/home")}>
+              Back to Client Home
+            </button>
+
           </section>
         </article>
       </section>
