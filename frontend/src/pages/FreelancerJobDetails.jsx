@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
+import FileUpload from "../components/FileUpload";
+import FileList from "../components/FileList";
 import API_URL from "../config/api";
 import "./FreelancerJobDetails.css";
 
@@ -10,6 +12,7 @@ const FreelancerJobDetails = () => {
   const [milestones, setMilestones] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [fileListKey, setFileListKey] = useState(0);
 
   useEffect(() => {
     const fetchJobDetails = async () => {
@@ -87,6 +90,12 @@ const FreelancerJobDetails = () => {
     }
   };
 
+  // successful file upload
+  const handleUploadSuccess = () => {
+    //refresh file list
+    setFileListKey((prevKey) => prevKey + 1);
+  };
+
   if (loading) {
     return (
       <main className="freelancer-job-details">
@@ -132,6 +141,7 @@ const FreelancerJobDetails = () => {
           </span>
         </article>
 
+        {/* Milestones Section */}
         <section className="job-info">
           <article className="job-info-card">
             <h2>Project Details</h2>
@@ -183,6 +193,13 @@ const FreelancerJobDetails = () => {
               <p>No milestones have been set for this project yet.</p>
             )}
           </article>
+        </section>
+
+        {/* File Upload Section */}
+        <section className="files-section">
+          <FileUpload jobId={jobId} onUploadSuccess={handleUploadSuccess} />
+
+          <FileList key={fileListKey} jobId={jobId} userRole="freelancer" />
         </section>
       </section>
     </main>

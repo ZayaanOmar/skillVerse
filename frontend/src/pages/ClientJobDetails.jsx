@@ -2,8 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { Modal, Button } from "react-bootstrap";
 import "./ClientJobDetails.css";
+import FileList from "../components/FileList";
 import API_URL from "../config/api";
 import axios from "axios";
+
 const ClientJobDetails = () => {
   const { jobId } = useParams();
   const { state } = useLocation();
@@ -197,6 +199,13 @@ const ClientJobDetails = () => {
           ))}
         </ul>
       </section>
+
+      {/* File Download Section */}
+      <section className="files-section">
+        <h2>Project Files</h2>
+        <FileList jobId={jobId} userRole="client" />
+      </section>
+
       <Modal
         show={showNoMilestoneModal}
         onHide={() => setShowNoMilestoneModal(false)}
@@ -217,22 +226,17 @@ const ClientJobDetails = () => {
           </Button>
         </Modal.Footer>
       </Modal>
-            <Modal
+      <Modal
         show={showCheckoutModal}
         onHide={() => setCheckoutModal(false)}
         centered
       >
         <Modal.Header closeButton>
-          <Modal.Title>No Tasks Done</Modal.Title>
+          <Modal.Title>No Payments Due</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
-          No tasks have been completed yet. Payment cannot be authorised
-        </Modal.Body>
+        <Modal.Body>All Payments Are Up-To-Date</Modal.Body>
         <Modal.Footer>
-          <Button
-            variant="secondary"
-            onClick={() => setCheckoutModal(false)}
-          >
+          <Button variant="secondary" onClick={() => setCheckoutModal(false)}>
             Close
           </Button>
         </Modal.Footer>

@@ -48,14 +48,13 @@
   cursor: pointer;
 }
 
-.btnCheck{
-  background-color:#67dfdf;
+.btnCheck {
+  background-color: #67dfdf;
   color: #ffffff;
   height: 40px;
   width: 120px;
   border-radius: 4px;
   border: none;
-  
 }
 .btnCheck:disabled {
   background-color: #ccc;
@@ -66,12 +65,12 @@
   opacity: 0.6;
 }
 .btnCheck:hover {
-  background-color:#009116 ;/* Slightly lighter blue */
+  background-color: #009116; /* Slightly lighter blue */
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Subtle shadow */
   transform: translateY(-4px); /* Slight lift effect */
 }
 .btnBack:hover {
-  background-color:#000000 ;/* Slightly lighter blue */
+  background-color: #000000; /* Slightly lighter blue */
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Subtle shadow */
   transform: translateY(-4px); /* Slight lift effect */
 }
@@ -90,4 +89,21 @@
 
 .error {
   color: #dc3545;
+}
+
+.client-job-details .files-section {
+  margin-top: 2rem;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+}
+
+.client-job-details .files-section h2 {
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+  color: #333;
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 10px;
 }
