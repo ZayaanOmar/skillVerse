@@ -15,6 +15,7 @@ const ClientJobDetails = () => {
   const [milestonesLoading, setMilestonesLoading] = useState(true);
   const [milestonesError, setMilestonesError] = useState("");
   const [showNoMilestoneModal, setShowNoMilestoneModal] = useState(false);
+  const [showCheckoutModal, setCheckoutModal] = useState(false);
 
   useEffect(() => {
     if (job) {
@@ -112,6 +113,7 @@ const ClientJobDetails = () => {
       const { checkoutUrl } = response.data;
       window.location.href = checkoutUrl;
     } catch (error) {
+      setCheckoutModal(true);
       console.error("Error creating checkout session:", error);
     }
   };
@@ -210,6 +212,26 @@ const ClientJobDetails = () => {
           <Button
             variant="secondary"
             onClick={() => setShowNoMilestoneModal(false)}
+          >
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
+            <Modal
+        show={showCheckoutModal}
+        onHide={() => setCheckoutModal(false)}
+        centered
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>No Tasks Done</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          No tasks have been completed yet. Payment cannot be authorised
+        </Modal.Body>
+        <Modal.Footer>
+          <Button
+            variant="secondary"
+            onClick={() => setCheckoutModal(false)}
           >
             Close
           </Button>
