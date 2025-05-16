@@ -258,3 +258,160 @@ describe("User Routes", () => {
     });
   });
 });
+
+describe("GET /users/", () => {
+  it("should return all users", async () => {
+    const mockUsers = [
+      { _id: "user1", username: "test1" },
+      { _id: "user2", username: "test2" }
+    ];
+
+    User.find.mockResolvedValue(mockUsers);
+
+    const response = await request(app).get("/users/");
+
+    expect(response.status).toBe(200);
+    expect(response.body.length).toBe(2);
+  });
+    it("should return empty array when no users exist", async () => {
+    User.find.mockResolvedValue([]);
+    const response = await request(app).get("/users/");
+    expect(response.body).toEqual([]);
+  });
+
+  it("should handle database errors", async () => {
+    User.find.mockRejectedValue(new Error("DB Error"));
+
+    const response = await request(app).get("/users/");
+
+    expect(response.status).toBe(500);
+  });
+});
+
+describe("GET /users/profile/:userId", () => {
+  it("should return profile details", async () => {
+    const mockProfile = {
+      user: { _id: "user123", username: "testuser" },
+      skills: ["JavaScript"]
+    };
+
+    ProfileDetails.findOne = jest.fn()
+      .mockReturnValue({
+        populate: jest.fn().mockResolvedValue(mockProfile)
+      });
+
+    const response = await request(app)
+      .get("/users/profile/user123");
+
+    expect(response.status).toBe(200);
+    expect(response.body.user.username).toBe("testuser");
+  });
+
+  it("should return 404 if profile not found", async () => {
+    ProfileDetails.findOne = jest.fn()
+      .mockReturnValue({
+        populate: jest.fn().mockResolvedValue(null)
+      });
+
+    const response = await request(app)
+      .get("/users/profile/nonexistent");
+
+    expect(response.status).toBe(404);
+  });
+    let populateMock;
+  
+  beforeEach(() => {
+    populateMock = jest.fn().mockResolvedValue(mockProfile);
+    ProfileDetails.findOne.mockReturnValue({
+    populate: populateMock
+    });
+  });
+
+  it("should return profile details", async () => {
+    const response = await request(app)
+      .get("/users/profile/user123");
+
+    expect(response.status).toBe(200);
+    expect(ProfileDetails.findOne).toHaveBeenCalled();
+    expect(populateMock).toHaveBeenCalledWith("user");
+  });
+});
+
+describe("POST /users/create-user", () => {
+  const mockProfile = {
+    user: "507f1f77bcf86cd799439011",
+    location: "Test City",
+    skills: ["JavaScript", "Testing"]
+  };
+
+  it("should create new profile", async () => {
+    ProfileDetails.findOneAndUpdate = jest.fn()
+      .mockResolvedValue(mockProfile);
+
+    const response = await request(app)
+      .post("/users/create-user")
+      .send(mockProfile)
+      .set("Authorization", "Bearer validtoken");
+
+    expect(response.status).toBe(200);
+    expect(response.body.message).toBe("Profile details saved successfully");
+  });
+    
+  it("should reject invalid profile data", async () => {
+    const response = await request(app)
+      .post("/users/create-user")
+      .send({ invalid: "data" });
+    expect(response.status).toBe(400);
+  });
+
+  it("should return 404 if user not found", async () => {
+    User.findById.mockResolvedValueOnce(null);
+
+    const response = await request(app)
+      .post("/users/create-user")
+      .send(mockProfile)
+      .set("Authorization", "Bearer validtoken");
+
+    expect(response.status).toBe(404);
+  });
+});
+
+describe("DELETE /users/:id", () => {
+  it("should delete user when admin makes request", async () => {
+    // Mock admin user
+    User.findById.mockResolvedValueOnce({ 
+      _id: "admin123", 
+      role: "admin" 
+    });
+    
+    const response = await request(app)
+      .delete("/users/507f1f77bcf86cd799439011")
+      .set("Authorization", "Bearer admintoken");
+
+    expect(response.status).toBe(200);
+    expect(response.body.message).toBe("User deleted successfully");
+  });
+
+  it("should return 403 when non-admin tries to delete", async () => {
+    const response = await request(app)
+      .delete("/users/507f1f77bcf86cd799439011")
+      .set("Authorization", "Bearer regulartoken");
+
+    expect(response.status).toBe(403);
+  });
+
+  it("should return 404 when user not found", async () => {
+    User.findByIdAndDelete.mockResolvedValueOnce(null);
+    
+    const response = await request(app)
+      .delete("/users/nonexistentid")
+      .set("Authorization", "Bearer admintoken");
+
+    expect(response.status).toBe(404);
+  });
+    it("should reject unauthenticated requests", async () => {
+    const response = await request(app)
+      .delete("/users/507f1f77bcf86cd799439011");
+    expect(response.status).toBe(401);
+  });
+});

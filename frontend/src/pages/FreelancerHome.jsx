@@ -75,7 +75,7 @@ const FreelancerHome = () => {
     <main className="freelancer-home">
       <Navbar />
       <section className="welcome">
-        <h1 className="heading">SkillVerser</h1>
+        <h1 className="heading">SkillVerse</h1>
         <p className="welcome-freelancer">
           One platform to find new clients, efficiently manage your projects and
           handle payments
