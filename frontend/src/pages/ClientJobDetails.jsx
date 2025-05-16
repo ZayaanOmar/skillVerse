@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
+import { Modal, Button } from "react-bootstrap";
 import "./ClientJobDetails.css";
 import API_URL from "../config/api";
 import axios from "axios";
@@ -13,6 +14,7 @@ const ClientJobDetails = () => {
   const [milestones, setMilestones] = useState([]);
   const [milestonesLoading, setMilestonesLoading] = useState(true);
   const [milestonesError, setMilestonesError] = useState("");
+  const [showNoMilestoneModal, setShowNoMilestoneModal] = useState(false);
 
   useEffect(() => {
     if (job) {
@@ -83,35 +85,37 @@ const ClientJobDetails = () => {
   if (!job) {
     return <section className="not-found">Job not found</section>;
   }
-  const handlePay = async (id) => {
+const handlePay = async (id) => {
+  if (milestones.length === 0) {
+    setShowNoMilestoneModal(true);
+    return;
+  }
     //console.log("Button clicked!");
-    const email = "***@example.com";
+  const email = "***@example.com";
     //need a call to backend to retrieve price from applications model.
     //need to handle payment logic as well
 
-    try {
-      const response = await axios.post(
-        `${API_URL}/payments/create-checkout-session`,
-        {
-          email: email,
-          jobId: id,
+  try {
+    const response = await axios.post(
+      `${API_URL}/payments/create-checkout-session`,
+      {
+        email: email,
+        jobId: id,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
         },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      }
+    );
 
-      console.log("Full response:", response);
-      const { checkoutUrl } = response.data;
+    const { checkoutUrl } = response.data;
+    window.location.href = checkoutUrl;
+  } catch (error) {
+    console.error("Error creating checkout session:", error);
+  }
+};
 
-      // Redirect user to the checkout page
-      window.location.href = checkoutUrl;
-    } catch (error) {
-      console.error("Error creating checkout session:", error);
-    }
-  };
   return (
     <main className="client-job-details">
       <section className="job-details-container">
@@ -190,6 +194,20 @@ const ClientJobDetails = () => {
           ))}
         </ul>
       </section>
+      <Modal show={showNoMilestoneModal} onHide={() => setShowNoMilestoneModal(false)} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>No Milestones Set</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          You must set at least one milestone before checking out.
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowNoMilestoneModal(false)}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
     </main>
   );
 };
