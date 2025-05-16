@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">96.87% </span>
+                <span class="strong">97.29% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>31/32</span>
+                <span class='fraction'>36/37</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">96.87% </span>
+                <span class="strong">97.29% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>31/32</span>
+                <span class='fraction'>36/37</span>
             </div>
         
             
@@ -147,12 +147,21 @@
 <a name='L82'></a><a href='#L82'>82</a>
 <a name='L83'></a><a href='#L83'>83</a>
 <a name='L84'></a><a href='#L84'>84</a>
-<a name='L85'></a><a href='#L85'>85</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L85'></a><a href='#L85'>85</a>
+<a name='L86'></a><a href='#L86'>86</a>
+<a name='L87'></a><a href='#L87'>87</a>
+<a name='L88'></a><a href='#L88'>88</a>
+<a name='L89'></a><a href='#L89'>89</a>
+<a name='L90'></a><a href='#L90'>90</a>
+<a name='L91'></a><a href='#L91'>91</a>
+<a name='L92'></a><a href='#L92'>92</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -187,14 +196,15 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -216,13 +226,17 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
@@ -244,6 +258,8 @@ const cors = require("cors");
 const serviceRequestRoutes = require("./routes/service-request-routes");
 const paymentRoutes = require("./routes/payment-routes");
 const applicationRoutes = require("./routes/application-routes");
+const milestoneRoutes = require("./routes/milestone-routes");
+const webhookRoutes = require("./routes/webhook");
 const MongoStore = require("connect-mongo"); // for storing sessions in MongoDB
 //const stripe = require('stripe')(process.env.STRIPE_PRIVATE_KEY);
 &nbsp;
@@ -268,6 +284,7 @@ app.use(
         ? <span class="branch-0 cbranch-no" title="branch not covered" >process.env.FRONTEND_URL</span>
         : "http://localhost:3000",
     credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE"], //update backend to allow delete method
   })
 );
 &nbsp;
@@ -300,6 +317,8 @@ app.use(passport.session());
 app.use("/auth", authRoutes);
 app.use("/users", userRoutes);
 app.use("/api/applications", applicationRoutes);
+app.use("/api/milestones", milestoneRoutes);
+app.use("/webhook", webhookRoutes);
 &nbsp;
 //set up payment routes
 app.use("/payments", paymentRoutes);
@@ -307,6 +326,8 @@ app.use("/payments", paymentRoutes);
 // Set up the service request routes (this should be before the app.listen)
 app.use("/api/service-requests", serviceRequestRoutes);
 &nbsp;
+//app.use("/api", userRoutes);//route that works
+app.use("/api/users", userRoutes); //get info of all users for admin list
 const PORT = process.env.PORT || <span class="branch-1 cbranch-no" title="branch not covered" >5000;</span>
 &nbsp;
 app.listen(PORT, () =&gt; {
@@ -322,7 +343,7 @@ module.exports = app;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-05-04T20:23:39.700Z
+                at 2025-05-16T09:32:57.806Z
             </div>
         <script src="../prettify.js"></script>
         <script>
