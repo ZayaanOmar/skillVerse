@@ -120,15 +120,16 @@ const ClientHome = () => {
     }
   };
 
-  const handleJobButtonClick = (job) => {
-    const page =
-      job.freelancerId !== null
-        ? `/myjobs/${job._id}`
-        : `/applications/${job._id}`;
+const handleJobButtonClick = (job) => {
+  const page =
+    job.freelancerId !== null
+      ? `/myjobs/${job._id}`
+      : `/applications/${job._id}`;
 
-    console.log("Page: ", page);
-    navigate(page);
-  };
+  navigate(page, { 
+    state: { job } // Pass the entire job object via state
+  });
+};
 
   const handlePay = async (id) => {
     //console.log("Button clicked!");
@@ -285,20 +286,12 @@ const ClientHome = () => {
                         ? job.freelancerId?.username
                         : "No Freelancer Assigned Yet"}
                     </p>
-                    <p>
-                      <strong>Total Price: R</strong> {job.price}
-                    </p>
-                    <p>
-                      <strong>Amount Outstanding: R</strong>{" "}
-                      {((job.progressActual - job.progressPaid) / 100) *
-                        job.price}
-                    </p>
+
+
                     <p>
                       <strong>Status:</strong> {job.status}
                     </p>
-                    <p>
-                      <strong>Progress:</strong> {job.progressActual} %
-                    </p>
+
                     <button
                       className="btnCheck"
                       onClick={() => handlePay(job._id)}
