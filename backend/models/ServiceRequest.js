@@ -21,9 +21,26 @@ const serviceRequestSchema = new mongoose.Schema(
       enum: ["Pending", "Accepted", "Completed", "In Progress"],
       default: "Pending", // Default status is 'pending' until a freelancer accepts it
     },
-    progress: {
+    progressActual: {
       type: Number,
       default: 0, // Progress percentage (0-100)
+    },
+    progressPaid: {
+      // Progress percentage that has been paid for
+      type: Number,
+      default: 0,
+    },
+    price: {
+      type: Number,
+      default: 0,
+    },
+    paymentsMade: {
+      type: Number,
+      default: 0, // Payments made by the client
+    },
+    paymentsPending: {
+      type: Number,
+      default: 0, // Payments pending from the client
     },
   },
   {

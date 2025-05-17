@@ -2,6 +2,7 @@ const express = require("express");
 require("dotenv").config();
 const axios = require("axios");
 const router = express.Router();
+const ServiceRequest = require("../models/ServiceRequest");
 
 const FRONTEND_URL =
   process.env.NODE_ENV === "production"
@@ -9,11 +10,35 @@ const FRONTEND_URL =
     : "http://localhost:3000";
 
 router.post("/create-checkout-session", async (req, res) => {
-  const { email, amount } = req.body;
+  const { email, jobId } = req.body;
 
-  if (!email || !amount) {
+  const serviceRequest = await ServiceRequest.findById(jobId);
+
+  console.log("Initializing payment for job:", jobId);
+
+  // calculate progress completed since last payment
+  const { progressActual, progressPaid } = serviceRequest;
+  const progressDelta = progressActual - progressPaid;
+
+  if (progressDelta <= 0) {
+    return res.status(400).json({ message: "No payment due" });
+  }
+
+  // calculate amount due based on progress delta
+  const amountDue = (progressDelta / 100) * serviceRequest.price;
+  console.log("Amount due:", amountDue);
+
+  if (!email || !amountDue) {
     return res.status(400).json({ error: "Email and amount are required" });
   }
+
+  /*
+  // Update the service request with the new payment details
+  serviceRequest.paymentsPending = serviceRequest.paymentsPending - amountDue;
+  serviceRequest.progressPaid = progressPaid + progressDelta;
+  serviceRequest.paymentsMade = serviceRequest.paymentsMade + amountDue;
+  await serviceRequest.save();
+  */
 
   try {
     //console.log("PAYSTACK_KEY:", process.env.PAYSTACK_SECRET_KEY ? "***loaded***" : "MISSING!");
@@ -21,8 +46,13 @@ router.post("/create-checkout-session", async (req, res) => {
       "https://api.paystack.co/transaction/initialize",
       {
         email: email,
-        amount: amount * 100,
+        amount: amountDue * 100, // Paystack requires the amount in kobo
         callback_url: `${FRONTEND_URL}/client/home`, // after payment, Paystack redirects here
+        metadata: {
+          serviceRequestId: jobId,
+          progressDelta,
+          amountDue,
+        },
       },
       {
         headers: {

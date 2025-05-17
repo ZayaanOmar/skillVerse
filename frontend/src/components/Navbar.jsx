@@ -104,11 +104,11 @@ const Navbar = () => {
             </Dropdown.Toggle>
 
             <Dropdown.Menu>
+              <Dropdown.Item onClick={showProfile}>My Profile</Dropdown.Item>
               <Dropdown.Item onClick={handleShowModal}>
                 Change Roles
               </Dropdown.Item>
-              <Dropdown.Item onClick={handleLogout}>Logout</Dropdown.Item>
-              <Dropdown.Item onClick={showProfile}>My Profile</Dropdown.Item>
+              <Dropdown.Item onClick={handleLogout}>Logout</Dropdown.Item>              
             </Dropdown.Menu>
           </Dropdown>
         </li>

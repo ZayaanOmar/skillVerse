@@ -3,15 +3,17 @@ const ServiceRequest = require("../models/ServiceRequest");
 const User = require("../models/User");
 const Application = require("../models/Application");
 const router = express.Router();
-const { createServiceRequest, getAllServiceRequests } = require("../controllers/serviceRequestController");
+const {
+  createServiceRequest,
+  getAllServiceRequests,
+} = require("../controllers/serviceRequestController");
 //http://localhost:5000/api/service-requests/create (postman check)
 // Create a new service request (from client obs POST)
 router.post("/create", async (req, res) => {
   const { clientId, serviceType } = req.body;
 
   try {
-    //checks if client is actually existing
-    console.log("Received clientId:", clientId);
+    //console.log("Received clientId:", clientId);
 
     const client = await User.findOne({ _id: clientId, role: "client" });
     //const allUsers = await User.find({});
@@ -109,7 +111,8 @@ router.post("/applications", async (req, res) => {
   }
 });
 
-router.get("/jobs/:id", async (req, res) => {
+// Get all jobs a client has posted
+router.get("/client/jobs/:id", async (req, res) => {
   const { id } = req.params;
   try {
     const jobs = await ServiceRequest.find({ clientId: id })
@@ -119,7 +122,7 @@ router.get("/jobs/:id", async (req, res) => {
     if (!jobs) {
       return res.status(404).json({ message: "Job not found" });
     }
-    console.log("Jobs fetched:", jobs); // Debugging line to check fetched jobs
+    //console.log("Jobs fetched:", jobs); // Debugging line to check fetched jobs
     res.status(200).json(jobs);
   } catch (error) {
     console.error(error);
@@ -129,20 +132,61 @@ router.get("/jobs/:id", async (req, res) => {
 router.get("/manage-jobs", async (req, res) => {
   try {
     const serviceRequests = await ServiceRequest.find()
-      .populate("clientId", "username")//show client name
-      .populate("freelancerId", "username")//show freelancer name
+      .populate("clientId", "username") //show client name
+      .populate("freelancerId", "username") //show freelancer name
       .exec();
-//console.log("Populated serviceRequests:", serviceRequests);
-   // serviceRequests.forEach(req => {
-   //   console.log({
+    //console.log("Populated serviceRequests:", serviceRequests);
+    // serviceRequests.forEach(req => {
+    //   console.log({
     //    client: req.clientId,
     //    freelancer: req.freelancerId,
-   //   });
-   // });
+    //   });
+    // });
     res.status(200).json(serviceRequests);
   } catch (error) {
     console.error("Error fetching service requests:", error);
     res.status(500).json({ message: "Failed to fetch service requests" });
+  }
+});
+
+// Get all jobs a freelancer is working on
+router.get("/freelancer/jobs/:id", async (req, res) => {
+  //console.log("Received request to fetch freelancer jobs"); // Debugging line
+  //console.log("Request params:", req.params); // Debugging line
+  //console.log("Fetching freelancer jobs for ID:", req.params.id); // Debugging line
+  const { id } = req.params;
+  try {
+    const freelancerJobs = await ServiceRequest.find({
+      freelancerId: id,
+    })
+      .populate("clientId", "username")
+      .populate("freelancerId", "username")
+      .exec();
+
+    res.status(200).json(freelancerJobs);
+  } catch (error) {
+    console.error("Error fetching freelancer jobs:", error);
+    res.status(500).json({ message: "Error fetching assigned jobs" });
+  }
+});
+
+// Get specific job details by ID
+router.get("/job/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const job = await ServiceRequest.findById(id)
+      .populate("clientId", "username email")
+      .populate("freelancerId", "username email")
+      .exec();
+
+    if (!job) {
+      return res.status(404).json({ message: "Job not found" });
+    }
+
+    res.status(200).json(job);
+  } catch (error) {
+    console.error("Error fetching job details:", error);
+    res.status(500).json({ message: "Error fetching job details" });
   }
 });
 

@@ -1,0 +1,109 @@
+.client-job-details {
+  padding: 2rem;
+}
+
+.job-details-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.detailed-job-card {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+  margin-top: 1rem;
+}
+
+.job-info-section,
+.financial-info-section {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid #eee;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.btnBack {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  height: 40px;
+}
+.action-buttons-rowebra {
+  display: flex;
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.btnCheck,
+.btnBack {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.btnCheck {
+  background-color: #67dfdf;
+  color: #ffffff;
+  height: 40px;
+  width: 120px;
+  border-radius: 4px;
+  border: none;
+}
+.btnCheck:disabled {
+  background-color: #ccc;
+  color: #777;
+  pointer-events: none;
+  animation: none !important;
+  transition: none !important;
+  opacity: 0.6;
+}
+.btnCheck:hover {
+  background-color: #009116; /* Slightly lighter blue */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+  transform: translateY(-4px); /* Slight lift effect */
+}
+.btnBack:hover {
+  background-color: #000000; /* Slightly lighter blue */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+  transform: translateY(-4px); /* Slight lift effect */
+}
+
+.btnBack {
+  background-color: #6c757d;
+  color: white;
+}
+
+.loading,
+.error,
+.not-found {
+  text-align: center;
+  padding: 2rem;
+}
+
+.error {
+  color: #dc3545;
+}
+
+.client-job-details .files-section {
+  margin-top: 2rem;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+}
+
+.client-job-details .files-section h2 {
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+  color: #333;
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 10px;
+}

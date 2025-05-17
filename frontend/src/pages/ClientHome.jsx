@@ -10,12 +10,20 @@ const ClientHome = () => {
   const [showModal, setShowModal] = useState(false); //this is for req submitted successfully(popup)
   const [showConfirmModal, setShowConfirmModal] = useState(false); //this brings up the yes no pop up, on yes sends req
   const [pendingCategory, setPendingCategory] = useState(null); //save the req on button click but dont send it yet
+  const [showMilestoneSuccessModal, setShowMilestoneSuccessModal] = useState(false);
   const [user, setUser] = useState(null);
   const [jobs, setJobs] = useState([]); //this is
   // for the jobs that are fetched from the backend
   const [message /*setMessage*/] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  //state variables for milestones
+  const [showMilestonesModal, setShowMilestonesModal] = useState(false);
+  const [selectedJobForMilestones, setSelectedJobForMilestones] =
+    useState(null);
+  const [milestones, setMilestones] = useState([
+    { description: "", dueDate: "" },
+  ]);
 
   const navigate = useNavigate();
 
@@ -29,6 +37,7 @@ const ClientHome = () => {
           const userData = await res.json();
           localStorage.setItem("user", JSON.stringify(userData));
           setUser(userData);
+          console.log("User data:", userData);
         } else {
           console.error("Failed to fetch user info");
         }
@@ -50,7 +59,7 @@ const ClientHome = () => {
       }
       try {
         const res = await fetch(
-          `${API_URL}/api/service-requests/jobs/${userId}`,
+          `${API_URL}/api/service-requests/client/jobs/${userId}`,
           {
             method: "GET",
             credentials: "include",
@@ -112,33 +121,46 @@ const ClientHome = () => {
     }
   };
 
-  const handlePay = async () => {
-    //console.log("Button clicked!");
-    const email = "johndoe@example.com";
+const handleJobButtonClick = (job) => {
+  const page =
+    job.freelancerId !== null
+      ? `/myjobs/${job._id}`
+      : `/applications/${job._id}`;
 
-    try {
-      const response = await axios.post(
-        `${API_URL}/payments/create-checkout-session`,
-        {
-          email: email,
-          amount: 1000,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+  navigate(page, { 
+    state: { job } // Pass the entire job object via state
+  });
+};
 
-      console.log("Full response:", response);
-      const { checkoutUrl } = response.data;
+  // const handlePay = async (id) => {
+  //   //console.log("Button clicked!");
+  //   const email = "***@example.com";
+  //   //need a call to backend to retrieve price from applications model.
+  //   //need to handle payment logic as well
 
-      // Redirect user to the checkout page
-      window.location.href = checkoutUrl;
-    } catch (error) {
-      console.error("Error creating checkout session:", error);
-    }
-  };
+  //   try {
+  //     const response = await axios.post(
+  //       `${API_URL}/payments/create-checkout-session`,
+  //       {
+  //         email: email,
+  //         jobId: id,
+  //       },
+  //       {
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //       }
+  //     );
+
+  //     console.log("Full response:", response);
+  //     const { checkoutUrl } = response.data;
+
+  //     // Redirect user to the checkout page
+  //     window.location.href = checkoutUrl;
+  //   } catch (error) {
+  //     console.error("Error creating checkout session:", error);
+  //   }
+  // };
 
   return (
     <main className="client-home">
@@ -261,29 +283,33 @@ const ClientHome = () => {
                     </p>
                     <p>
                       <strong>Freelancer: </strong>
-                      {job.status === "Accepted" ||
-                      job.status === "In Progress" ||
-                      job.status === "Completed"
+                      {job.freelancerId !== null
                         ? job.freelancerId?.username
                         : "No Freelancer Assigned Yet"}
                     </p>
                     <p>
                       <strong>Status:</strong> {job.status}
                     </p>
-                    <p>
-                      <strong>Progress:</strong> {job.progress} %
-                    </p>
-                    <button
-                      className="btnCheck"
-                      onClick={handlePay}
-                    >
-                      Checkout
-                    </button>
+
                     <button
                       className="btnDetails"
-                      onClick={() => navigate(`/myjobs/${job._id}`)}
+                      onClick={() => handleJobButtonClick(job)}
                     >
-                      View Details
+                      {job.freelancerId !== null
+                        ? "View Details"
+                        : "View Applications"}
+                    </button>
+                    <button
+                      className="btnMilestones"
+                      onClick={() => {
+                        setSelectedJobForMilestones(job);
+                        setMilestones([
+                          { description: "", dueDate: "", amount: "" },
+                        ]);
+                        setShowMilestonesModal(true);
+                      }}
+                    >
+                      Set Milestones
                     </button>
                   </article>
                 ))}
@@ -324,13 +350,15 @@ const ClientHome = () => {
           <strong>{pendingCategory}</strong>?
         </Modal.Body>
         <Modal.Footer>
-          <Button className="noButton"
+          <Button
+            className="noButton"
             variant="secondary"
             onClick={() => setShowConfirmModal(false)}
           >
             No
           </Button>
-          <Button className="yesButton"
+          <Button
+            className="yesButton"
             variant="primary"
             onClick={() => {
               handleServiceSelection(
@@ -340,6 +368,156 @@ const ClientHome = () => {
             }}
           >
             Yes
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      {/*modal for success of milestone setting */}
+      <Modal
+        show={showMilestoneSuccessModal}
+        onHide={() => setShowMilestoneSuccessModal(false)}
+        centered
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Milestones Saved</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          The milestones have been successfully saved for this job.
+        </Modal.Body>
+        <Modal.Footer>
+          <Button
+            variant="primary"
+            onClick={() => setShowMilestoneSuccessModal(false)}
+          >
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+      {/* Milestones Modal */}
+      <Modal
+        show={showMilestonesModal}
+        onHide={() => setShowMilestonesModal(false)}
+        centered
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>
+            Set Milestones for {selectedJobForMilestones?.serviceType}
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <form>
+            {/*render input field for each milestone*/}
+            {milestones.map((milestone, index) => (
+              <section key={index} className="mb-3">
+                <section className="form-group">
+                  <label>Description</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    value={milestone.description}
+                    onChange={(e) => {
+                      // update specific milestone's description
+                      const newMilestones = [...milestones];
+                      newMilestones[index].description = e.target.value;
+                      setMilestones(newMilestones);
+                    }}
+                    placeholder="Milestone description"
+                    required // field mandotory
+                  />
+                </section>
+                <section className="form-group">
+                  <label>Due Date</label>
+                  <input
+                    type="date"
+                    className="form-control"
+                    value={milestone.dueDate}
+                    onChange={(e) => {
+                      // update the specific milestone's due date
+                      const newMilestones = [...milestones];
+                      newMilestones[index].dueDate = e.target.value;
+                      setMilestones(newMilestones);
+                    }}
+                    required
+                  />
+                </section>
+                {index > 0 && (
+                  // removing milestones button
+                  <Button
+                    variant="danger"
+                    size="sm"
+                    onClick={() => {
+                      const newMilestones = [...milestones];
+                      newMilestones.splice(index, 1);
+                      setMilestones(newMilestones);
+                    }}
+                    className="mt-2"
+                  >
+                    Remove Milestone
+                  </Button>
+                )}
+              </section>
+            ))}
+            {/*adding more milestones at once*/}
+            <Button
+              variant="secondary"
+              onClick={() => {
+                setMilestones([
+                  ...milestones,
+                  { description: "", dueDate: "" },
+                ]);
+              }}
+              className="me-2"
+            >
+              Add Another Milestone
+            </Button>
+          </form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button
+            variant="secondary"
+            onClick={() => setShowMilestonesModal(false)}
+          >
+            Cancel
+          </Button>
+          <Button
+            variant="primary"
+            onClick={async () => {
+              try {
+                const hasEmptyFields = milestones.some(
+                  (m) => !m.description || !m.dueDate
+                );
+
+                if (hasEmptyFields) {
+                  alert("Please fill in all fields for all milestones");
+                  return;
+                }
+
+                const response = await axios.post(
+                  `${API_URL}/api/milestones/${selectedJobForMilestones._id}`,
+                  { milestones },
+                  {
+                    withCredentials: true,
+                    headers: {
+                      "Content-Type": "application/json",
+                    },
+                  }
+                );
+
+                console.log("Milestones created:", response.data);
+                setShowMilestonesModal(false);
+                setShowMilestoneSuccessModal(true);
+
+              } catch (error) {
+                console.error("Error:", error.response?.data || error.message);
+                alert(
+                  `Failed to set milestones: ${
+                    error.response?.data?.message || error.message
+                  }`
+                );
+              }
+            }}
+          >
+            Save Milestones
           </Button>
         </Modal.Footer>
       </Modal>

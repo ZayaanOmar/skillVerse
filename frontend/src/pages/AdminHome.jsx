@@ -5,7 +5,32 @@ import API_URL from "../config/api";
 
 const AdminHome = () => {
   const navigate = useNavigate();
-  const [user, setUser] = useState(null);
+  const [stats, setStats] = useState({
+    numUsers: 0,
+    numServiceReqs: 0,
+    numRoleChangeReqs: 0,
+  });
+
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const res = await fetch(`${API_URL}/api/admin/stats`, {
+          method: "GET",
+          credentials: "include",
+        });
+
+        if (res.ok) {
+          const data = await res.json();
+          //console.log(data);
+          setStats(data);
+        }
+      } catch (error) {
+        console.error("Erro fetching stats:", error);
+      }
+    };
+
+    fetchStats();
+  }, []);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -16,7 +41,6 @@ const AdminHome = () => {
         if (res.ok) {
           const userData = await res.json();
           localStorage.setItem("user", JSON.stringify(userData));
-          setUser(userData);
         } else {
           console.error("Failed to fetch user info");
         }
@@ -28,8 +52,8 @@ const AdminHome = () => {
     fetchUser();
   }, []);
 
-  console.log("User in useEffect:", user); // Debugging line to check user data
-  console.log("User in localStorage:", localStorage.getItem("user")); // Debugging line to check localStorage
+  //console.log("User in useEffect:", user); // Debugging line to check user data
+  //console.log("User in localStorage:", localStorage.getItem("user")); // Debugging line to check localStorage
 
   const handleTicketSupport = () => {
     navigate("/admin/support");
@@ -46,15 +70,15 @@ const AdminHome = () => {
         <section className="admin-analytics-section">
           <section className="admin-analytics-card">
             <h5>Total Users</h5>
-            <p>1,245</p>
+            <p>{stats.numUsers}</p>
           </section>
           <section className="admin-analytics-card">
             <h5>Open Tickets</h5>
-            <p>32</p>
+            <p>{stats.numRoleChangeReqs}</p>
           </section>
           <section className="admin-analytics-card">
             <h5>Job Listings</h5>
-            <p>87</p>
+            <p>{stats.numServiceReqs}</p>
           </section>
           <section className="admin-analytics-card">
             <h5>System Status</h5>
@@ -91,15 +115,17 @@ const AdminHome = () => {
                     <i className="bi bi-people"></i>Manage Users
                   </h5>
                   <p className="card-text">View and manage user accounts</p>
-                  <button className="btn btn-outline-primary"
-                    onClick={() => navigate("/admin/manage-accounts")}>
+                  <button
+                    className="btn btn-outline-primary"
+                    onClick={() => navigate("/admin/manage-accounts")}
+                  >
                     Manage Accounts
                   </button>
                 </section>
               </section>
             </section>
 
-            <section class="col-4">
+            <section className="col-4">
               <section className="card">
                 <section className="card-body">
                   <h5 className="card-title">
@@ -107,8 +133,10 @@ const AdminHome = () => {
                     Listings
                   </h5>
                   <p className="card-text">View and manage job listings</p>
-                  <button className="btn btn-outline-primary"
-                    onClick={() => navigate("/admin/manage-jobs")}>
+                  <button
+                    className="btn btn-outline-primary"
+                    onClick={() => navigate("/admin/manage-jobs")}
+                  >
                     Manage Job Listings
                   </button>
                 </section>
