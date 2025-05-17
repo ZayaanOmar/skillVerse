@@ -45,13 +45,7 @@ const CreateProfile = () => {
   };
 
   const handleSubmit = async () => {
-    if (
-      !location ||
-      !gender ||
-      !occupation ||
-      skills.length === 0 ||
-      !aboutMe
-    ) {
+    if (!location || !gender || !occupation || !aboutMe) {
       setErrorMessage("Missing information. Please fill out all fields.");
       return;
     }
@@ -125,10 +119,13 @@ const CreateProfile = () => {
             <Card className="profile-card border-white">
               <Card.Body>
                 <Row className="profile-info-row" id="card-heading">
-                  <h4>Please enter your information</h4>
+                  <h3>Please enter your information.</h3>
+                </Row>
+                <Row className="profile-info-row">
+                  <h5>Fields marked with '*' are required.</h5>
                 </Row>
                 <Row className="profile-info-row align-items-center">
-                  <label htmlFor="location">Location:</label>
+                  <label htmlFor="location">Location:*</label>
                   <input
                     type="text"
                     id="location"
@@ -139,7 +136,7 @@ const CreateProfile = () => {
                   />
                 </Row>
                 <Row className="profile-info-row align-items-center">
-                  <label htmlFor="gender">Gender:</label>
+                  <label htmlFor="gender">Gender:*</label>
                   <select
                     id="gender"
                     name="gender"
@@ -154,7 +151,7 @@ const CreateProfile = () => {
                   </select>
                 </Row>
                 <Row className="profile-info-row align-items-center">
-                  <label htmlFor="occupation">Occupation:</label>
+                  <label htmlFor="occupation">Occupation:*</label>
                   <input
                     type="text"
                     id="occupation"
@@ -204,7 +201,7 @@ const CreateProfile = () => {
                   </section>
                 </Row>
                 <Row className="profile-info-row align-items-center">
-                  <label htmlFor="aboutMe">About Me:</label>
+                  <label htmlFor="aboutMe">About Me:*</label>
                   <textarea
                     id="aboutMe"
                     name="aboutMe"

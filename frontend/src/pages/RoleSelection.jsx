@@ -49,8 +49,9 @@ const RoleSelection = () => {
           localStorage.setItem("user", JSON.stringify(userData));
 
           // Navigate to correct dashboard
-          if (role === "client") navigate("/client/home");
-          else if (role === "freelancer") navigate("/create-profile");
+          /*if (role === "client") navigate("/client/home");
+          else if (role === "freelancer") navigate("/create-profile");*/
+          navigate("/create-profile");
         } else {
           console.error("Failed to fetch user data");
         }
