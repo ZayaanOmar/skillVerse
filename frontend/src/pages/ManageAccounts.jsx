@@ -14,8 +14,8 @@ const ManageAccounts = () => {
         const res = await fetch(`${API_URL}/api/users`);
         const data = await res.json();
         if (res.ok) {
-          const filteredUsers = data.filter(user => user.role !== 'admin');//dont show me other admins in this list
-          setUsers(filteredUsers);//show all users except admins
+          const filteredUsers = data.filter((user) => user.role !== "admin"); //dont show me other admins in this list
+          setUsers(filteredUsers); //show all users except admins
         } else {
           console.error("Failed to fetch users");
         }
@@ -28,45 +28,49 @@ const ManageAccounts = () => {
   }, []);
 
   // Delete user function
-const deleteUser = async (userId) => {
-  try {
-const res = await fetch(`${API_URL}/api/users/${userId}`, {
-  method: "DELETE",
-  credentials: "include",
-});
+  const deleteUser = async (userId) => {
+    try {
+      const res = await fetch(`${API_URL}/api/users/${userId}`, {
+        method: "DELETE",
+        credentials: "include",
+      });
 
-    if (res.ok) {
-      // Successfully deleted, update the users state
-      setUsers(users.filter((user) => user._id !== userId));
-      alert("User deleted successfully.");
-    } else {
-      // If not successful, get the error message
-      const data = await res.json();
-      alert(data.message || "Failed to delete user.");
+      if (res.ok) {
+        // Successfully deleted, update the users state
+        setUsers(users.filter((user) => user._id !== userId));
+        alert("User deleted successfully.");
+      } else {
+        // If not successful, get the error message
+        const data = await res.json();
+        alert(data.message || "Failed to delete user.");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Error deleting user.");
     }
-  } catch (err) {
-    console.error(err);
-    alert("Error deleting user.");
-  }
-};
+  };
 
-
+  const formatDate = (dateString) => {
+    const options = { year: "numeric", month: "long", day: "numeric" };
+    return new Date(dateString).toLocaleDateString(undefined, options);
+  };
 
   return (
     <section className="container mt-4">
       <h2>Manage User Accounts</h2>
       <table className="table table-bordered mt-3">
         <thead>
-
           <link
             href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"
             rel="stylesheet"
-          link/>
+            link
+          />
 
           <tr>
             <th>Username</th>
             <th>Role</th>
-            <th>Google ID</th>
+            <th>User ID</th>
+            <th>Account Created</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -80,17 +84,18 @@ const res = await fetch(`${API_URL}/api/users/${userId}`, {
               <tr key={user._id}>
                 <td>{user.username}</td>
                 <td>{user.role}</td>
-                <td>{user.googleID}</td>
+                <td>{user._id}</td>
+                <td>{formatDate(user.createdAt)}</td>
                 <td>
-                <button
-                  className="deleteicn"
-                  onClick={() => {
-                    setUserToDelete(user);  // Set the user to delete
-                    setShowDeleteModal(true); // Show the confirmation modal
-                  }}
-                >
-                  <i className="bi bi-trash"></i> {/* Trash bin icon */}
-                </button>
+                  <button
+                    className="deleteicn"
+                    onClick={() => {
+                      setUserToDelete(user); // Set the user to delete
+                      setShowDeleteModal(true); // Show the confirmation modal
+                    }}
+                  >
+                    <i className="bi bi-trash"></i> {/* Trash bin icon */}Delete
+                  </button>
                 </td>
               </tr>
             ))
@@ -120,7 +125,7 @@ const res = await fetch(`${API_URL}/api/users/${userId}`, {
             variant="danger"
             onClick={() => {
               if (userToDelete) {
-                deleteUser(userToDelete._id);  // Delete the user
+                deleteUser(userToDelete._id); // Delete the user
               }
               setShowDeleteModal(false); // Close the modal
             }}

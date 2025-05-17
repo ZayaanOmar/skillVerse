@@ -15,6 +15,7 @@ router.get("/homepage", authCheck, logIn);
 router.post("/", addUser);
 
 router.put("/:id", updateUser);
+
 //this part is added to get all user accounts for admin manage accts
 router.get("/", async (req, res) => {
   try {
@@ -25,6 +26,7 @@ router.get("/", async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 });
+
 //used now to delete the account of a user
 router.delete("/:id", authCheck, async (req, res) => {
   const { id } = req.params;
